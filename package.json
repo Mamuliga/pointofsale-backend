@@ -1,0 +1,22 @@
+{
+  "name": "eit-pos-backend",
+  "version": "1.0.0",
+  "description": "The Most advanced and user friendly point of sale",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/emeraldit/eit-pos-backend.git"
+  },
+  "keywords": [
+    "pos"
+  ],
+  "author": "Emerald IT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/emeraldit/eit-pos-backend/issues"
+  },
+  "homepage": "https://gitlab.com/emeraldit/eit-pos-backend#readme"
+}
