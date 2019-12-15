@@ -1,3 +1,4 @@
+// TODO: Setup automation for deploy
 import express from "express";
 import config from "./config";
 import apiRoutes from "./controllers";
@@ -6,6 +7,8 @@ import morgan from "morgan";
 import notFoundRoute from "./middleware/notFoundRoute";
 
 const app = express();
+
+// TODO: call setup header middleware
 
 app.use(morgan("common"));
 

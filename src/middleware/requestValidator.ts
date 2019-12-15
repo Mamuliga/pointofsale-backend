@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import Joi from "@hapi/joi";
 import validatorParams from "../interfaces/IValidatorParams";
 
-export default (shema: validatorParams) =>
+export default (schema: validatorParams) =>
   function(req: Request, res: Response, next: NextFunction) {
     const {
       reqBodyValidator,
       reqParamsValidator,
       reqQueryParamsValidator
-    } = shema;
+    } = schema;
     try {
       if (reqBodyValidator) {
         const { error } = Joi.object(reqBodyValidator).validate(req.body);
