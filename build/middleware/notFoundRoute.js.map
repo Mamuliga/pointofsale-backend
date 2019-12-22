@@ -1,1 +1,0 @@
-{"version":3,"file":"notFoundRoute.js","sourceRoot":"","sources":["../../src/middleware/notFoundRoute.ts"],"names":[],"mappings":";;;;;;;;;;;AAEA,mBAA8B,GAAY,EAAE,GAAa,EAAE,IAAkB;;QAC3E,GAAG,CAAC,MAAM,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC,EAAE,KAAK,EAAE,qBAAqB,EAAE,CAAC,CAAC;IACzD,CAAC;CAAA;AAFD,4BAEC"}
