@@ -1,16 +1,14 @@
-# echo "Installing Node..."
-# sudo apt-get update
-# sudo apt-get install nodejs
-# sudo apt-get install npm
+#!/usr/bin/env bash
+# fail if any commands fails
+set -e
+# debug log
+# set -x
 
 echo "Installing Node_modules..."
-npm i
+yarn install
 
 echo "Compiling typescript files..."
-npm run dist
-
-# echo "archive the build folder..."
-# zip -r dist.zip dist
+yarn run dist
 
 echo "Installing heroku CLI..."
 brew tap heroku/brew && brew install heroku
@@ -23,11 +21,15 @@ git config remote.heroku.push +HEAD:refs/heads/master
 git config user.name "Bitrise Deployment"
 git config user.name "br.dep@brise.com"
 
+echo "making build folder available for git..."
 mv dist build
 
+echo "adding build folder to git..."
 git add .
 git commit -m "release for version $VERSION_NO"
 
+echo "Create auth file to push heroku..."
 echo "machine git.heroku.com login rizan.emeraldit@gmail.com password $HEROKU_API_KEY" > ~/.netrc
 
+echo "pushing changes to heroku..."
 git push heroku
