@@ -1,12 +1,12 @@
 import { Router } from "express";
 import {
-  getEmployee,
-  createEmployee,
-  getAllEmployees,
+  getCustomer,
+  createCustomer,
+  getAllCustomers,
   findByIdAndUpdate,
-  deleteEmployee
-} from "../models/Employee";
-import {Employee} from "./apiShapes/Employee"
+  deleteCustomer
+} from "../models/Customer";
+import {Customer} from "./apiShapes/Customer"
 import { CREATE_EMPLOYEE_REQUEST_BODY ,UPDATE_EMPLOYEE_REQUEST_BODY,DELETE_EMPLOYEE_REQUEST_BODY} from "./validators/employee";
 import requestValidator from "../middleware/requestValidator";
 
@@ -14,9 +14,9 @@ const employeeRoute = Router();
 
 employeeRoute.get("/", async (req, res) => {
   try {
-    const employees = await getAllEmployees();
+    const employees = await getAllCustomers();
     if (!employees.length) res.status(204).json([]);
-    res.status(200).json(employees.map((employee) => Employee(employee)));
+    res.status(200).json(employees.map((employee) => Customer(employee)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -28,7 +28,7 @@ employeeRoute.get("/", async (req, res) => {
 employeeRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const employee = await getEmployee(parseInt(id) || 0);
+    const employee = await getCustomer(parseInt(id) || 0);
     if (!employee) res.status(204).json({});
     res.status(200).json(employee);
   } catch (ex) {
@@ -45,7 +45,7 @@ employeeRoute.post(
   async (req, res) => {
     const { id } = req.params;
     try {
-      const employee = await createEmployee(req.body);
+      const employee = await createCustomer(req.body);
       if (!employee) throw new Error("Unable to create the Employee");
       res.status(201).json(employee);
     } catch (ex) {
@@ -78,7 +78,7 @@ employeeRoute.delete("/:id",async (req,res)=>{
   requestValidator({ reqBodyValidator: DELETE_EMPLOYEE_REQUEST_BODY });
   const { id } = req.params;
   try {
-  const employee = await deleteEmployee(parseInt(id)) ;
+  const employee = await deleteCustomer(parseInt(id)) ;
   if (!employee) throw new Error("Unable to delete the Employee");
       res.status(201).json(employee);
     } catch (ex) {
