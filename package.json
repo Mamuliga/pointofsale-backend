@@ -9,10 +9,6 @@
     "dist": "tsc -p .",
     "deploy": "git push heroku"
   },
-  "engines": {
-    "node": "12.13.0",
-    "npm": "6.12.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://gitlab.com/emeraldit/eit-pos-backend.git"
