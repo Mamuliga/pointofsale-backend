@@ -1,18 +1,21 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   getEmployee,
   createEmployee,
   getAdminEmployees
-} from "../models/Employee";
-import { CREATE_EMPLOYEE_REQUEST_BODY } from "./validators/employee";
-import requestValidator from "../middleware/requestValidator";
+} from '../models/Employee';
+import { CREATE_EMPLOYEE_REQUEST_BODY } from './validators/employee';
+import requestValidator from '../middleware/requestValidator';
 
 const employeeRoute = Router();
 
-employeeRoute.get("/admins", async (req, res) => {
+employeeRoute.get('/admins', async (req, res) => {
   try {
     const AdminEmployees = await getAdminEmployees();
-    if (!AdminEmployees.length) res.status(204).json([]);
+    if (!AdminEmployees.length) {
+      res.status(204).json([]);
+      return;
+    }
     res.status(200).json(AdminEmployees);
   } catch (ex) {
     console.log(ex);
@@ -22,7 +25,7 @@ employeeRoute.get("/admins", async (req, res) => {
   }
 });
 
-employeeRoute.get("/:id", async (req, res) => {
+employeeRoute.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const employee = await getEmployee(parseInt(id) || 0);
@@ -37,13 +40,13 @@ employeeRoute.get("/:id", async (req, res) => {
 });
 
 employeeRoute.post(
-  "/",
+  '/',
   requestValidator({ reqBodyValidator: CREATE_EMPLOYEE_REQUEST_BODY }),
   async (req, res) => {
     const { id } = req.params;
     try {
       const employee = await createEmployee(req.body);
-      if (!employee) throw new Error("Unable to create the Employee");
+      if (!employee) throw new Error('Unable to create the Employee');
       res.status(201).json(employee);
     } catch (ex) {
       console.log(ex);
