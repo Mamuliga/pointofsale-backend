@@ -65,7 +65,7 @@ employeeRoute.put("/:id", async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_EMPLOYEE_REQUEST_BODY });
   const { id } = req.params;
   try {
-    const employee = await findByIdAndUpdate(parseInt(id), {});
+    const employee = await findByIdAndUpdate(parseInt(id), req.body);
     if (!employee) throw new Error("Unable to update the Employee");
     res.status(201).json(employee);
   } catch (ex) {

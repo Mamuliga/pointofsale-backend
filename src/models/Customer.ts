@@ -16,7 +16,7 @@ export async function createCustomer(customer: ICustomer) {
 export async function findByIdAndUpdate(id: number, customer: any) {
   const oldcustomer = await Customer.findByPk(id);
   if (oldcustomer) {
-    const newcustomer = await oldcustomer.update({ customer });
+    const newcustomer = await oldcustomer.update(customer);
     return newcustomer;
   }
 }

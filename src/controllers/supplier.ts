@@ -65,7 +65,7 @@ supplierRoute.put("/:id", async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_SUPPLIER_REQUEST_BODY });
   const { id } = req.params;
   try {
-    const supplier = await findByIdAndUpdate(parseInt(id), {});
+    const supplier = await findByIdAndUpdate(parseInt(id), req.body);
     if (!supplier) throw new Error("Unable to update the Supplier");
     res.status(201).json(supplier);
   } catch (ex) {

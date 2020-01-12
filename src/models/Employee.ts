@@ -16,7 +16,7 @@ export async function createEmployee(employee: IEmployee) {
 export async function findByIdAndUpdate(id: number, employee: any) {
   const oldemp = await Employee.findByPk(id);
   if (oldemp) {
-    const newemp = await oldemp.update({ employee });
+    const newemp = await oldemp.update(employee);
     return newemp;
   }
 }

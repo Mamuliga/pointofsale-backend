@@ -16,7 +16,7 @@ export async function createSupplier(supplier: ISupplier) {
 export async function findByIdAndUpdate(id: number, supplier: any) {
   const oldsupplier = await Supplier.findByPk(id);
   if (oldsupplier) {
-    const newsupplier = await oldsupplier.update({ supplier });
+    const newsupplier = await oldsupplier.update(supplier);
     return newsupplier;
   }
 }

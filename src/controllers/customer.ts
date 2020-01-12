@@ -65,7 +65,7 @@ customerRoute.put("/:id", async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_CUSTOMER_REQUEST_BODY });
   const { id } = req.params;
   try {
-    const customer = await findByIdAndUpdate(parseInt(id), {});
+    const customer = await findByIdAndUpdate(parseInt(id), req.body);
     if (!customer) throw new Error("Unable to update the Customer");
     res.status(204).json(customer);
   } catch (ex) {
