@@ -14,7 +14,6 @@ app.use(morgan("common"));
 
 // Initialize Sequelize instant
 app.use(dbConnect);
-
 // Enable the json body request
 app.use(express.json());
 

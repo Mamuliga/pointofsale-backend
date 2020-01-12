@@ -6,8 +6,12 @@ import {
   findByIdAndUpdate,
   deleteEmployee
 } from "../models/Employee";
-import {Employee} from "./apiShapes/Employee"
-import { CREATE_EMPLOYEE_REQUEST_BODY ,UPDATE_EMPLOYEE_REQUEST_BODY,DELETE_EMPLOYEE_REQUEST_BODY} from "./validators/employee";
+import { Employee } from "./apiShapes/Employee";
+import {
+  CREATE_EMPLOYEE_REQUEST_BODY,
+  UPDATE_EMPLOYEE_REQUEST_BODY,
+  DELETE_EMPLOYEE_REQUEST_BODY
+} from "./validators/employee";
 import requestValidator from "../middleware/requestValidator";
 
 const employeeRoute = Router();
@@ -16,7 +20,7 @@ employeeRoute.get("/", async (req, res) => {
   try {
     const employees = await getAllEmployees();
     if (!employees.length) res.status(204).json([]);
-    res.status(200).json(employees.map((employee) => Employee(employee)));
+    res.status(200).json(employees.map(employee => Employee(employee)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -57,36 +61,34 @@ employeeRoute.post(
   }
 );
 
-
-
-employeeRoute.put("/:id",async (req,res)=>{
+employeeRoute.put("/:id", async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_EMPLOYEE_REQUEST_BODY });
   const { id } = req.params;
   try {
-  const employee = await findByIdAndUpdate(parseInt(id),{}) ;
-  if (!employee) throw new Error("Unable to update the Employee");
-      res.status(201).json(employee);
-    } catch (ex) {
-      console.log(ex);
-      res.status(res.statusCode || 400).json({
-        error: ex.message
-      });
-    }
-})
+    const employee = await findByIdAndUpdate(parseInt(id), {});
+    if (!employee) throw new Error("Unable to update the Employee");
+    res.status(201).json(employee);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
 
-employeeRoute.delete("/:id",async (req,res)=>{
+employeeRoute.delete("/:id", async (req, res) => {
   requestValidator({ reqBodyValidator: DELETE_EMPLOYEE_REQUEST_BODY });
   const { id } = req.params;
   try {
-  const employee = await deleteEmployee(parseInt(id)) ;
-  if (!employee) throw new Error("Unable to delete the Employee");
-      res.status(201).json(employee);
-    } catch (ex) {
-      console.log(ex);
-      res.status(res.statusCode || 400).json({
-        error: ex.message
-      });
-    }
-})
+    const employee = await deleteEmployee(parseInt(id));
+    if (!employee) throw new Error("Unable to delete the Employee");
+    res.status(201).json(employee);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
 
 export default employeeRoute;

@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 
-export const CREATE_EMPLOYEE_REQUEST_BODY = {
+export const CREATE_CUSTOMER_REQUEST_BODY = {
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string()
@@ -19,7 +19,7 @@ export const CREATE_EMPLOYEE_REQUEST_BODY = {
   recruiter: Joi.string().required()
 };
 
-export const UPDATE_EMPLOYEE_REQUEST_BODY = {
+export const UPDATE_CUSTOMER_REQUEST_BODY = {
   firstName: Joi.string().optional(),
   lastName: Joi.string().optional(),
   email: Joi.string()
@@ -38,7 +38,7 @@ export const UPDATE_EMPLOYEE_REQUEST_BODY = {
   recruiter: Joi.string().optional()
 };
 
-export const DELETE_EMPLOYEE_REQUEST_BODY = {
+export const DELETE_CUSTOMER_REQUEST_BODY = {
   firstName: Joi.string().optional(),
   lastName: Joi.string().optional(),
   email: Joi.string()

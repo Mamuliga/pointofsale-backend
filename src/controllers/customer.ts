@@ -6,17 +6,21 @@ import {
   findByIdAndUpdate,
   deleteCustomer
 } from "../models/Customer";
-import {Customer} from "./apiShapes/Customer"
-import { CREATE_EMPLOYEE_REQUEST_BODY ,UPDATE_EMPLOYEE_REQUEST_BODY,DELETE_EMPLOYEE_REQUEST_BODY} from "./validators/employee";
+import { Customer } from "./apiShapes/Customer";
+import {
+  CREATE_CUSTOMER_REQUEST_BODY,
+  UPDATE_CUSTOMER_REQUEST_BODY,
+  DELETE_CUSTOMER_REQUEST_BODY
+} from "./validators/customer";
 import requestValidator from "../middleware/requestValidator";
 
-const employeeRoute = Router();
+const customerRoute = Router();
 
-employeeRoute.get("/", async (req, res) => {
+customerRoute.get("/", async (req, res) => {
   try {
-    const employees = await getAllCustomers();
-    if (!employees.length) res.status(204).json([]);
-    res.status(200).json(employees.map((employee) => Customer(employee)));
+    const customers = await getAllCustomers();
+    if (!customers.length) res.status(204).json([]);
+    res.status(200).json(customers.map(customer => Customer(customer)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -25,12 +29,12 @@ employeeRoute.get("/", async (req, res) => {
   }
 });
 
-employeeRoute.get("/:id", async (req, res) => {
+customerRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const employee = await getCustomer(parseInt(id) || 0);
-    if (!employee) res.status(204).json({});
-    res.status(200).json(employee);
+    const customer = await getCustomer(parseInt(id) || 0);
+    if (!customer) res.status(204).json({});
+    res.status(200).json(customer);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -39,15 +43,15 @@ employeeRoute.get("/:id", async (req, res) => {
   }
 });
 
-employeeRoute.post(
+customerRoute.post(
   "/",
-  requestValidator({ reqBodyValidator: CREATE_EMPLOYEE_REQUEST_BODY }),
+  requestValidator({ reqBodyValidator: CREATE_CUSTOMER_REQUEST_BODY }),
   async (req, res) => {
     const { id } = req.params;
     try {
-      const employee = await createCustomer(req.body);
-      if (!employee) throw new Error("Unable to create the Employee");
-      res.status(201).json(employee);
+      const customer = await createCustomer(req.body);
+      if (!customer) throw new Error("Unable to create the Customer");
+      res.status(201).json(customer);
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({
@@ -57,36 +61,34 @@ employeeRoute.post(
   }
 );
 
-
-
-employeeRoute.put("/:id",async (req,res)=>{
-  requestValidator({ reqBodyValidator: UPDATE_EMPLOYEE_REQUEST_BODY });
+customerRoute.put("/:id", async (req, res) => {
+  requestValidator({ reqBodyValidator: UPDATE_CUSTOMER_REQUEST_BODY });
   const { id } = req.params;
   try {
-  const employee = await findByIdAndUpdate(parseInt(id),{}) ;
-  if (!employee) throw new Error("Unable to update the Employee");
-      res.status(201).json(employee);
-    } catch (ex) {
-      console.log(ex);
-      res.status(res.statusCode || 400).json({
-        error: ex.message
-      });
-    }
-})
+    const customer = await findByIdAndUpdate(parseInt(id), {});
+    if (!customer) throw new Error("Unable to update the Customer");
+    res.status(204).json(customer);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
 
-employeeRoute.delete("/:id",async (req,res)=>{
-  requestValidator({ reqBodyValidator: DELETE_EMPLOYEE_REQUEST_BODY });
+customerRoute.delete("/:id", async (req, res) => {
+  requestValidator({ reqBodyValidator: DELETE_CUSTOMER_REQUEST_BODY });
   const { id } = req.params;
   try {
-  const employee = await deleteCustomer(parseInt(id)) ;
-  if (!employee) throw new Error("Unable to delete the Employee");
-      res.status(201).json(employee);
-    } catch (ex) {
-      console.log(ex);
-      res.status(res.statusCode || 400).json({
-        error: ex.message
-      });
-    }
-})
+    const customer = await deleteCustomer(parseInt(id));
+    if (!customer) throw new Error("Unable to delete the Customer");
+    res.status(201).json(customer);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
 
-export default employeeRoute;
+export default customerRoute;

@@ -13,18 +13,18 @@ export async function createEmployee(employee: IEmployee) {
   return await Employee.create(employee);
 }
 
-export async function findByIdAndUpdate(id: number,employee:any) {
+export async function findByIdAndUpdate(id: number, employee: any) {
   const oldemp = await Employee.findByPk(id);
-  if(oldemp) {
-   const newemp = await oldemp.update({employee});
-   return newemp;
+  if (oldemp) {
+    const newemp = await oldemp.update({ employee });
+    return newemp;
   }
 }
 
 export async function deleteEmployee(id: number) {
   const oldemp = await Employee.findByPk(id);
-  if(oldemp) {
-   await oldemp.destroy();
-   return oldemp;
+  if (oldemp) {
+    await oldemp.destroy();
+    return oldemp;
   }
 }

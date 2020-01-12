@@ -1,7 +1,6 @@
 export default interface ICustomer {
-    firstName: string;
-    lastName: string;
-    phoneNO: string;
-    bankAccount: string;
-  }
-  
+  firstName: string;
+  lastName: string;
+  phoneNo: string;
+  bankAccount: string;
+}
