@@ -1,5 +1,5 @@
 export default {
-  PORT: 3301,
+  PORT: 3300,
   APP_NAME: "EIT POS",
   APP_VERSION: "1.0.0-dev",
   DB_HOST: "localhost",
