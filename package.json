@@ -4,12 +4,10 @@
   "description": "The Most advanced and user friendly point of sale",
   "main": "index.js",
   "scripts": {
-    "start": "tsc -p . && node dist/index.js",
-    "dev": "nodemon src/index.ts"
-  },
-  "engines": {
-    "node": "12.13.0",
-    "npm": "6.12.0"
+    "start": "node build/index.js",
+    "dev": "nodemon src/index.ts",
+    "dist": "tsc -p .",
+    "deploy": "git push heroku"
   },
   "repository": {
     "type": "git",
