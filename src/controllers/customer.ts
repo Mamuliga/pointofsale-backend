@@ -19,7 +19,10 @@ const customerRoute = Router();
 customerRoute.get("/", async (req, res) => {
   try {
     const customers = await getAllCustomers();
-    if (!customers.length) res.status(204).json([]);
+    if (!customers.length) {
+      res.status(204).json([]);
+      return;
+    }
     res.status(200).json(customers.map(customer => Customer(customer)));
   } catch (ex) {
     console.log(ex);

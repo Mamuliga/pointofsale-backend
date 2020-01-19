@@ -19,7 +19,10 @@ const supplierRoute = Router();
 supplierRoute.get("/", async (req, res) => {
   try {
     const suppliers = await getAllSuppliers();
-    if (!suppliers.length) res.status(204).json([]);
+    if (!suppliers.length) {
+      res.status(204).json([]);
+      return;
+    }
     res.status(200).json(suppliers.map(supplier => Supplier(supplier)));
   } catch (ex) {
     console.log(ex);

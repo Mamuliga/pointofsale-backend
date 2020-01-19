@@ -19,7 +19,10 @@ const employeeRoute = Router();
 employeeRoute.get("/", async (req, res) => {
   try {
     const employees = await getAllEmployees();
-    if (!employees.length) res.status(204).json([]);
+    if (!employees.length) {
+      res.status(204).json([]);
+      return;
+    }
     res.status(200).json(employees.map(employee => Employee(employee)));
   } catch (ex) {
     console.log(ex);
