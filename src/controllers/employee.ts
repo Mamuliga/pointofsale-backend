@@ -9,8 +9,7 @@ import {
 import { Employee } from "./apiShapes/Employee";
 import {
   CREATE_EMPLOYEE_REQUEST_BODY,
-  UPDATE_EMPLOYEE_REQUEST_BODY,
-  DELETE_EMPLOYEE_REQUEST_BODY
+  UPDATE_EMPLOYEE_REQUEST_BODY
 } from "./validators/employee";
 import requestValidator from "../middleware/requestValidator";
 
@@ -80,7 +79,6 @@ employeeRoute.put("/:id", async (req, res) => {
 });
 
 employeeRoute.delete("/:id", async (req, res) => {
-  requestValidator({ reqBodyValidator: DELETE_EMPLOYEE_REQUEST_BODY });
   const { id } = req.params;
   try {
     const employee = await deleteEmployee(parseInt(id));

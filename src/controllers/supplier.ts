@@ -9,8 +9,7 @@ import {
 import { Supplier } from "./apiShapes/Supplier";
 import {
   CREATE_SUPPLIER_REQUEST_BODY,
-  UPDATE_SUPPLIER_REQUEST_BODY,
-  DELETE_SUPPLIER_REQUEST_BODY
+  UPDATE_SUPPLIER_REQUEST_BODY
 } from "./validators/supplier";
 import requestValidator from "../middleware/requestValidator";
 
@@ -80,7 +79,6 @@ supplierRoute.put("/:id", async (req, res) => {
 });
 
 supplierRoute.delete("/:id", async (req, res) => {
-  requestValidator({ reqBodyValidator: DELETE_SUPPLIER_REQUEST_BODY });
   const { id } = req.params;
   try {
     const supplier = await deleteSupplier(parseInt(id));

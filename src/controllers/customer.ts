@@ -9,9 +9,7 @@ import {
 import { Customer } from "./apiShapes/Customer";
 import {
   CREATE_CUSTOMER_REQUEST_BODY,
-  UPDATE_CUSTOMER_REQUEST_BODY,
-  DELETE_CUSTOMER_REQUEST_BODY
-} from "./validators/customer";
+  UPDATE_CUSTOMER_REQUEST_BODY} from "./validators/customer";
 import requestValidator from "../middleware/requestValidator";
 
 const customerRoute = Router();
@@ -80,7 +78,6 @@ customerRoute.put("/:id", async (req, res) => {
 });
 
 customerRoute.delete("/:id", async (req, res) => {
-  requestValidator({ reqBodyValidator: DELETE_CUSTOMER_REQUEST_BODY });
   const { id } = req.params;
   try {
     const customer = await deleteCustomer(parseInt(id));
