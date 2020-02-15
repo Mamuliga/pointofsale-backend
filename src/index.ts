@@ -5,11 +5,14 @@ import apiRoutes from "./controllers";
 import dbConnect from "./middleware/dbConnect";
 import morgan from "morgan";
 import notFoundRoute from "./middleware/notFoundRoute";
+import setHeaders from "../src/middleware/headerSetup"
 
 const app = express();
 
 // TODO: call setup header middleware
-
+app.use((req, res, next) => {
+  setHeaders(req, res,next);
+});
 app.use(morgan("common"));
 
 // Initialize Sequelize instant
