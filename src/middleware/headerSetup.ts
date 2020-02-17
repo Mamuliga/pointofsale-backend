@@ -6,5 +6,6 @@ export default function(req: Request, res: Response, next: NextFunction) {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
+  res.header("Access-Control-Allow-Methods","*")
   next();
 }
