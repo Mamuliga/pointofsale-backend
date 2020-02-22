@@ -10,7 +10,7 @@ class Supplier extends Model<Supplier> {
     validate: {
       notNull: true
     },
-    comment: "first Name of the person"
+    comment: "first name of the supplier"
   })
   firstName: string | undefined;
 
@@ -20,14 +20,14 @@ class Supplier extends Model<Supplier> {
     validate: {
       notNull: true
     },
-    comment: "last Name of the person"
+    comment: "last name of the supplier."
   })
   lastName: string | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    comment: "Company of the person"
+    comment: "Company of the supplier"
   })
   companyName: string | undefined;
 
@@ -37,14 +37,14 @@ class Supplier extends Model<Supplier> {
     validate: {
       isEmail: true
     },
-    comment: "Email Address of the person"
+    comment: "Email Address of the supplier"
   })
   email: string | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    comment: "Phone number of the person"
+    comment: "Phone number of the supplier"
   })
   phoneNo: string | undefined;
 
@@ -57,28 +57,28 @@ class Supplier extends Model<Supplier> {
         msg: "Gender can be only 'male' or 'female'"
       }
     },
-    comment: "Gender of the person"
+    comment: "Gender of the supplier"
   })
   gender: string | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    comment: "Address of the person"
+    comment: "Address of the supplier"
   })
   address: string | undefined;
 
   @Column({
     type: DataType.DATEONLY,
     allowNull: true,
-    comment: "Date of birth of the person"
+    comment: "Date of birth of the supplier"
   })
   dob: string | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    comment: "Description about the person"
+    comment: "Description about the supplier"
   })
   description: string | undefined;
 
@@ -92,28 +92,28 @@ class Supplier extends Model<Supplier> {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    comment: "Default Discount for person"
+    comment: "Default Discount for supplier"
   })
   defaultDiscount: string | undefined;
 
   @Column({
     type: DataType.JSON,
     allowNull: true,
-    comment: "Bank Account Details of the person"
+    comment: "Bank Account Details of the supplier"
   })
   bankAccount: string | undefined;
 
   @Column({
     type: DataType.DATEONLY,
     allowNull: true,
-    comment: "Joined Date to the company"
+    comment: "Joined Date to the company."
   })
   regDate: string | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    comment: "recruiter to the company"
+    comment: "recruiter to the company."
   })
   recruiter: string | undefined;
 }

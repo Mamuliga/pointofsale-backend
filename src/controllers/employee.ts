@@ -1,22 +1,28 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   getEmployee,
   createEmployee,
-  getAdminEmployees
-} from '../models/Employee';
-import { CREATE_EMPLOYEE_REQUEST_BODY } from './validators/employee';
-import requestValidator from '../middleware/requestValidator';
+  getAllEmployees,
+  findByIdAndUpdate,
+  deleteEmployee
+} from "../models/Employee";
+import { Employee } from "./apiShapes/Employee";
+import {
+  CREATE_EMPLOYEE_REQUEST_BODY,
+  UPDATE_EMPLOYEE_REQUEST_BODY
+} from "./validators/employee";
+import requestValidator from "../middleware/requestValidator";
 
 const employeeRoute = Router();
 
-employeeRoute.get('/admins', async (req, res) => {
+employeeRoute.get("/", async (req, res) => {
   try {
-    const AdminEmployees = await getAdminEmployees();
-    if (!AdminEmployees.length) {
+    const employees = await getAllEmployees();
+    if (!employees.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(AdminEmployees);
+    res.status(200).json(employees.map(employee => Employee(employee)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -25,7 +31,7 @@ employeeRoute.get('/admins', async (req, res) => {
   }
 });
 
-employeeRoute.get('/:id', async (req, res) => {
+employeeRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const employee = await getEmployee(parseInt(id) || 0);
@@ -40,13 +46,13 @@ employeeRoute.get('/:id', async (req, res) => {
 });
 
 employeeRoute.post(
-  '/',
+  "/",
   requestValidator({ reqBodyValidator: CREATE_EMPLOYEE_REQUEST_BODY }),
   async (req, res) => {
     const { id } = req.params;
     try {
       const employee = await createEmployee(req.body);
-      if (!employee) throw new Error('Unable to create the Employee');
+      if (!employee) throw new Error("Unable to create the Employee");
       res.status(201).json(employee);
     } catch (ex) {
       console.log(ex);
@@ -56,5 +62,34 @@ employeeRoute.post(
     }
   }
 );
+
+employeeRoute.put("/:id", async (req, res) => {
+  requestValidator({ reqBodyValidator: UPDATE_EMPLOYEE_REQUEST_BODY });
+  const { id } = req.params;
+  try {
+    const employee = await findByIdAndUpdate(parseInt(id), req.body);
+    if (!employee) throw new Error("Unable to update the Employee");
+    res.status(201).json(employee);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
+
+employeeRoute.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const employee = await deleteEmployee(parseInt(id));
+    if (!employee) throw new Error("Unable to delete the Employee");
+    res.status(201).json(employee);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
 
 export default employeeRoute;

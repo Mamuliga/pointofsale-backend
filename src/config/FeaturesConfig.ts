@@ -4,6 +4,6 @@
  * object key will named using _ naming convention
  * it can use any kind of data type
  */
-export default {
+export default <any>{
   key_for_unique_feature: true
 };

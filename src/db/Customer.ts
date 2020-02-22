@@ -10,7 +10,7 @@ class Customer extends Model<Customer> {
     validate: {
       notNull: true
     },
-    comment: "first Name of the person"
+    comment: "first Name of the customer"
   })
   firstName: string | undefined;
 
@@ -20,14 +20,14 @@ class Customer extends Model<Customer> {
     validate: {
       notNull: true
     },
-    comment: "last Name of the person"
+    comment: "last Name of the customer"
   })
   lastName: string | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    comment: "Company of the person"
+    comment: "Company of the customer"
   })
   companyName: string | undefined;
 
@@ -37,7 +37,7 @@ class Customer extends Model<Customer> {
     validate: {
       isEmail: true
     },
-    comment: "Email Address of the person"
+    comment: "Email Address of the customer"
   })
   email: string | undefined;
 

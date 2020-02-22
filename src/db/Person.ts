@@ -18,7 +18,7 @@ class Person extends Model<Person> {
     validate: {
       notNull: true
     },
-    comment: "last Name of the person"
+    comment: "last Name of the person."
   })
   lastName: string | undefined;
 

@@ -6,8 +6,9 @@ export default async function(req: Request, res: Response, next: NextFunction) {
     await sequelize.sync();
     next();
   } catch (ex) {
+    console.log(ex);
     res.status(500).json({
-      error: "Unable to connect Database"
+      error: "Unable to connect Database."
     });
   }
 }

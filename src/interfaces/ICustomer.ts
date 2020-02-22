@@ -1,4 +1,4 @@
-export default interface IEmployee {
+export default interface ICustomer {
   firstName: string;
   lastName: string;
   phoneNo: string;

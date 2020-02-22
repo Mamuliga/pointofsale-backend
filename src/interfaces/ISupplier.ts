@@ -1,6 +1,6 @@
-export default interface IEmployee {
+export default interface ISupplier {
   firstName: string;
   lastName: string;
-  phoneNo: string;
+  phoneNO: string;
   bankAccount: string;
 }
