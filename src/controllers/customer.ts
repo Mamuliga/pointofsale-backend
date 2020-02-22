@@ -1,20 +1,21 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   getCustomer,
   createCustomer,
   getAllCustomers,
-  findByIdAndUpdate,
+  updateCustomer,
   deleteCustomer
-} from "../models/Customer";
-import { Customer } from "./apiShapes/Customer";
+} from '../models/Customer';
+import { Customer } from './apiShapes/Customer';
 import {
   CREATE_CUSTOMER_REQUEST_BODY,
-  UPDATE_CUSTOMER_REQUEST_BODY} from "./validators/customer";
-import requestValidator from "../middleware/requestValidator";
+  UPDATE_CUSTOMER_REQUEST_BODY
+} from './validators/customer';
+import requestValidator from '../middleware/requestValidator';
 
 const customerRoute = Router();
 
-customerRoute.get("/", async (req, res) => {
+customerRoute.get('/', async (req, res) => {
   try {
     const customers = await getAllCustomers();
     if (!customers.length) {
@@ -30,7 +31,7 @@ customerRoute.get("/", async (req, res) => {
   }
 });
 
-customerRoute.get("/:id", async (req, res) => {
+customerRoute.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const customer = await getCustomer(parseInt(id) || 0);
@@ -45,13 +46,13 @@ customerRoute.get("/:id", async (req, res) => {
 });
 
 customerRoute.post(
-  "/",
+  '/',
   requestValidator({ reqBodyValidator: CREATE_CUSTOMER_REQUEST_BODY }),
   async (req, res) => {
     const { id } = req.params;
     try {
       const customer = await createCustomer(req.body);
-      if (!customer) throw new Error("Unable to create the Customer");
+      if (!customer) throw new Error('Unable to create the Customer');
       res.status(201).json(customer);
     } catch (ex) {
       console.log(ex);
@@ -62,12 +63,12 @@ customerRoute.post(
   }
 );
 
-customerRoute.put("/:id", async (req, res) => {
+customerRoute.put('/:id', async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_CUSTOMER_REQUEST_BODY });
   const { id } = req.params;
   try {
-    const customer = await findByIdAndUpdate(parseInt(id), req.body);
-    if (!customer) throw new Error("Unable to update the Customer");
+    const customer = await updateCustomer(parseInt(id), req.body);
+    if (!customer) throw new Error('Unable to update the Customer');
     res.status(204).json(customer);
   } catch (ex) {
     console.log(ex);
@@ -77,11 +78,11 @@ customerRoute.put("/:id", async (req, res) => {
   }
 });
 
-customerRoute.delete("/:id", async (req, res) => {
+customerRoute.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const customer = await deleteCustomer(parseInt(id));
-    if (!customer) throw new Error("Unable to delete the Customer");
+    if (!customer) throw new Error('Unable to delete the Customer');
     res.status(201).json(customer);
   } catch (ex) {
     console.log(ex);

@@ -1,21 +1,21 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   getSupplier,
   createSupplier,
   getAllSuppliers,
-  findByIdAndUpdate,
+  updateSupplier,
   deleteSupplier
-} from "../models/Supplier";
-import { Supplier } from "./apiShapes/Supplier";
+} from '../models/Supplier';
+import { Supplier } from './apiShapes/Supplier';
 import {
   CREATE_SUPPLIER_REQUEST_BODY,
   UPDATE_SUPPLIER_REQUEST_BODY
-} from "./validators/supplier";
-import requestValidator from "../middleware/requestValidator";
+} from './validators/supplier';
+import requestValidator from '../middleware/requestValidator';
 
 const supplierRoute = Router();
 
-supplierRoute.get("/", async (req, res) => {
+supplierRoute.get('/', async (req, res) => {
   try {
     const suppliers = await getAllSuppliers();
     if (!suppliers.length) {
@@ -31,7 +31,7 @@ supplierRoute.get("/", async (req, res) => {
   }
 });
 
-supplierRoute.get("/:id", async (req, res) => {
+supplierRoute.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const supplier = await getSupplier(parseInt(id) || 0);
@@ -46,13 +46,13 @@ supplierRoute.get("/:id", async (req, res) => {
 });
 
 supplierRoute.post(
-  "/",
+  '/',
   requestValidator({ reqBodyValidator: CREATE_SUPPLIER_REQUEST_BODY }),
   async (req, res) => {
     const { id } = req.params;
     try {
       const supplier = await createSupplier(req.body);
-      if (!supplier) throw new Error("Unable to create the Supplier");
+      if (!supplier) throw new Error('Unable to create the Supplier');
       res.status(201).json(supplier);
     } catch (ex) {
       console.log(ex);
@@ -63,12 +63,12 @@ supplierRoute.post(
   }
 );
 
-supplierRoute.put("/:id", async (req, res) => {
+supplierRoute.put('/:id', async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_SUPPLIER_REQUEST_BODY });
   const { id } = req.params;
   try {
-    const supplier = await findByIdAndUpdate(parseInt(id), req.body);
-    if (!supplier) throw new Error("Unable to update the Supplier");
+    const supplier = await updateSupplier(parseInt(id), req.body);
+    if (!supplier) throw new Error('Unable to update the Supplier');
     res.status(201).json(supplier);
   } catch (ex) {
     console.log(ex);
@@ -78,11 +78,11 @@ supplierRoute.put("/:id", async (req, res) => {
   }
 });
 
-supplierRoute.delete("/:id", async (req, res) => {
+supplierRoute.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const supplier = await deleteSupplier(parseInt(id));
-    if (!supplier) throw new Error("Unable to delete the Supplier");
+    if (!supplier) throw new Error('Unable to delete the Supplier');
     res.status(201).json(supplier);
   } catch (ex) {
     console.log(ex);
