@@ -35,7 +35,7 @@ authRoute.post(
           id: employeeWithValidPassword.id,
           roleInPOS: employeeWithValidPassword.roleInPOS
         },
-        config.JWT_SECRETE
+        config.JWT_SECRET
       );
       res.json({ token });
       return;
