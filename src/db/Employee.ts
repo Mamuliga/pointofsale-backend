@@ -131,15 +131,17 @@ class Employee extends Model<Employee> {
   })
   private password: string | undefined;
 
-  hashingPassword(password: string) {
+  async hashingPassword(password: string) {
     this.password = bcrypt.hashSync(
       password,
       bcrypt.genSaltSync(config.BCRYPT_SALT)
     );
+    await this.save();
   }
 
   isValidPassword(password: string) {
-    return bcrypt.compareSync(password, this.password || '');
+    if (!this.password) return null;
+    return bcrypt.compareSync(password, this.password);
   }
 }
 

@@ -1,8 +1,29 @@
 import IEmployee from '../interfaces/IEmployee';
 import Employee from '../db/Employee';
+import { canEmployeeLogIn } from '../utilities/authHelper';
 
 export async function getAllEmployees() {
   return await Employee.findAll();
+}
+
+export async function isValidPassword(id: number, password: string) {
+  try {
+    const employee = await Employee.findByPk(id);
+    if (!canEmployeeLogIn(employee)) {
+      // employee does not have the permission to login
+      return null;
+    }
+    let validPassword = employee?.isValidPassword(password);
+    if (validPassword === null) {
+      // first time login
+      // update the password
+      await employee?.hashingPassword(password);
+      validPassword = true;
+    }
+    return validPassword ? employee : false;
+  } catch (ex) {
+    return false;
+  }
 }
 
 export async function getEmployee(id: number) {

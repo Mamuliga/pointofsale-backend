@@ -8,5 +8,6 @@ export default {
   DB_PASSWORD: '',
   DB_PORT: 3306,
   BCRYPT_SALT: 12,
+  JWT_SECRETE: 'secret_key',
   ...process.env
 };
