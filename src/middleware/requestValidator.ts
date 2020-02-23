@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-import Joi from "@hapi/joi";
-import validatorParams from "../interfaces/IValidatorParams";
+import { Request, Response, NextFunction } from 'express';
+import Joi from '@hapi/joi';
+import validatorParams from '../interfaces/IValidatorParams';
 
 export default (schema: validatorParams) =>
   function(req: Request, res: Response, next: NextFunction) {
