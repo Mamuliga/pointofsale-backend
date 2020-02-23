@@ -1,5 +1,14 @@
-import { Model, Table, Column, DataType } from 'sequelize-typescript';
+import {
+  Model,
+  Table,
+  Column,
+  DataType,
+  BeforeCreate,
+  BeforeUpdate
+} from 'sequelize-typescript';
 import { EMPLOYEE_ROLES, GENDER } from '../utilities/constant';
+import bcrypt from 'bcrypt';
+import config from '../config';
 
 @Table({
   timestamps: false
@@ -123,6 +132,22 @@ class Employee extends Model<Employee> {
     comment: 'Role in POS.'
   })
   roleInPOS: string | undefined;
+
+  @Column({
+    type: DataType.STRING
+  })
+  private password: string | undefined;
+
+  hashingPassword(password: string) {
+    this.password = bcrypt.hashSync(
+      password,
+      bcrypt.genSaltSync(config.BCRYPT_SALT)
+    );
+  }
+
+  isValidPassword(password: string) {
+    return bcrypt.compareSync(password, this.password || '');
+  }
 }
 
 export default Employee;
