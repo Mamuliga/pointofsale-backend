@@ -1,11 +1,4 @@
-import {
-  Model,
-  Table,
-  Column,
-  DataType,
-  BeforeCreate,
-  BeforeUpdate
-} from 'sequelize-typescript';
+import { Model, Table, Column, DataType } from 'sequelize-typescript';
 import { EMPLOYEE_ROLES, GENDER } from '../utilities/constant';
 import bcrypt from 'bcrypt';
 import config from '../config';

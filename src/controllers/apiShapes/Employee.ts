@@ -8,6 +8,7 @@ export function Employee(employee: any) {
     phoneNo: employee && employee.phoneNo,
     gender: employee && employee.gender,
     bankAccount: employee && employee.bankAccount,
-    canLogIn: canEmployeeLogIn(employee)
+    canLogIn: canEmployeeLogIn(employee),
+    isFirstTimeLogin: employee && !employee.password
   };
 }
