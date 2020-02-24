@@ -6,7 +6,7 @@ import {
   updateEmployee,
   deleteEmployee
 } from '../models/Employee';
-import { Employee } from './apiShapes/Employee';
+import { EmployeeShape, EmployeesShape } from './apiShapes/Employee';
 import {
   CREATE_EMPLOYEE_REQUEST_BODY,
   UPDATE_EMPLOYEE_REQUEST_BODY
@@ -22,7 +22,7 @@ employeeRoute.get('/', async (req, res) => {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(employees.map(employee => Employee(employee)));
+    res.status(200).json(employees.map(employee => EmployeesShape(employee)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -36,7 +36,7 @@ employeeRoute.get('/:id', async (req, res) => {
   try {
     const employee = await getEmployee(parseInt(id) || 0);
     if (!employee) res.status(204).json({});
-    res.status(200).json(employee);
+    res.status(200).json(EmployeeShape(employee));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
