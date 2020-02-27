@@ -10,7 +10,7 @@ export const EMPLOYEE_ROLES = {
 };
 
 export const ITEM_CATEGORIES = {
-  none: "none",
-  admin: "admin",
-  cashier: "cashier"
+  category_1: "category_1",
+  category_2: "category_2",
+  category_3: "category_3"
 };

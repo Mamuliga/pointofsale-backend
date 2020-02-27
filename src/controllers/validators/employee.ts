@@ -1,5 +1,5 @@
-import Joi from '@hapi/joi';
-import { EMPLOYEE_ROLES, GENDER } from '../../utilities/constant';
+import Joi from "@hapi/joi";
+import { EMPLOYEE_ROLES, GENDER } from "../../utilities/constant";
 
 export const CREATE_EMPLOYEE_REQUEST_BODY = {
   firstName: Joi.string().required(),
@@ -11,7 +11,7 @@ export const CREATE_EMPLOYEE_REQUEST_BODY = {
   companyName: Joi.string().optional(),
   gender: Joi.string()
     .valid(...Object.keys(GENDER))
-    .error(new Error('Gender can be one of male or female'))
+    .error(new Error("Gender can be one of male or female"))
     .optional(),
   address: Joi.string().optional(),
   dob: Joi.string().optional(),
@@ -22,7 +22,7 @@ export const CREATE_EMPLOYEE_REQUEST_BODY = {
   regDate: Joi.date().optional(),
   recruiter: Joi.string().optional(),
   roleInPOS: Joi.valid(...Object.keys(EMPLOYEE_ROLES))
-    .error(new Error('Invalid POS Role'))
+    .error(new Error("Invalid POS Role"))
     .default(EMPLOYEE_ROLES.none)
 };
 
