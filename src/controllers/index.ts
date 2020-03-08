@@ -7,12 +7,14 @@ import supplierRoute from "./supplier";
 import itemRoute from "./item";
 import featureRoute from "./featureConfig";
 import appConfig from "./appConfig";
+import { checkJwt } from "../middleware/checkJwt";
+import { checkRole } from "../middleware/checkRole";
 
 const apiRoute = Router();
 
 apiRoute.use("/auth", authRouter);
 apiRoute.use("/features", featureRoute);
-apiRoute.use("/employees", employeeRoute);
+apiRoute.use("/employees", checkJwt, employeeRoute);
 apiRoute.use("/customers", customerRoute);
 apiRoute.use("/suppliers", supplierRoute);
 apiRoute.use("/items", itemRoute);

@@ -1,21 +1,21 @@
-import { Router } from 'express';
+import { Router } from "express";
 import {
   getEmployee,
   createEmployee,
   getAllEmployees,
   updateEmployee,
   deleteEmployee
-} from '../models/Employee';
-import { EmployeeShape, EmployeesShape } from './apiShapes/Employee';
+} from "../models/Employee";
+import { EmployeeShape, EmployeesShape } from "./apiShapes/Employee";
 import {
   CREATE_EMPLOYEE_REQUEST_BODY,
   UPDATE_EMPLOYEE_REQUEST_BODY
-} from './validators/employee';
-import requestValidator from '../middleware/requestValidator';
+} from "./validators/employee";
+import requestValidator from "../middleware/requestValidator";
 
 const employeeRoute = Router();
 
-employeeRoute.get('/', async (req, res) => {
+employeeRoute.get("/", async (req, res) => {
   try {
     const employees = await getAllEmployees();
     if (!employees.length) {
@@ -31,7 +31,7 @@ employeeRoute.get('/', async (req, res) => {
   }
 });
 
-employeeRoute.get('/:id', async (req, res) => {
+employeeRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const employee = await getEmployee(parseInt(id) || 0);
@@ -46,13 +46,14 @@ employeeRoute.get('/:id', async (req, res) => {
 });
 
 employeeRoute.post(
-  '/',
+  "/",
   requestValidator({ reqBodyValidator: CREATE_EMPLOYEE_REQUEST_BODY }),
+
   async (req, res) => {
     const { id } = req.params;
     try {
       const employee = await createEmployee(req.body);
-      if (!employee) throw new Error('Unable to create the Employee');
+      if (!employee) throw new Error("Unable to create the Employee");
       res.status(201).json(employee);
     } catch (ex) {
       console.log(ex);
@@ -63,12 +64,12 @@ employeeRoute.post(
   }
 );
 
-employeeRoute.put('/:id', async (req, res) => {
+employeeRoute.put("/:id", async (req, res) => {
   requestValidator({ reqBodyValidator: UPDATE_EMPLOYEE_REQUEST_BODY });
   const { id } = req.params;
   try {
     const employee = await updateEmployee(parseInt(id), req.body);
-    if (!employee) throw new Error('Unable to update the Employee');
+    if (!employee) throw new Error("Unable to update the Employee");
     res.status(201).json(employee);
   } catch (ex) {
     console.log(ex);
@@ -78,11 +79,11 @@ employeeRoute.put('/:id', async (req, res) => {
   }
 });
 
-employeeRoute.delete('/:id', async (req, res) => {
+employeeRoute.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const employee = await deleteEmployee(parseInt(id));
-    if (!employee) throw new Error('Unable to delete the Employee');
+    if (!employee) throw new Error("Unable to delete the Employee");
     res.status(201).json(employee);
   } catch (ex) {
     console.log(ex);
