@@ -6,17 +6,13 @@ export const CREATE_CUSTOMER_REQUEST_BODY = {
   email: Joi.string()
     .email()
     .optional(),
-  phoneNo: Joi.string().required(),
-  companyName: Joi.string().required(),
-  gender: Joi.string().required(),
+  phoneNo: Joi.string().optional(),
+  gender: Joi.string().optional(),
   address: Joi.string().optional(),
-  dob: Joi.string().optional(),
   description: Joi.string().optional(),
-  profilePicture: Joi.string().required(),
   defaultDiscount: Joi.string().optional(),
-  bankAccount: Joi.string().required(),
-  regDate: Joi.date().required(),
-  recruiter: Joi.string().required()
+  bankAccount: Joi.string().optional(),
+  recruiter: Joi.string().optional()
 };
 
 export const UPDATE_CUSTOMER_REQUEST_BODY = {
@@ -26,14 +22,10 @@ export const UPDATE_CUSTOMER_REQUEST_BODY = {
     .email()
     .optional(),
   phoneNo: Joi.string().optional(),
-  companyName: Joi.string().optional(),
   gender: Joi.string().optional(),
   address: Joi.string().optional(),
-  dob: Joi.string().optional(),
   description: Joi.string().optional(),
-  profilePicture: Joi.string().optional(),
   defaultDiscount: Joi.string().optional(),
   bankAccount: Joi.string().optional(),
-  regDate: Joi.date().optional(),
   recruiter: Joi.string().optional()
 };

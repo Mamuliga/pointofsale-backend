@@ -1,4 +1,5 @@
 import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { GENDER } from "../utilities/constant";
 
 @Table({
   timestamps: false
@@ -26,13 +27,6 @@ class Supplier extends Model<Supplier> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
-    comment: "Company of the supplier"
-  })
-  companyName: string | undefined;
-
-  @Column({
-    type: DataType.STRING,
     allowNull: false,
     validate: {
       isEmail: true
@@ -50,14 +44,14 @@ class Supplier extends Model<Supplier> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isIn: {
-        args: [["male", "female"]],
+        args: [Object.keys(GENDER)],
         msg: "Gender can be only 'male' or 'female'"
       }
     },
-    comment: "Gender of the supplier"
+    comment: "Gender of the employee"
   })
   gender: string | undefined;
 
@@ -69,25 +63,11 @@ class Supplier extends Model<Supplier> {
   address: string | undefined;
 
   @Column({
-    type: DataType.DATEONLY,
-    allowNull: true,
-    comment: "Date of birth of the supplier"
-  })
-  dob: string | undefined;
-
-  @Column({
     type: DataType.STRING,
     allowNull: true,
     comment: "Description about the supplier"
   })
   description: string | undefined;
-
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-    comment: "image name of profile picture"
-  })
-  profilePicture: string | undefined;
 
   @Column({
     type: DataType.STRING,
@@ -102,13 +82,6 @@ class Supplier extends Model<Supplier> {
     comment: "Bank Account Details of the supplier"
   })
   bankAccount: string | undefined;
-
-  @Column({
-    type: DataType.DATEONLY,
-    allowNull: true,
-    comment: "Joined Date to the company."
-  })
-  regDate: string | undefined;
 
   @Column({
     type: DataType.STRING,
