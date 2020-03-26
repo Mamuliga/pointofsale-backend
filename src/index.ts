@@ -1,19 +1,19 @@
 // TODO: Setup automation for deploy
-import express from "express";
-import config from "./config";
-import apiRoutes from "./controllers";
-import dbConnect from "./middleware/dbConnect";
-import morgan from "morgan";
-import notFoundRoute from "./middleware/notFoundRoute";
-import setHeaders from "../src/middleware/headerSetup"
+import express from 'express';
+import config from './config';
+import apiRoutes from './controllers';
+import dbConnect from './middleware/dbConnect';
+import morgan from 'morgan';
+import notFoundRoute from './middleware/notFoundRoute';
+import setHeaders from './middleware/headerSetup';
 
 const app = express();
 
 // TODO: call setup header middleware
 app.use((req, res, next) => {
-  setHeaders(req, res,next);
+  setHeaders(req, res, next);
 });
-app.use(morgan("common"));
+app.use(morgan('common'));
 
 // Initialize Sequelize instant
 app.use(dbConnect);
@@ -21,7 +21,7 @@ app.use(dbConnect);
 app.use(express.json());
 
 // home route
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   try {
     res.status(200).json({
       app: config.APP_NAME,
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   }
 });
 
-app.use("/api", apiRoutes);
+app.use('/api', apiRoutes);
 
 app.use(notFoundRoute);
 
