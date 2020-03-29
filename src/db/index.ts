@@ -7,6 +7,7 @@ import AppConfig from "./AppConfig";
 import Supplier from "./Supplier";
 import Customer from "./Customer";
 import Employee from "./Employee";
+import Item from "./Item";
 
 const { DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT } = config;
 
@@ -20,7 +21,7 @@ const sequelize = new Sequelize({
   password: DB_PASSWORD,
   port: DB_PORT,
   dialectModule: sqlite,
-  models: [Person, AppConfig, Customer, Supplier, Employee]
+  models: [Person, AppConfig, Customer, Supplier, Employee, Item]
 });
 
 export default sequelize;

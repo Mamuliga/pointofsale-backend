@@ -1,4 +1,4 @@
-import { canEmployeeLogIn } from '../../utilities/authHelper';
+import { canEmployeeLogIn } from "../../utilities/authHelper";
 
 export function EmployeesShape(employee: any) {
   return {
@@ -23,11 +23,8 @@ export function EmployeeShape(employee: any) {
     bankAccount: employee && employee.bankAccount,
     email: employee && employee.email,
     address: employee && employee.address,
-    dob: employee && employee.dob,
     description: employee && employee.description,
-    profilePicture: employee && employee.profilePicture,
     defaultDiscount: employee && employee.defaultDiscount,
-    regDate: employee && employee.regDate,
     recruiter: employee && employee.recruiter,
     roleInPOS: employee && employee.roleInPOS
   };
