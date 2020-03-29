@@ -1,4 +1,7 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, ForeignKey } from "sequelize-typescript";
+import Supplier from "./Supplier";
+import { string } from "joi";
+import { any } from "bluebird";
 
 @Table({
   timestamps: false
@@ -30,7 +33,8 @@ class Item extends Model<Item> {
     comment: "Item Category"
   })
   category: string | undefined;
-//TODO Add Relational data Type
+
+  @ForeignKey(() => Supplier)
   @Column({
     type: DataType.STRING,
     allowNull: false,
