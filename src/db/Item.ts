@@ -1,8 +1,4 @@
-import { Model, Table, Column, DataType, ForeignKey } from "sequelize-typescript";
-import Supplier from "./Supplier";
-import { string } from "joi";
-import { any } from "bluebird";
-
+import { Model, Table, Column, DataType } from "sequelize-typescript";
 @Table({
   timestamps: false
 })
@@ -33,17 +29,6 @@ class Item extends Model<Item> {
     comment: "Item Category"
   })
   category: string | undefined;
-
-  @ForeignKey(() => Supplier)
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    validate: {
-      notNull: true
-    },
-    comment: "Name of the Supplier"
-  })
-  supplier: string | undefined;
 
   @Column({
     type: DataType.STRING,
