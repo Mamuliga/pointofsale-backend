@@ -1,5 +1,4 @@
 import { Model, Table, Column, DataType } from "sequelize-typescript";
-import { ITEM_CATEGORIES } from "../utilities/constant";
 
 @Table({
   timestamps: false
@@ -11,7 +10,7 @@ class Item extends Model<Item> {
     validate: {
       notNull: true
     },
-    comment: "first Name of the employee"
+    comment: "Item barcode"
   })
   barcode: string | undefined;
 
@@ -21,22 +20,17 @@ class Item extends Model<Item> {
     validate: {
       notNull: true
     },
-    comment: "first Name of the employee"
+    comment: "Item name"
   })
   itemName: string | undefined;
 
   @Column({
     type: DataType.STRING,
-    validate: {
-      isIn: {
-        args: [Object.keys(ITEM_CATEGORIES)],
-        msg: "Invalid Category"
-      }
-    },
+    allowNull:true,
     comment: "Item Category"
   })
   category: string | undefined;
-
+//TODO Add Relational data Type
   @Column({
     type: DataType.STRING,
     allowNull: false,

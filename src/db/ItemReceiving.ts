@@ -1,5 +1,4 @@
 import { Model, Table, Column, DataType } from "sequelize-typescript";
-import { ITEM_CATEGORIES } from "../utilities/constant";
 
 @Table({
   timestamps: false
@@ -41,7 +40,7 @@ class ItemReceiving extends Model<ItemReceiving> {
     validate: {
       notNull: true
     },
-    comment: "receiving date of the item"
+    comment: "manufacture date of the item"
   })
   revDate: Date | undefined;
 

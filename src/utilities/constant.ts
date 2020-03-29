@@ -8,9 +8,3 @@ export const EMPLOYEE_ROLES = {
   admin: "admin",
   cashier: "cashier"
 };
-
-export const ITEM_CATEGORIES = {
-  category_1: "category_1",
-  category_2: "category_2",
-  category_3: "category_3"
-};

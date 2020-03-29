@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import config from "../config";
 
-export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
+const validateJwt = (req: Request, res: Response, next: NextFunction) => {
   const token = <string>req.headers["authorization"];
   let jwtPayload;
 
@@ -12,8 +12,10 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
     next();
   } catch (error) {
     res.status(401).json({
-      error: error.message
+      error: 'Unauthorized request'
     });
     return;
   }
 };
+
+export default validateJwt;
