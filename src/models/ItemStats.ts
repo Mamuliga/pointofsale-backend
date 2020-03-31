@@ -1,4 +1,4 @@
-import ItemStats from "./../db/ItemStats";
+import ItemStats from "../db/ItemStat";
 import IItemStats from "./../interfaces/IItemStats";
 
 export async function getAllItemStats() {

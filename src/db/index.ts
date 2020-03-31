@@ -8,7 +8,7 @@ import Supplier from "./Supplier";
 import Customer from "./Customer";
 import Employee from "./Employee";
 import Item from "./Item";
-import ItemStats from "./ItemStats";
+import ItemStats from "./ItemStat";
 
 const { DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT } = config;
 

@@ -8,7 +8,7 @@ import itemRoute from "./item";
 import featureRoute from "./featureConfig";
 import appConfig from "./appConfig";
 import validateJwt from "../middleware/validateJwt";
-import itemStats from "./itemStats";
+import itemStats from "./itemStat";
 
 const apiRoute = Router();
 
