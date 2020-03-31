@@ -8,6 +8,7 @@ import itemRoute from "./item";
 import featureRoute from "./featureConfig";
 import appConfig from "./appConfig";
 import validateJwt from "../middleware/validateJwt";
+import itemStats from "./itemStats";
 
 const apiRoute = Router();
 
@@ -19,4 +20,5 @@ apiRoute.use("/suppliers", supplierRoute);
 apiRoute.use("/items", itemRoute);
 apiRoute.use("/mock", mockRouter);
 apiRoute.use("/appSettings", appConfig);
+apiRoute.use("/itemStats", itemStats);
 export default apiRoute;
