@@ -1,5 +1,5 @@
 import ItemStats from "../db/ItemStat";
-import IItemStats from "./../interfaces/IItemStats";
+import IItemStats from "../interfaces/IItemStat";
 
 export async function getAllItemStats() {
   return await ItemStats.findAll();
