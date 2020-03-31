@@ -4,7 +4,7 @@ import { Model, Table, Column, DataType } from "sequelize-typescript";
   timestamps: false
 })
 class ItemReceiving extends Model<ItemReceiving> {
-  @Column({
+  @Column({ 
     type: DataType.INTEGER,
     allowNull: false,
     validate: {
