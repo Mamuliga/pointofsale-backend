@@ -1,28 +1,28 @@
 import { Router } from "express";
 import {
-  getItemStats,
-  createItemStats,
-  getAllItemStats,
+  getSale,
+  createSale,
+  getAllSales,
 //   updateItemStats,
-  deleteItemStats
-} from "../models/ItemStats";
+//   deleteItemStats
+} from "../models/Sale";
 import { Customer } from "./apiShapes/Customer";
 import {
-    CREATE_ITEM_STAT_REQUEST_BODY,
+    CREATE_SALE_REQUEST_BODY,
 //   UPDATE_CUSTOMER_REQUEST_BODY
-} from "./validators/itemStat";
+} from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
 
-const itemStatRoute = Router();
+const saleRoute = Router();
 
-itemStatRoute.get("/", async (req, res) => {
+saleRoute.get("/", async (req, res) => {
   try {
-    const customers = await getAllItemStats();
-    if (!customers.length) {
+    const sales = await getAllSales();
+    if (!sales.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(customers.map(customer => Customer(customer)));
+    res.status(200).json(sales.map(customer => Customer(customer)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -31,12 +31,12 @@ itemStatRoute.get("/", async (req, res) => {
   }
 });
 
-itemStatRoute.get("/:id", async (req, res) => {
+saleRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const customer = await getItemStats(parseInt(id) || 0);
-    if (!customer) res.status(204).json({});
-    res.status(200).json(customer);
+    const sale = await getSale(parseInt(id) || 0);
+    if (!sale) res.status(204).json({});
+    res.status(200).json(sale);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -45,15 +45,15 @@ itemStatRoute.get("/:id", async (req, res) => {
   }
 });
 
-itemStatRoute.post(
+saleRoute.post(
   "/",
-  requestValidator({ reqBodyValidator: CREATE_ITEM_STAT_REQUEST_BODY }),
+  requestValidator({ reqBodyValidator: CREATE_SALE_REQUEST_BODY }),
   async (req, res) => {
     const { id } = req.params;
     try {
-      const customer = await createItemStats(req.body);
-      if (!customer) throw new Error("Unable to create the Customer");
-      res.status(201).json(customer);
+      const sale = await createSale(req.body);
+      if (!sale) throw new Error("Unable to create the Customer");
+      res.status(201).json(sale);
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({
@@ -78,18 +78,18 @@ itemStatRoute.post(
 //   }
 // });
 
-itemStatRoute.delete("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const customer = await deleteItemStats(parseInt(id));
-    if (!customer) throw new Error("Unable to delete the Customer");
-    res.status(201).json(customer);
-  } catch (ex) {
-    console.log(ex);
-    res.status(res.statusCode || 400).json({
-      error: ex.message
-    });
-  }
-});
+// itemStatRoute.delete("/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const customer = await deleteItemStats(parseInt(id));
+//     if (!customer) throw new Error("Unable to delete the Customer");
+//     res.status(201).json(customer);
+//   } catch (ex) {
+//     console.log(ex);
+//     res.status(res.statusCode || 400).json({
+//       error: ex.message
+//     });
+//   }
+// });
 
-export default itemStatRoute;
+export default saleRoute;

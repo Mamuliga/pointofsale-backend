@@ -16,9 +16,9 @@ import {
       validate: {
         notNull: true
       },
-      comment: "Sale Id"
+      comment: "Sale Ref"
     })
-    saleId: string | undefined;
+    sale: string | undefined;
   
     @Column({
       type: DataType.STRING,
@@ -38,7 +38,7 @@ import {
       },
       comment: "Selling price of the item"
     })
-    selling_price: number | undefined;
+    sellingPrice: number | undefined;
   
     @Column({
       type: DataType.FLOAT,

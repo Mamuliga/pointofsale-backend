@@ -9,6 +9,11 @@ import Customer from "./Customer";
 import Employee from "./Employee";
 import Item from "./Item";
 import ItemStats from "./ItemStat";
+import CashBook from "./CashBook";
+import ItemSale from "./ItemSale";
+import ItemReceiving from "./ItemReceiving";
+import Receive from "./Receive";
+import Sale from "./Sale";
 
 const { DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT } = config;
 
@@ -22,7 +27,7 @@ const sequelize = new Sequelize({
   password: DB_PASSWORD,
   port: DB_PORT,
   dialectModule: sqlite,
-  models: [Person, AppConfig, Customer, Supplier, Employee, Item, ItemStats]
+  models: [Person, AppConfig, Customer, Supplier, Employee, Item, ItemStats, CashBook, ItemSale, ItemReceiving, Receive, Sale]
 });
 
 export default sequelize;

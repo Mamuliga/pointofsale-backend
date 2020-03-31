@@ -13,9 +13,9 @@ import {
 } from "./validators/itemReceiving";
 import requestValidator from "../middleware/requestValidator";
 
-const itemStats = Router();
+const itemReceivingRoute = Router();
 
-itemStats.get("/", async (req, res) => {
+itemReceivingRoute.get("/", async (req, res) => {
     try {
         const customers = await getAllItemReceivings();
         if (!customers.length) {
@@ -31,7 +31,7 @@ itemStats.get("/", async (req, res) => {
     }
 });
 
-itemStats.get("/:id", async (req, res) => {
+itemReceivingRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const customer = await getItemReceiving(parseInt(id) || 0);
@@ -45,7 +45,7 @@ itemStats.get("/:id", async (req, res) => {
     }
 });
 
-itemStats.post(
+itemReceivingRoute.post(
     "/",
     requestValidator({ reqBodyValidator: CREATE_ITEM_RECEIVING_REQUEST_BODY }),
     async (req, res) => {
@@ -92,4 +92,4 @@ itemStats.post(
 //     }
 // });
 
-export default itemStats;
+export default itemReceivingRoute;

@@ -49,7 +49,7 @@ class Sale extends Model<Sale> {
     },
     comment: "Recieved amount"
   })
-  revd_Amount: number | undefined;
+  revdAmount: number | undefined;
 
   @Column({
     type: DataType.FLOAT,

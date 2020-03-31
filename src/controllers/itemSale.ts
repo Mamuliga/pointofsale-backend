@@ -13,9 +13,9 @@ import {
 } from "./validators/itemSale";
 import requestValidator from "../middleware/requestValidator";
 
-const itemSale = Router();
+const itemSaleRoute = Router();
 
-itemSale.get("/", async (req, res) => {
+itemSaleRoute.get("/", async (req, res) => {
     try {
         const customers = await getAllItemSales();
         if (!customers.length) {
@@ -31,7 +31,7 @@ itemSale.get("/", async (req, res) => {
     }
 });
 
-itemSale.get("/:id", async (req, res) => {
+itemSaleRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const customer = await getItemSales(parseInt(id) || 0);
@@ -45,7 +45,7 @@ itemSale.get("/:id", async (req, res) => {
     }
 });
 
-itemSale.post(
+itemSaleRoute.post(
     "/",
     requestValidator({ reqBodyValidator: CREATE_ITEM_SALE_REQUEST_BODY }),
     async (req, res) => {
@@ -92,4 +92,4 @@ itemSale.post(
 //     }
 // });
 
-export default itemSale;
+export default itemSaleRoute;

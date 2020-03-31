@@ -8,7 +8,12 @@ import itemRoute from "./item";
 import featureRoute from "./featureConfig";
 import appConfig from "./appConfig";
 import validateJwt from "../middleware/validateJwt";
-import itemStats from "./itemStat";
+import itemStatRoute from "./itemStat";
+import cashBookRoute from "./cashBook";
+import itemReceivingRoute from "./itemReceiving";
+import itemSaleRoute from "./itemSale";
+import receiveRoute from "./receive";
+import saleRoute from "./sale";
 
 const apiRoute = Router();
 
@@ -20,5 +25,11 @@ apiRoute.use("/suppliers", supplierRoute);
 apiRoute.use("/items", itemRoute);
 apiRoute.use("/mock", mockRouter);
 apiRoute.use("/appSettings", appConfig);
-apiRoute.use("/itemStats", itemStats);
+apiRoute.use("/itemStat", itemStatRoute);
+apiRoute.use("/cashBook", cashBookRoute);
+apiRoute.use("/itemReceiving", itemReceivingRoute);
+apiRoute.use("/itemSale", itemSaleRoute);
+apiRoute.use("/receive", receiveRoute);
+apiRoute.use("/sale", saleRoute);
+
 export default apiRoute;

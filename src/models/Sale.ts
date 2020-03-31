@@ -1,15 +1,15 @@
 import ISale from '../interfaces/ISale';
 import Sale from '../db/Sale';
 
-export async function getAllReceiving() {
+export async function getAllSales() {
   return await Sale.findAll();
 }
 
-export async function getReceiving(id: number) {
+export async function getSale(id: number) {
   return await Sale.findByPk(id);
 }
 
-export async function createReceiving(customer: ISale) {
+export async function createSale(customer: ISale) {
   return await Sale.create(customer);
 }
 

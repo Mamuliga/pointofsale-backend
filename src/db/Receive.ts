@@ -4,15 +4,6 @@ import { Model, Table, Column, DataType } from "sequelize-typescript";
   timestamps: true
 })
 class Receive extends Model<Receive> {
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    validate: {
-      notNull: true
-    },
-    comment: "id of the receiving table"
-  })
-  id: string | undefined;
 
   @Column({
     type: DataType.STRING,
@@ -28,7 +19,7 @@ class Receive extends Model<Receive> {
     type: DataType.STRING,
     allowNull: false,
     validate: {
-      isEmail: true
+      notNull: true
     },
     comment: "Total of the recieving bill"
   })
