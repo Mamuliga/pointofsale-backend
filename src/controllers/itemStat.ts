@@ -6,7 +6,7 @@ import {
 //   updateItemStats,
   deleteItemStats
 } from "../models/ItemStats";
-import { Customer } from "./apiShapes/Customer";
+import { ItemStatsShape } from "./apiShapes/ItemStat";
 import {
     CREATE_ITEM_STAT_REQUEST_BODY,
 //   UPDATE_CUSTOMER_REQUEST_BODY
@@ -17,12 +17,12 @@ const itemStatRoute = Router();
 
 itemStatRoute.get("/", async (req, res) => {
   try {
-    const customers = await getAllItemStats();
-    if (!customers.length) {
+    const itemStats = await getAllItemStats();
+    if (!itemStats.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(customers.map(customer => Customer(customer)));
+    res.status(200).json(itemStats.map(itemStat => ItemStatsShape(itemStat)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
