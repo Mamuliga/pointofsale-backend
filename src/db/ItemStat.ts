@@ -3,19 +3,17 @@ import {
   Model,
   Column,
   DataType,
-  HasMany,
-  HasOne,
   ForeignKey,
   BelongsTo
 } from "sequelize-typescript";
- import Supplier from "./Supplier";
+import Supplier from "./Supplier";
 import Item from "./Item";
 
 @Table({
   timestamps: true
 })
 class ItemStats extends Model<ItemStats> {
-  // @ForeignKey(()=>Item)
+  @ForeignKey(()=>Item)
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -24,7 +22,10 @@ class ItemStats extends Model<ItemStats> {
     },
     comment: "Item Id"
   })
-  itemId: string | undefined;
+  itemId: number | undefined;
+
+  @BelongsTo(() => Item)
+  item: Item | undefined;
 
   @ForeignKey(() => Supplier)
   @Column({
