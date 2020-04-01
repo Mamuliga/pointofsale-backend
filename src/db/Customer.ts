@@ -2,7 +2,7 @@ import { Model, Table, Column, DataType } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
 
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class Customer extends Model<Customer> {
   // @Column({

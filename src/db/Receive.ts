@@ -1,36 +1,54 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Supplier from "./Supplier";
+import Item from "./Item";
 
 @Table({
   timestamps: true
 })
 class Receive extends Model<Receive> {
-
+  @ForeignKey(()=>Item)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
     validate: {
       notNull: true
     },
     comment: "Supplier of the recieving item"
   })
-  supplier: string | undefined;
+  itemId: string | undefined;
+
+  @BelongsTo(()=>Item)
+  item: Item | undefined;
+  
+  @ForeignKey(()=>Supplier)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    validate: {
+      notNull: true
+    },
+    comment: "Supplier of the recieving item"
+  })
+  supplierId: string | undefined;
+  @BelongsTo(()=>Supplier)
+  supplier: Supplier | undefined;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.FLOAT,
     allowNull: false,
     validate: {
       notNull: true
     },
     comment: "Total of the recieving bill"
   })
-  total: string | undefined;
+  total: number | undefined;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.FLOAT,
     allowNull: false,
     comment: "Total Discount of the item"
   })
-  totalDiscount: string | undefined;
+  totalDiscount: number | undefined;
 
   @Column({
     type: DataType.STRING,
@@ -40,18 +58,18 @@ class Receive extends Model<Receive> {
   paymentType: string | undefined;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.FLOAT,
     allowNull: true,
     comment: "Payed amount of received amount"
   })
-  payedAmount: string | undefined;
+  payedAmount: number | undefined;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.FLOAT,
     allowNull: true,
     comment: "Balance of the recieved amount"
   })
-  balance: string | undefined;
+  balance: number | undefined;
 }
 
 export default Receive;

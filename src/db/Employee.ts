@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import config from "../config";
 
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class Employee extends Model<Employee> {
   @Column({

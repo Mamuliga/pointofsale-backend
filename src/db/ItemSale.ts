@@ -2,33 +2,44 @@ import {
     Table, 
     Model,
     Column,
-    DataType
+    DataType,
+    ForeignKey,
+    BelongsTo
   } from "sequelize-typescript";
+import Sale from "./Sale";
+import Item from "./Item";
   
   @Table({
     timestamps: true
   })
   class ItemSale extends Model<ItemSale> {
-    // TODO @ForeignKey(()=>Item)
+    @ForeignKey(()=>Sale)
     @Column({
-      type: DataType.STRING,
+      type: DataType.INTEGER,
       allowNull: false,
       validate: {
         notNull: true
       },
       comment: "Sale Ref"
     })
-    sale: string | undefined;
-  
+    saleId: string | undefined;
+
+    @BelongsTo(()=>Sale)
+    sale: Sale | undefined;
+
+    @ForeignKey(()=>Item)
     @Column({
-      type: DataType.STRING,
+      type: DataType.INTEGER,
       allowNull: false,
       validate: {
         notNull: true
       },
-      comment: "item name"
+      comment: "item ref"
     })
-    item: string | undefined;
+    itemId: string | undefined;
+
+    @BelongsTo(()=>Item)
+    item: Item | undefined;
   
     @Column({
       type: DataType.FLOAT,

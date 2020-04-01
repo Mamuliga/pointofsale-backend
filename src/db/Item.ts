@@ -1,6 +1,6 @@
 import { Model, Table, Column, DataType } from "sequelize-typescript";
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class Item extends Model<Item> {
   @Column({

@@ -4,18 +4,23 @@ import {
   Column,
   DataType,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
+  Scopes
 } from "sequelize-typescript";
 import Supplier from "./Supplier";
 import Item from "./Item";
-
+// @Scopes(() => ({
+//   full: {
+//     include: [Supplier]
+//   }
+// }))
 @Table({
   timestamps: true
 })
 class ItemStats extends Model<ItemStats> {
   @ForeignKey(()=>Item)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
     validate: {
       notNull: true
@@ -29,7 +34,7 @@ class ItemStats extends Model<ItemStats> {
 
   @ForeignKey(() => Supplier)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     comment: "Supplier Id"
   })
   supplierId:number | undefined;
@@ -48,7 +53,7 @@ class ItemStats extends Model<ItemStats> {
   costPrice: number | undefined;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.FLOAT,
     allowNull: false,
     validate: {
       notNull: true

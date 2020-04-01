@@ -1,7 +1,7 @@
 import { Model, Table, Column, DataType } from "sequelize-typescript";
 
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class ItemReceiving extends Model<ItemReceiving> {
   @Column({ 
@@ -15,7 +15,7 @@ class ItemReceiving extends Model<ItemReceiving> {
   quantity: number | undefined;
 
   @Column({
-    type: DataType.DOUBLE,
+    type: DataType.FLOAT,
     allowNull: false,
     validate: {
       notNull: true
@@ -25,7 +25,7 @@ class ItemReceiving extends Model<ItemReceiving> {
   costPrice: number | undefined;
 
   @Column({
-    type: DataType.DOUBLE,
+    type: DataType.FLOAT,
     allowNull: false,
     validate: {
       notNull: true

@@ -3,7 +3,7 @@ export default interface IItemStats {
   supplierId: string;
   supplier: string;
   costPrice: string;
-  salesPrice: string;
+  // salesPrice: string;
   manuDate: string;
   expDate: string;
   quantity: string;

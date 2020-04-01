@@ -1,20 +1,23 @@
 
-import { Model, Table, Column, DataType, HasOne } from "sequelize-typescript";
+import { Model, Table, Column, DataType, HasOne, ForeignKey, BelongsTo } from "sequelize-typescript";
 import Customer from "./Customer";
 @Table({ 
   timestamps: false
 })
 class Sale extends Model<Sale> {
   // @HasOne(()=>Customer)
+  @ForeignKey(() => Customer)
   @Column({
-    type:DataType.STRING ,
+    type:DataType.INTEGER ,
     allowNull: false,
     validate: {
       notNull: true
     },
     comment: "Cutomer id"
   })
-  customer: string | undefined;
+  customerId: string | undefined;
+  @BelongsTo(() => Customer)
+  customer: Customer | undefined;
 
   @Column({
     type: DataType.FLOAT,
