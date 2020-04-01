@@ -58,7 +58,7 @@ class ItemStats extends Model<ItemStats> {
   salesPrice: number | undefined;
 
   @Column({
-    type: DataType.DATE,
+    type: DataType.DATEONLY,
     allowNull: false,
     validate: {
       notNull: true
@@ -68,7 +68,7 @@ class ItemStats extends Model<ItemStats> {
   manuDate: string | undefined;
 
   @Column({
-    type: DataType.DATE,
+    type: DataType.DATEONLY,
     allowNull: false,
     validate: {
       notNull: true
