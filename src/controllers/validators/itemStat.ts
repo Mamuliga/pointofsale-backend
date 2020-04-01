@@ -2,6 +2,7 @@ import Joi from "@hapi/joi";
 
 export const CREATE_ITEM_STAT_REQUEST_BODY = {
   itemId: Joi.string(),
+  supplierId: Joi.number(),
   supplier: Joi.string(),
   costPrice: Joi.string(),
   salesPrice: Joi.string(),

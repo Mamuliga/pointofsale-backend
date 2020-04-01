@@ -5,7 +5,8 @@ import {
   DataType,
   HasMany,
   HasOne,
-  ForeignKey
+  ForeignKey,
+  BelongsTo
 } from "sequelize-typescript";
  import Supplier from "./Supplier";
 import Item from "./Item";
@@ -14,7 +15,7 @@ import Item from "./Item";
   timestamps: true
 })
 class ItemStats extends Model<ItemStats> {
-  @ForeignKey(()=>Item)
+  // @ForeignKey(()=>Item)
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -25,16 +26,14 @@ class ItemStats extends Model<ItemStats> {
   })
   itemId: string | undefined;
 
-  @ForeignKey(()=>Supplier)
+  @ForeignKey(() => Supplier)
   @Column({
     type: DataType.STRING,
-    allowNull: false,
-    validate: {
-      notNull: true
-    },
-    comment: "Supplier"
   })
-  supplier: string | undefined;
+  supplierId:number | undefined;
+
+  @BelongsTo(() => Supplier)
+  supplier: Supplier | undefined;
 
   @Column({
     type: DataType.FLOAT,
