@@ -1,8 +1,17 @@
 import ItemStats from "../db/ItemStat";
 import IItemStats from "../interfaces/IItemStat";
+import Supplier from "../db/Supplier";
 
 export async function getAllItemStats() {
-  return await ItemStats.findAll();
+  return await ItemStats.findAll(
+  //   {
+  //   include: [{
+  //     model: Supplier,
+  //     as: 'supplier'
+  //  }]
+
+  // }
+  );
 }
 
 export async function getItemStats(id: number) {
