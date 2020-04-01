@@ -4,13 +4,13 @@ import Supplier from "../db/Supplier";
 
 export async function getAllItemStats() {
   return await ItemStats.findAll(
-  //   {
-  //   include: [{
-  //     model: Supplier,
-  //     as: 'supplier'
-  //  }]
+    {
+    include: [{
+      model: Supplier,
+      as: 'supplier'
+   }]
 
-  // }
+  }
   );
 }
 
