@@ -1,7 +1,10 @@
 export default interface IItemStats {
-    barcode: string;
-    itemName: string;
-    category: string;
-    supplier: string;
-    reOrderLevel: string;
-  }
+  itemId: string;
+  supplierId: string;
+  supplier: string;
+  costPrice: string;
+  salesPrice: string;
+  manuDate: string;
+  expDate: string;
+  quantity: string;
+  } 

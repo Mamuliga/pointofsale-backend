@@ -29,6 +29,7 @@ class ItemStats extends Model<ItemStats> {
   @ForeignKey(() => Supplier)
   @Column({
     type: DataType.STRING,
+    comment: "Supplier Id"
   })
   supplierId:number | undefined;
 

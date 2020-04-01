@@ -1,5 +1,6 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
+import Item from "./Item";
 
 @Table({
   timestamps: false
@@ -89,6 +90,9 @@ class Supplier extends Model<Supplier> {
     comment: "recruiter to the company."
   })
   recruiter: string | undefined;
+
+  // @HasMany(() => Item)
+  // items: Item[] = [];
 }
 
 export default Supplier;
