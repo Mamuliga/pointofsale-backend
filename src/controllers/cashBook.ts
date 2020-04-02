@@ -5,10 +5,7 @@ import {
   getCashBookEntry,
   createCashbookEntry,
 } from "../models/Cashbook";
-import {
-  CREATE_CAHSBOOK_REQUEST_BODY,
-//   UPDATE_ITEM_REQUEST_BODY
-} from "./validators/cashBook";
+import { CREATE_CAHSBOOK_REQUEST_BODY } from "./validators/cashBook";
 import requestValidator from "../middleware/requestValidator";
 
 const cashBookRoute = Router();
@@ -60,34 +57,5 @@ cashBookRoute.post(
     }
   }
 );
-
-// itemRoute.put("/:id", async (req, res) => {
-//   requestValidator({ reqBodyValidator: UPDATE_ITEM_REQUEST_BODY });
-//   const { id } = req.params;
-//   try {
-//     const item = await updateItem(parseInt(id), req.body);
-//     if (!item) throw new Error("Unable to update the item");
-//     res.status(201).json(item);
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message
-//     });
-//   }
-// });
-
-// itemRoute.delete("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const item = await deleteItem(parseInt(id));
-//     if (!item) throw new Error("Unable to delete the item");
-//     res.status(201).json(item);
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message
-//     });
-//   }
-// });
 
 export default cashBookRoute;

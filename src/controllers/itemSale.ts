@@ -3,14 +3,9 @@ import {
     getItemSales,
     createItemSale,
     getAllItemSales,
-    //   updateItemStats,
-    // deleteItemStats
 } from "../models/ItemSale";
 import { ItemSaleShape } from "./apiShapes/ItemSale";
-import {
-    CREATE_ITEM_SALE_REQUEST_BODY,
-    //   UPDATE_CUSTOMER_REQUEST_BODY
-} from "./validators/itemSale";
+import {   CREATE_ITEM_SALE_REQUEST_BODY } from "./validators/itemSale";
 import requestValidator from "../middleware/requestValidator";
 
 const itemSaleRoute = Router();

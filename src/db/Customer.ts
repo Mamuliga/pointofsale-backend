@@ -5,15 +5,6 @@ import { GENDER } from "../utilities/constant";
   timestamps: true
 })
 class Customer extends Model<Customer> {
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  //   validate: {
-  //     notNull: true
-  //   },
-  //   comment: "first Name of the customer"
-  // })
-  // id: string | undefined;
 
   @Column({
     type: DataType.STRING,
