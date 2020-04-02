@@ -1,18 +1,38 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Receive from "./Receive";
+import Item from "./Item";
 
 @Table({
   timestamps: true
 })
 class ItemReceiving extends Model<ItemReceiving> {
+  @ForeignKey(()=>(Receive))
   @Column({ 
     type: DataType.INTEGER,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "quantity of the item"
+    comment: "receive ref"
   })
-  quantity: number | undefined;
+  receiveId: number | undefined;
+
+  @BelongsTo(()=>Receive)
+  receive:Receive | undefined
+
+  @ForeignKey(()=>(Item))
+  @Column({ 
+    type: DataType.INTEGER,
+    allowNull: false,
+    validate: {
+      notNull: true
+    },
+    comment: "item ref"
+  })
+  itemId: number | undefined;
+
+  @BelongsTo(()=>Item)
+  item:Item | undefined
 
   @Column({
     type: DataType.FLOAT,
@@ -20,9 +40,9 @@ class ItemReceiving extends Model<ItemReceiving> {
     validate: {
       notNull: true
     },
-    comment: "cost price of the item"
+    comment: "receive price of the item"
   })
-  costPrice: number | undefined;
+  receivePrice: number | undefined;
 
   @Column({
     type: DataType.FLOAT,
@@ -30,28 +50,28 @@ class ItemReceiving extends Model<ItemReceiving> {
     validate: {
       notNull: true
     },
-    comment: "sale price of the item"
+    comment: "discount of received item"
   })
-  salePrice: number | undefined;
+  discount: number | undefined;
 
   @Column({
-    type: DataType.DATEONLY,
+    type: DataType.NUMBER,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "manufacture date of the item"
+    comment: "item received quantiti"
   })
-  revDate: Date | undefined;
+  qty: number | undefined;
 
   @Column({
-    type: DataType.DATEONLY,
+    type: DataType.STRING,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "expiry date of the item"
+    comment: "description of the item"
   })
-  expDate: Date | undefined;
+  description: Date | undefined;
 }
 export default ItemReceiving;

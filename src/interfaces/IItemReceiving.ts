@@ -1,7 +1,8 @@
 export default interface IItemReceiving {
-    quantity: string;
-    costPrice: string;
-    salePrice: string;
-    revDate: string;
-    expDate: string;
-  }
+  receiveId: number;
+  itemId: number;
+  discount: number;
+  receivePrice: number;
+  qty: number;
+  description: string;
+}

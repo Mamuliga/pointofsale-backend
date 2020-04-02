@@ -30,6 +30,7 @@ class Receive extends Model<Receive> {
     comment: "Supplier of the recieving item"
   })
   supplierId: string | undefined;
+  
   @BelongsTo(()=>Supplier)
   supplier: Supplier | undefined;
 

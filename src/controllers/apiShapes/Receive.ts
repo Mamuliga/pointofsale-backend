@@ -1,7 +1,7 @@
 export function ReceiveShape(receiving: any) {
     return {
       id: receiving && receiving.id,
-      itemId:receiving && receiving.itemId,
+      item:receiving && receiving.item,
       supplier: receiving && receiving.supplier,
       total: receiving && receiving.total,
       totlaDiscount: receiving && receiving.totlaDiscount,

@@ -1,9 +1,10 @@
 import Joi from "@hapi/joi";
 
 export const CREATE_ITEM_RECEIVING_REQUEST_BODY = {
-    costPrice: Joi.number().required(),
-    salePrice: Joi.number().optional(),
-    revDate: Joi.date().optional(),
-    quantity: Joi.number().optional(),
-    expDate:Joi.date().optional(),
+    receiveId: Joi.number().required(),
+    itemId: Joi.number(),
+    discount:Joi.number(),
+    receivePrice:Joi.number().required(),
+    qty: Joi.number().required(),
+    description:Joi.string().required()
 };

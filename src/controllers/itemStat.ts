@@ -5,7 +5,7 @@ import {
   getAllItemStats,
 //   updateItemStats,
   deleteItemStats
-} from "../models/ItemStats";
+} from "../models/ItemStat";
 import { ItemStatsShape } from "./apiShapes/ItemStat";
 import {
     CREATE_ITEM_STAT_REQUEST_BODY,
