@@ -6,7 +6,7 @@ import {
   updateSupplier,
   deleteSupplier
 } from '../models/Supplier';
-import { Supplier } from './apiShapes/Supplier';
+import { SuppliersShape, SupplierShape } from './apiShapes/Supplier';
 import {
   CREATE_SUPPLIER_REQUEST_BODY,
   UPDATE_SUPPLIER_REQUEST_BODY
@@ -22,7 +22,7 @@ supplierRoute.get('/', async (req, res) => {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(suppliers.map(supplier => Supplier(supplier)));
+    res.status(200).json(suppliers.map(supplier => SuppliersShape(supplier)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -36,7 +36,7 @@ supplierRoute.get('/:id', async (req, res) => {
   try {
     const supplier = await getSupplier(parseInt(id) || 0);
     if (!supplier) res.status(204).json({});
-    res.status(200).json(supplier);
+    res.status(200).json(SupplierShape(supplier));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({

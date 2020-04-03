@@ -5,7 +5,6 @@ import Customer from "./Customer";
   timestamps: false
 })
 class Sale extends Model<Sale> {
-  // @HasOne(()=>Customer)
   @ForeignKey(() => Customer)
   @Column({
     type:DataType.INTEGER ,

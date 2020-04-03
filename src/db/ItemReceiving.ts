@@ -60,7 +60,7 @@ class ItemReceiving extends Model<ItemReceiving> {
     validate: {
       notNull: true
     },
-    comment: "item received quantiti"
+    comment: "item received quantitity"
   })
   qty: number | undefined;
 

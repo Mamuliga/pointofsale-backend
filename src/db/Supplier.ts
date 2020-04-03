@@ -1,11 +1,14 @@
 import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
-import Item from "./Item";
+import ItemStats from "./ItemStat";
 
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class Supplier extends Model<Supplier> {
+  @HasMany(() => ItemStats)
+  itemStats: ItemStats[] = [];
+
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -90,9 +93,6 @@ class Supplier extends Model<Supplier> {
     comment: "recruiter to the company."
   })
   recruiter: string | undefined;
-
-  // @HasMany(() => Item)
-  // items: Item[] = [];
 }
 
 export default Supplier;
