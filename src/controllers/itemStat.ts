@@ -10,7 +10,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const itemStatRoute = Router();
 
-itemStatRoute.get("/", async (req, res) => {
+itemStatRoute.get("/", async (_req, res) => {
   try {
     const itemStats = await getAllItemStats();
     if (!itemStats.length) {

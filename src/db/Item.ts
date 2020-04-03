@@ -1,8 +1,14 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
+import ItemStats from "./ItemStat";
 @Table({
   timestamps: true
 })
+
+
 class Item extends Model<Item> {
+  @HasMany(() => ItemStats)
+  itemStats: ItemStats[] | undefined;
+
   @Column({
     type: DataType.STRING,
     allowNull: false,

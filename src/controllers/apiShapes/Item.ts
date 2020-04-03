@@ -4,6 +4,7 @@ export function ItemShape(item: any) {
     barcode: item && item.barcode,
     itemName: item && item.itemName,
     category: item && item.category,
-    reOrderLevel: item && item.reOrderLevel
+    reOrderLevel: item && item.reOrderLevel,
+    itemStats: item && item.itemStats,
   };
 }
