@@ -4,12 +4,9 @@ import {
     getAllReceiving,
     getReceiving,
     createReceiving,
-    //   updateItem,
-    //   deleteItem
 } from "../models/Receive";
 import {
     CREATE_RECEIVE_REQUEST_BODY,
-    //   UPDATE_ITEM_REQUEST_BODY
 } from "./validators/receive";
 import requestValidator from "../middleware/requestValidator";
 
@@ -49,7 +46,6 @@ receiveRoute.post(
     "/",
     requestValidator({ reqBodyValidator: CREATE_RECEIVE_REQUEST_BODY }),
     async (req, res) => {
-        const { id } = req.params;
         try {
             const item = await createReceiving(req.body);
             if (!item) throw new Error("Unable to create the item");
@@ -62,34 +58,5 @@ receiveRoute.post(
         }
     }
 );
-
-// itemRoute.puts("/:id", async (req, res) => {
-//   requestValidator({ reqBodyValidator: UPDATE_ITEM_REQUEST_BODY });
-//   const { id } = req.params;
-//   try {
-//     const item = await updateItem(parseInt(id), req.body);
-//     if (!item) throw new Error("Unable to update the item");
-//     res.status(201).json(item);
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message
-//     });
-//   }
-// });
-
-// receiveRoute.delete("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const item = await deleteItem(parseInt(id));
-//     if (!item) throw new Error("Unable to delete the item");
-//     res.status(201).json(item);
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message
-//     });
-//   }
-// });
 
 export default receiveRoute;

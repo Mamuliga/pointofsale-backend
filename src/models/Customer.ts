@@ -7,11 +7,7 @@ const getSaleOptions = {
     {
       model: Sale,
       as: 'sales'
-    },
-    // {
-    //   model: Item,
-    //   as: 'item'
-    // }
+    }
   ]
 };
 
