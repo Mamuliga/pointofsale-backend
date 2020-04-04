@@ -8,10 +8,10 @@ import Receive from "./Receive";
 })
 class Supplier extends Model<Supplier> {
   @HasMany(() => ItemStats)
-  itemStats: ItemStats[] = [];
+  itemStats: ItemStats[] | undefined;
 
   @HasMany(() => Receive)
-  receivings: Receive[] = [];
+  receivings: Receive[] | undefined;
 
   @Column({
     type: DataType.STRING,

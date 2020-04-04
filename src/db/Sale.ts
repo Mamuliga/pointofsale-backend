@@ -1,10 +1,14 @@
 
-import { Model, Table, Column, DataType, HasOne, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
 import Customer from "./Customer";
+import ItemSale from "./ItemSale";
 @Table({ 
   timestamps: true
 })
 class Sale extends Model<Sale> {
+  @HasMany(()=>ItemSale)
+  itemSales: ItemSale[] | undefined
+
   @ForeignKey(() => Customer)
   @Column({
     type:DataType.INTEGER ,

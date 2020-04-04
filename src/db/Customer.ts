@@ -7,7 +7,7 @@ import Sale from "./Sale";
 })
 class Customer extends Model<Customer> {
   @HasMany(() => Sale)
-  sales: Sale[] = [];
+  sales: Sale[] | undefined;
 
   @Column({
     type: DataType.STRING,

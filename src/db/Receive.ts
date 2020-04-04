@@ -1,11 +1,15 @@
-import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo, HasMany } from "sequelize-typescript";
 import Supplier from "./Supplier";
 import Item from "./Item";
+import ItemReceiving from "./ItemReceiving";
 
 @Table({
   timestamps: true
 })
 class Receive extends Model<Receive> {
+  @HasMany(()=>ItemReceiving)
+  itemReceivings: ItemReceiving | undefined
+
   @ForeignKey(()=>Item)
   @Column({
     type: DataType.INTEGER,

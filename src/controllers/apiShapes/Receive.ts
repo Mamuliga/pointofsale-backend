@@ -7,6 +7,7 @@ export function ReceiveShape(receiving: any) {
       totlaDiscount: receiving && receiving.totlaDiscount,
       paymentType: receiving && receiving.paymentType,
       payedAmount: receiving && receiving.payedAmount,
-      balance: receiving && receiving.balance
+      balance: receiving && receiving.balance,
+      itemReceivings: receiving && receiving.itemReceivings
     };
   }

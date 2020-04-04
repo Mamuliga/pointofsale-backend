@@ -7,6 +7,7 @@ export function SaleShape(sale: any) {
       paymentType: sale && sale.paymentType,
       payedAmount: sale && sale.payedAmount,
       balance: sale && sale.balance,
+      itemSales: sale && sale.itemSales,
     };
   }
 
