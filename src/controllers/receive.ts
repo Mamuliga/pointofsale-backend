@@ -12,7 +12,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const receiveRoute = Router();
 
-receiveRoute.get("/", async (req, res) => {
+receiveRoute.get("/", async (_req, res) => {
     try {
         const receivings = await getAllReceiving();
         if (!receivings.length) {

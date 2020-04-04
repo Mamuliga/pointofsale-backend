@@ -15,7 +15,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const itemRoute = Router();
 
-itemRoute.get("/", async (req, res) => {
+itemRoute.get("/", async (_req, res) => {
   try {
     const items = await getAllItems();
     if (!items.length) {
@@ -49,7 +49,6 @@ itemRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_ITEM_REQUEST_BODY }),
   async (req, res) => {
-    const { id } = req.params;
     try {
       const item = await createItem(req.body);
       if (!item) throw new Error("Unable to create the item");

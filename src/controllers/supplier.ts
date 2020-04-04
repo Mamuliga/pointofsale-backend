@@ -15,7 +15,7 @@ import requestValidator from '../middleware/requestValidator';
 
 const supplierRoute = Router();
 
-supplierRoute.get('/', async (req, res) => {
+supplierRoute.get('/', async (_req, res) => {
   try {
     const suppliers = await getAllSuppliers();
     if (!suppliers.length) {
@@ -49,7 +49,6 @@ supplierRoute.post(
   '/',
   requestValidator({ reqBodyValidator: CREATE_SUPPLIER_REQUEST_BODY }),
   async (req, res) => {
-    const { id } = req.params;
     try {
       const supplier = await createSupplier(req.body);
       if (!supplier) throw new Error('Unable to create the Supplier');

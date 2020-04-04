@@ -10,7 +10,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const saleRoute = Router();
 
-saleRoute.get("/", async (req, res) => {
+saleRoute.get("/", async (_req, res) => {
   try {
     const sales = await getAllSales();
     if (!sales.length) {

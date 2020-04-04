@@ -10,7 +10,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const itemSaleRoute = Router();
 
-itemSaleRoute.get("/", async (req, res) => {
+itemSaleRoute.get("/", async (_req, res) => {
     try {
         const customers = await getAllItemSales();
         if (!customers.length) {
@@ -57,34 +57,5 @@ itemSaleRoute.post(
         }
     }
 );
-
-// itemStats.put("/:id", async (req, res) => {
-//   requestValidator({ reqBodyValidator: UPDATE_CUSTOMER_REQUEST_BODY });
-//   const { id } = req.params;
-//   try {
-//     const customer = await updateCustomer(parseInt(id), req.body);
-//     if (!customer) throw new Error("Unable to update the Customer");
-//     res.status(204).json(customer);
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message
-//     });
-//   }
-// });
-
-// itemStats.delete("/:id", async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//         const customer = await deleteItemStats(parseInt(id));
-//         if (!customer) throw new Error("Unable to delete the Customer");
-//         res.status(201).json(customer);
-//     } catch (ex) {
-//         console.log(ex);
-//         res.status(res.statusCode || 400).json({
-//             error: ex.message
-//         });
-//     }
-// });
 
 export default itemSaleRoute;

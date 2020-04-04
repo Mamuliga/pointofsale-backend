@@ -10,7 +10,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const cashBookRoute = Router();
 
-cashBookRoute.get("/", async (req, res) => {
+cashBookRoute.get("/", async (_req, res) => {
   try {
     const entries = await getAllCashBookEntries();
     if (!entries.length) {
@@ -44,7 +44,6 @@ cashBookRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_CAHSBOOK_REQUEST_BODY }),
   async (req, res) => {
-    const { id } = req.params;
     try {
       const item = await createCashbookEntry(req.body);
       if (!item) throw new Error("Unable to create the item");

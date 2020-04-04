@@ -15,7 +15,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const customerRoute = Router();
 
-customerRoute.get("/", async (req, res) => {
+customerRoute.get("/", async (_req, res) => {
   try {
     const customers = await getAllCustomers();
     if (!customers.length) {

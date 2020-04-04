@@ -44,7 +44,6 @@ itemStatRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_ITEM_STAT_REQUEST_BODY }),
   async (req, res) => {
-    const { id } = req.params;
     try {
       const customer = await createItemStats(req.body);
       if (!customer) throw new Error("Unable to create the Customer");
