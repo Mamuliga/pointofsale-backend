@@ -2,9 +2,9 @@ import Joi from "@hapi/joi";
 
 export const CREATE_SALE_REQUEST_BODY = {
   customerId: Joi.number(),
-  total: Joi.string(),
-  totalDiscount: Joi.string(),
+  total: Joi.number(),
+  totalDiscount: Joi.number(),
   paymentType: Joi.string(),
-  balance: Joi.string(),
-  revdAmount:Joi.string(),
+  balance: Joi.number(),
+  revdAmount:Joi.number(),
 };

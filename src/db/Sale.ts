@@ -2,7 +2,7 @@
 import { Model, Table, Column, DataType, HasOne, ForeignKey, BelongsTo } from "sequelize-typescript";
 import Customer from "./Customer";
 @Table({ 
-  timestamps: false
+  timestamps: true
 })
 class Sale extends Model<Sale> {
   @ForeignKey(() => Customer)

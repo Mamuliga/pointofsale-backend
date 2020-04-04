@@ -6,7 +6,7 @@ import {
   updateCustomer,
   deleteCustomer
 } from "../models/Customer";
-import { Customer } from "./apiShapes/Customer";
+import { CustomersShape, CustomerShape } from "./apiShapes/Customer";
 import {
   CREATE_CUSTOMER_REQUEST_BODY,
   UPDATE_CUSTOMER_REQUEST_BODY
@@ -22,7 +22,7 @@ customerRoute.get("/", async (req, res) => {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(customers.map(customer => Customer(customer)));
+    res.status(200).json(customers.map(customer => CustomersShape(customer)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -36,7 +36,7 @@ customerRoute.get("/:id", async (req, res) => {
   try {
     const customer = await getCustomer(parseInt(id) || 0);
     if (!customer) res.status(204).json({});
-    res.status(200).json(customer);
+    res.status(200).json(CustomerShape(customer));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({

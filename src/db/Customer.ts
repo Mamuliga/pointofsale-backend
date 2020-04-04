@@ -1,10 +1,13 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
+import Sale from "./Sale";
 
 @Table({
   timestamps: true
 })
 class Customer extends Model<Customer> {
+  @HasMany(() => Sale)
+  sales: Sale[] = [];
 
   @Column({
     type: DataType.STRING,

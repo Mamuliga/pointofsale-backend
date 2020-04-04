@@ -5,15 +5,9 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
-  Scopes
 } from "sequelize-typescript";
 import Supplier from "./Supplier";
 import Item from "./Item";
-// @Scopes(() => ({
-//   full: {
-//     include: [Supplier]
-//   }
-// }))
 @Table({
   timestamps: true
 })

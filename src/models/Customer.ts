@@ -1,12 +1,26 @@
 import ICustomer from '../interfaces/ICustomer';
 import Customer from '../db/Customer';
+import Sale from '../db/Sale';
+
+const getSaleOptions = {
+  include: [
+    {
+      model: Sale,
+      as: 'sales'
+    },
+    // {
+    //   model: Item,
+    //   as: 'item'
+    // }
+  ]
+};
 
 export async function getAllCustomers() {
   return await Customer.findAll();
 }
 
 export async function getCustomer(id: number) {
-  return await Customer.findByPk(id);
+  return await Customer.findByPk(id, getSaleOptions);
 }
 
 export async function createCustomer(customer: ICustomer) {
