@@ -21,5 +21,6 @@ export function SupplierShape(supplier: any) {
     description: supplier && supplier.description,
     defaultDiscount: supplier && supplier.defaultDiscount,
     itemStats: supplier && supplier.itemStats,
+    receivings: supplier && supplier.receivings,
   };
 }

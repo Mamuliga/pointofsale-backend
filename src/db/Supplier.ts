@@ -1,6 +1,7 @@
 import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
 import ItemStats from "./ItemStat";
+import Receive from "./Receive";
 
 @Table({
   timestamps: true
@@ -8,6 +9,9 @@ import ItemStats from "./ItemStat";
 class Supplier extends Model<Supplier> {
   @HasMany(() => ItemStats)
   itemStats: ItemStats[] = [];
+
+  @HasMany(() => Receive)
+  receivings: Receive[] = [];
 
   @Column({
     type: DataType.STRING,
