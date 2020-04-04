@@ -4,7 +4,7 @@ import {
     createItemSale,
     getAllItemSales,
 } from "../models/ItemSale";
-import { ItemSaleShape } from "./apiShapes/ItemSale";
+import { ItemSaleShape, ItemSalesShape } from "./apiShapes/ItemSale";
 import {   CREATE_ITEM_SALE_REQUEST_BODY } from "./validators/itemSale";
 import requestValidator from "../middleware/requestValidator";
 
@@ -12,12 +12,12 @@ const itemSaleRoute = Router();
 
 itemSaleRoute.get("/", async (_req, res) => {
     try {
-        const customers = await getAllItemSales();
-        if (!customers.length) {
+        const itemSales = await getAllItemSales();
+        if (!itemSales.length) {
             res.status(204).json([]);
             return;
         }
-        res.status(200).json(customers.map(customer => ItemSaleShape(customer)));
+        res.status(200).json(itemSales.map(itemSale => ItemSalesShape(itemSale)));
     } catch (ex) {
         console.log(ex);
         res.status(res.statusCode || 400).json({
@@ -29,9 +29,9 @@ itemSaleRoute.get("/", async (_req, res) => {
 itemSaleRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const customer = await getItemSales(parseInt(id) || 0);
-        if (!customer) res.status(204).json({});
-        res.status(200).json(customer);
+        const itemSale = await getItemSales(parseInt(id) || 0);
+        if (!itemSale) res.status(204).json({});
+        res.status(200).json(ItemSaleShape(itemSale));
     } catch (ex) {
         console.log(ex);
         res.status(res.statusCode || 400).json({

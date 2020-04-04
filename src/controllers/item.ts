@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ItemShape } from "./apiShapes/Item";
+import { ItemShape, ItemsShape } from "./apiShapes/Item";
 import {
   getAllItems,
   getItem,
@@ -22,7 +22,7 @@ itemRoute.get("/", async (_req, res) => {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(items.map(item => ItemShape(item)));
+    res.status(200).json(items.map(item => ItemsShape(item)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({

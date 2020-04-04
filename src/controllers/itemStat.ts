@@ -4,7 +4,7 @@ import {
   createItemStats,
   getAllItemStats,
 } from "../models/ItemStat";
-import { ItemStatsShape } from "./apiShapes/ItemStat";
+import { ItemStatsShape, ItemStatShape } from "./apiShapes/ItemStat";
 import { CREATE_ITEM_STAT_REQUEST_BODY } from "./validators/itemStat";
 import requestValidator from "../middleware/requestValidator";
 
@@ -29,9 +29,9 @@ itemStatRoute.get("/", async (_req, res) => {
 itemStatRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const customer = await getItemStats(parseInt(id) || 0);
-    if (!customer) res.status(204).json({});
-    res.status(200).json(customer);
+    const itemStat = await getItemStats(parseInt(id) || 0);
+    if (!itemStat) res.status(204).json({});
+    res.status(200).json(ItemStatShape(itemStat));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -45,9 +45,9 @@ itemStatRoute.post(
   requestValidator({ reqBodyValidator: CREATE_ITEM_STAT_REQUEST_BODY }),
   async (req, res) => {
     try {
-      const customer = await createItemStats(req.body);
-      if (!customer) throw new Error("Unable to create the Customer");
-      res.status(201).json(customer);
+      const itemStat = await createItemStats(req.body);
+      if (!itemStat) throw new Error("Unable to create the itemStat");
+      res.status(201).json(itemStat);
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({

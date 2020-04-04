@@ -29,9 +29,9 @@ cashBookRoute.get("/", async (_req, res) => {
 cashBookRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const item = await getCashBookEntry(parseInt(id) || 0);
-    if (!item) res.status(204).json({});
-    res.status(200).json(CashbookShape(item));
+    const entry = await getCashBookEntry(parseInt(id) || 0);
+    if (!entry) res.status(204).json({});
+    res.status(200).json(CashbookShape(entry));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -45,9 +45,9 @@ cashBookRoute.post(
   requestValidator({ reqBodyValidator: CREATE_CAHSBOOK_REQUEST_BODY }),
   async (req, res) => {
     try {
-      const item = await createCashbookEntry(req.body);
-      if (!item) throw new Error("Unable to create the item");
-      res.status(201).json(item);
+      const entry = await createCashbookEntry(req.body);
+      if (!entry) throw new Error("Unable to create the cashbook entry");
+      res.status(201).json(entry);
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({

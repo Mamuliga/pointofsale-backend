@@ -46,7 +46,7 @@ saleRoute.post(
   async (req, res) => {
     try {
       const sale = await createSale(req.body);
-      if (!sale) throw new Error("Unable to create the Customer");
+      if (!sale) throw new Error("Unable to create the sale");
       res.status(201).json(sale);
     } catch (ex) {
       console.log(ex);

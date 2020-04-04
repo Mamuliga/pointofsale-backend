@@ -4,7 +4,7 @@ import {
     createItemReceiving,
     getAllItemReceivings,
 } from "../models/ItemReceiving";
-import { ItemReceivingShape } from "./apiShapes/ItemReceiving";
+import { ItemReceivingsShapes, ItemReceivingShape } from "./apiShapes/ItemReceiving";
 import { CREATE_ITEM_RECEIVING_REQUEST_BODY } from "./validators/itemReceiving";
 import requestValidator from "../middleware/requestValidator";
 
@@ -12,12 +12,12 @@ const itemReceivingRoute = Router();
 
 itemReceivingRoute.get("/", async (req, res) => {
     try {
-        const customers = await getAllItemReceivings();
-        if (!customers.length) {
+        const itemReceivings = await getAllItemReceivings();
+        if (!itemReceivings.length) {
             res.status(204).json([]);
             return;
         }
-        res.status(200).json(customers.map(customer => ItemReceivingShape(customer)));
+        res.status(200).json(itemReceivings.map(itemReceiving => ItemReceivingsShapes(itemReceiving)));
     } catch (ex) {
         console.log(ex);
         res.status(res.statusCode || 400).json({
@@ -29,9 +29,9 @@ itemReceivingRoute.get("/", async (req, res) => {
 itemReceivingRoute.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const customer = await getItemReceiving(parseInt(id) || 0);
-        if (!customer) res.status(204).json({});
-        res.status(200).json(customer);
+        const itemReceiving = await getItemReceiving(parseInt(id) || 0);
+        if (!itemReceiving) res.status(204).json({});
+        res.status(200).json(ItemReceivingShape(itemReceiving));
     } catch (ex) {
         console.log(ex);
         res.status(res.statusCode || 400).json({
@@ -45,9 +45,9 @@ itemReceivingRoute.post(
     requestValidator({ reqBodyValidator: CREATE_ITEM_RECEIVING_REQUEST_BODY }),
     async (req, res) => {
         try {
-            const customer = await createItemReceiving(req.body);
-            if (!customer) throw new Error("Unable to create the Customer");
-            res.status(201).json(customer);
+            const itemReceiving = await createItemReceiving(req.body);
+            if (!itemReceiving) throw new Error("Unable to create the Customer");
+            res.status(201).json(itemReceiving);
         } catch (ex) {
             console.log(ex);
             res.status(res.statusCode || 400).json({

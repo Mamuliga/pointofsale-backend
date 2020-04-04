@@ -2,6 +2,7 @@ import IReceive from '../interfaces/IReceive';
 import Receive from '../db/Receive';
 import Item from '../db/Item';
 import Supplier from '../db/Supplier';
+import ItemReceiving from '../db/ItemReceiving';
 
 const getReceivingOptions = {
   include: [
@@ -12,6 +13,10 @@ const getReceivingOptions = {
     {
       model: Supplier,
       as: 'supplier'
+    },
+    {
+      model: ItemReceiving,
+      as: 'itemReceivings'
     }
   ]
 }

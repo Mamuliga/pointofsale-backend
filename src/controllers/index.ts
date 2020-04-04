@@ -25,11 +25,11 @@ apiRoute.use("/suppliers", supplierRoute);
 apiRoute.use("/items", itemRoute);
 apiRoute.use("/mock", mockRouter);
 apiRoute.use("/appSettings", appConfig);
-apiRoute.use("/itemStat", itemStatRoute);
-apiRoute.use("/cashBook", cashBookRoute);
-apiRoute.use("/itemReceiving", itemReceivingRoute);
-apiRoute.use("/itemSale", itemSaleRoute);
-apiRoute.use("/receive", receiveRoute);
-apiRoute.use("/sale", saleRoute);
+apiRoute.use("/itemStats", itemStatRoute);
+apiRoute.use("/cashBooks", cashBookRoute);
+apiRoute.use("/itemReceivings", itemReceivingRoute);
+apiRoute.use("/itemSales", itemSaleRoute);
+apiRoute.use("/receives", receiveRoute);
+apiRoute.use("/sales", saleRoute);
 
 export default apiRoute;
