@@ -1,13 +1,18 @@
 import ISale from '../interfaces/ISale';
 import Sale from '../db/Sale';
 import Customer from '../db/Customer';
+import ItemSale from '../db/ItemSale';
 
 const getSaleOptions = {
   include: [
     {
       model: Customer,
       as: 'customer'
-    }
+    },
+    {
+      model: ItemSale,
+      as: 'itemSales'
+    },
   ]
 };
 

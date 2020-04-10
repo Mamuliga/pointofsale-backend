@@ -16,7 +16,8 @@ export function ItemSaleShape(itemSale: any) {
       discount: itemSale && itemSale.discount,
       quantity: itemSale && itemSale.quantity,
       description: itemSale && itemSale.description,
-      sale: itemSale && itemSale.sale,
+      sale: itemSale && itemSale.sale, 
+      item: itemSale && itemSale.item, 
     };
   }
 
