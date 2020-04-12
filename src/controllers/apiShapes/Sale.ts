@@ -26,10 +26,10 @@ export function SaleShape(sale: any) {
 export function getASaleShape(sale: any) {
   const { saleId, customerId, firstName, lastName, totlaDiscount, paymentType, revdAmount, balance } = sale[0];
   const customerName = firstName + " " + lastName;
-  const itemDetails: any | { itemName: any; discount: any; quantity: any; sellingPrice: any; }[] = [];
+  const itemDetails: any | { itemName: string; discount: number; quantity: number; sellingPrice: number; itemId: number; }[] = [];
   if (Array.isArray(sale)) {
-    sale.forEach(({ itemName, discount, quantity, sellingPrice }) => {
-      itemDetails.push({ itemName, discount, quantity, sellingPrice })
+    sale.forEach(({ itemName, discount, quantity, sellingPrice, itemId }) => {
+      itemDetails.push({ itemName, discount, quantity, sellingPrice, itemId })
     })
   }
   return {
