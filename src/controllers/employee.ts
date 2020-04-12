@@ -15,7 +15,7 @@ import requestValidator from "../middleware/requestValidator";
 
 const employeeRoute = Router();
 
-employeeRoute.get("/", async (req, res) => {
+employeeRoute.get("/", async (_req, res) => {
   try {
     const employees = await getAllEmployees();
     if (!employees.length) {

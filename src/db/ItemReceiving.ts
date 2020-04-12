@@ -1,57 +1,77 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Receive from "./Receive";
+import Item from "./Item";
 
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class ItemReceiving extends Model<ItemReceiving> {
-  @Column({
+  @ForeignKey(()=>(Receive))
+  @Column({ 
     type: DataType.INTEGER,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "quantity of the item"
+    comment: "receive ref"
   })
-  quantity: number | undefined;
+  receiveId: number | undefined;
 
-  @Column({
-    type: DataType.DOUBLE,
+  @BelongsTo(()=>Receive)
+  receive:Receive | undefined
+
+  @ForeignKey(()=>(Item))
+  @Column({ 
+    type: DataType.INTEGER,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "cost price of the item"
+    comment: "item ref"
   })
-  costPrice: number | undefined;
+  itemId: number | undefined;
+
+  @BelongsTo(()=>Item)
+  item:Item | undefined
 
   @Column({
-    type: DataType.DOUBLE,
+    type: DataType.FLOAT,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "sale price of the item"
+    comment: "receive price of the item"
   })
-  salePrice: number | undefined;
+  receivePrice: number | undefined;
 
   @Column({
-    type: DataType.DATEONLY,
+    type: DataType.FLOAT,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "manufacture date of the item"
+    comment: "discount of received item"
   })
-  revDate: Date | undefined;
+  discount: number | undefined;
 
   @Column({
-    type: DataType.DATEONLY,
+    type: DataType.NUMBER,
     allowNull: false,
     validate: {
       notNull: true
     },
-    comment: "expiry date of the item"
+    comment: "item received quantitity"
   })
-  expDate: Date | undefined;
+  qty: number | undefined;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    validate: {
+      notNull: true
+    },
+    comment: "description of the item"
+  })
+  description: Date | undefined;
 }
 export default ItemReceiving;

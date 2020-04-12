@@ -1,12 +1,22 @@
 import Item from "./../db/Item";
 import IItem from "./../interfaces/IItem";
+import ItemStats from "../db/ItemStat";
+
+const getItemOptions = {
+  include: [
+    {
+      model: ItemStats,
+      as: 'itemStats'
+    }
+  ]
+};
 
 export async function getAllItems() {
   return await Item.findAll();
 }
 
 export async function getItem(id: number) {
-  return await Item.findByPk(id);
+  return await Item.findByPk(id, getItemOptions);
 }
 
 export async function createItem(item: IItem) {

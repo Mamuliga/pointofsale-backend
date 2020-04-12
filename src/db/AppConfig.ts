@@ -1,6 +1,6 @@
 import { Table, Model, Column, DataType } from "sequelize-typescript";
 
-@Table({ timestamps: false })
+@Table({ timestamps: true })
 class AppConfig extends Model<AppConfig> {
   @Column({
     type: DataType.STRING,

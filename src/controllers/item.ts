@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ItemShape } from "./apiShapes/Item";
+import { ItemShape, ItemsShape } from "./apiShapes/Item";
 import {
   getAllItems,
   getItem,
@@ -15,14 +15,14 @@ import requestValidator from "../middleware/requestValidator";
 
 const itemRoute = Router();
 
-itemRoute.get("/", async (req, res) => {
+itemRoute.get("/", async (_req, res) => {
   try {
     const items = await getAllItems();
     if (!items.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(items.map(item => ItemShape(item)));
+    res.status(200).json(items.map(item => ItemsShape(item)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -49,7 +49,6 @@ itemRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_ITEM_REQUEST_BODY }),
   async (req, res) => {
-    const { id } = req.params;
     try {
       const item = await createItem(req.body);
       if (!item) throw new Error("Unable to create the item");

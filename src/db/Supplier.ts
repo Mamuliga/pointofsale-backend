@@ -1,10 +1,18 @@
-import { Model, Table, Column, DataType } from "sequelize-typescript";
+import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
+import ItemStats from "./ItemStat";
+import Receive from "./Receive";
 
 @Table({
-  timestamps: false
+  timestamps: true
 })
 class Supplier extends Model<Supplier> {
+  @HasMany(() => ItemStats)
+  itemStats: ItemStats[] | undefined;
+
+  @HasMany(() => Receive)
+  receivings: Receive[] | undefined;
+
   @Column({
     type: DataType.STRING,
     allowNull: false,
