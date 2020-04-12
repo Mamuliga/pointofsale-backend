@@ -1,10 +1,11 @@
 import { Router } from "express";
 import {
-  getSale,
+  // getSale,
+  getSingleSale,
   createSale,
   getAllSales,
 } from "../models/Sale";
-import { SaleShape, SalesShape } from "./apiShapes/Sale";
+import { SaleShape, SalesShape, getASaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
 
@@ -26,12 +27,26 @@ saleRoute.get("/", async (_req, res) => {
   }
 });
 
+// saleRoute.get("/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const sale = await getSale(parseInt(id) || 0);
+//     if (!sale) res.status(204).json({});
+//     res.status(200).json(SaleShape(sale));
+//   } catch (ex) {
+//     console.log(ex);
+//     res.status(res.statusCode || 400).json({
+//       error: ex.message
+//     });
+//   }
+// });
+
 saleRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const sale = await getSale(parseInt(id) || 0);
+    const sale = await getSingleSale(parseInt(id) || 0);
     if (!sale) res.status(204).json({});
-    res.status(200).json(SaleShape(sale));
+    res.status(200).json(getASaleShape(sale));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
