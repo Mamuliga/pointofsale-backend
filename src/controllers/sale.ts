@@ -93,8 +93,6 @@ const handleItemStatOnSale = async (itemSales:any) => {
   } catch (ex) {
     console.log(ex);
   }
- 
-
 }
 
 
