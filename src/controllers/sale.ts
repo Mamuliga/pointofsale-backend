@@ -89,6 +89,7 @@ const handleItemSaleOnSale = (itemSales:any, sale:any) => {
 }
 
 const handleCashBookOnSale = async (cashBookDetails:any) => {
+  if(cashBookDetails.type === "cash"){
     try {
       const cashBookResult = await createCashbookEntry(cashBookDetails);
       if (!cashBookResult){
@@ -101,6 +102,7 @@ const handleCashBookOnSale = async (cashBookDetails:any) => {
       //   error: ex.message
       // });
     }
+  }
 }
 
 const handleItemStatOnSale = async (itemSales:any) => {
