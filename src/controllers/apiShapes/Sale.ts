@@ -11,28 +11,25 @@ export function SalesShape(sale: any) {
 }
 
 export function SaleShape(sale: any) {
-  return {
-    id: sale && sale.id,
-    customer: sale && sale.customer,
-    total: sale && sale.total,
-    totlaDiscount: sale && sale.totlaDiscount,
-    paymentType: sale && sale.paymentType,
-    payedAmount: sale && sale.payedAmount,
-    balance: sale && sale.balance,
-    itemSales: sale && sale.itemSales,
-  };
-}
-
-export function getASaleShape(sale: any) {
-  const { saleId, customerId, firstName, lastName, totlaDiscount, paymentType, revdAmount, balance } = sale[0];
-  const customerName = firstName + " " + lastName;
+  const { id, customer, total, totlaDiscount, paymentType, balance, itemSales } = sale;
   const itemDetails: any | { itemName: string; discount: number; quantity: number; sellingPrice: number; itemId: number; }[] = [];
-  if (Array.isArray(sale)) {
-    sale.forEach(({ itemName, discount, quantity, sellingPrice, itemId }) => {
-      itemDetails.push({ itemName, discount, quantity, sellingPrice, itemId })
-    })
+  if (sale) {
+    if (Array.isArray(itemSales)) {
+      itemSales.forEach(({ item: { itemName }, discount, quantity, sellingPrice, itemId }) => {
+        itemDetails.push({ itemName, discount, quantity, sellingPrice, itemId })
+      })
+    }
+    return {
+      id,
+      customerName: customer.firstName + " " + customer.lastName,
+      total,
+      totlaDiscount,
+      paymentType,
+      balance,
+      itemDetails,
+      sale,
+    };
+  } else {
+    return {};
   }
-  return {
-    saleId, customerId, customerName, totlaDiscount, paymentType, revdAmount, balance, itemDetails
-  };
 }

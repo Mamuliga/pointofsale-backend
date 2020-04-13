@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
-  getSingleSale,
   createSale,
   getAllSales,
+  getSale,
 } from "../models/Sale";
-import {  SalesShape, getASaleShape } from "./apiShapes/Sale";
+import { SalesShape, SaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
 import ItemStats from "../db/ItemStat";
@@ -33,9 +33,9 @@ saleRoute.get("/", async (req, res) => {
 saleRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const sale = await getSingleSale(parseInt(id) || 0);
+    const sale = await getSale(parseInt(id) || 0);
     if (!sale) res.status(204).json({});
-    res.status(200).json(getASaleShape(sale));
+    res.status(200).json(SaleShape(sale));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -44,12 +44,12 @@ saleRoute.get("/:id", async (req, res) => {
   }
 });
 
-const handleItemSaleOnSale = (itemSales:any, sale:any) => {
-  itemSales.forEach((itemSale: any)=>{
+const handleItemSaleOnSale = (itemSales: any, sale: any) => {
+  itemSales.forEach((itemSale: any) => {
     try {
       const { itemId, sellingPrice, discount, quantity, description } = itemSale;
       const itemSaleDetails = {
-        saleId:sale.toJSON().id,
+        saleId: sale.toJSON().id,
         itemId,
         sellingPrice,
         discount,
@@ -57,7 +57,7 @@ const handleItemSaleOnSale = (itemSales:any, sale:any) => {
         description,
       }
       const itemSaleResult = ItemSale.create(itemSaleDetails);
-      if (!itemSaleResult){
+      if (!itemSaleResult) {
         throw new Error("Unable to create the  item sale");
       }
     } catch (ex) {
@@ -66,11 +66,11 @@ const handleItemSaleOnSale = (itemSales:any, sale:any) => {
   })
 }
 
-const handleCashBookOnSale = async (cashBookDetails:any) => {
-  if(cashBookDetails.type === "cash"){
+const handleCashBookOnSale = async (cashBookDetails: any) => {
+  if (cashBookDetails.type === "cash") {
     try {
       const cashBookResult = CashBook.create(cashBookDetails);
-      if (!cashBookResult){
+      if (!cashBookResult) {
         throw new Error("Unable to create cashbook entry on sale");
       }
     } catch (ex) {
@@ -79,14 +79,14 @@ const handleCashBookOnSale = async (cashBookDetails:any) => {
   }
 }
 
-const handleItemStatOnSale = async (itemSales:any) => {
-  try{
-    itemSales.forEach((itemSale: { quantity: number; itemId: number; })=>{
+const handleItemStatOnSale = async (itemSales: any) => {
+  try {
+    itemSales.forEach((itemSale: { quantity: number; itemId: number; }) => {
       ItemStats.update({
         quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`)
       }, {
         where: {
-          itemId:itemSale.itemId,
+          itemId: itemSale.itemId,
         }
       });
     })
@@ -100,11 +100,12 @@ saleRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_SALE_REQUEST_BODY }),
   async (req, res) => {
+    // add Sequelize.transaction(t => {
     try {
       const sale = await createSale(req.body);
-      if (!sale){
+      if (!sale) {
         throw new Error("Unable to create the sale");
-      } else{
+      } else {
         res.status(201).json(sale);
         handleItemSaleOnSale(req.body.itemSales, sale);
         handleCashBookOnSale(req.body.cashBookDetails);
