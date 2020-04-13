@@ -8,4 +8,5 @@ export const CREATE_SALE_REQUEST_BODY = {
   balance: Joi.number(),
   revdAmount:Joi.number(),
   itemSales:Joi.array(),
+  cashBookDetails:Joi.object(),
 };

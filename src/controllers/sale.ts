@@ -10,6 +10,7 @@ import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
 import { createItemSale } from "../models/ItemSale";
 import { ItemSaleShape } from "./apiShapes/ItemSale";
+import { createCashbookEntry } from "../models/Cashbook";
 
 const saleRoute = Router();
 
@@ -85,6 +86,21 @@ const handleItemSaleOnSale = (itemSales:any, sale:any) => {
   })
 }
 
+const handleCashBookOnSale = async (cashBookDetails:any) => {
+    try {
+      const cashBookResult = await createCashbookEntry(cashBookDetails);
+      if (!cashBookResult){
+        throw new Error("Unable to create cashbook entry on sale");
+      }
+      // res.status(201).json(itemSaleResult)
+    } catch (ex) {
+      console.log(ex);
+      // res.status(res.statusCode || 400).json({
+      //   error: ex.message
+      // });
+    }
+}
+
 
 saleRoute.post(
   "/",
@@ -97,6 +113,7 @@ saleRoute.post(
       } else{
         res.status(201).json(sale);
         handleItemSaleOnSale(req.body.itemSales, sale);
+        handleCashBookOnSale(req.body.cashBookDetails);
       }
     } catch (ex) {
       console.log(ex);
