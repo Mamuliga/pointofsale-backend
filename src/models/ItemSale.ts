@@ -24,6 +24,6 @@ export async function getItemSales(id: number) {
   return await ItemSale.findByPk(id, getItemSalesOptions);
 }
 
-export async function createItemSale(item: IItemSale) {
+export async function createItemSale(item: any) {
   return await ItemSale.create(item);
 }

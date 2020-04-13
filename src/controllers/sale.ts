@@ -8,6 +8,8 @@ import {
 import { SaleShape, SalesShape, getASaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
+import { createItemSale } from "../models/ItemSale";
+import { ItemSaleShape } from "./apiShapes/ItemSale";
 
 const saleRoute = Router();
 
@@ -55,14 +57,47 @@ saleRoute.get("/:id", async (req, res) => {
   }
 });
 
+const getItemSaleRequest = (saleRequest: any, {id}:any) => {
+  const { itemId, sellingPrice, discount, quantity, description } = saleRequest;
+  return {
+    saleId:id,
+    itemId,
+    sellingPrice,
+    discount,
+    quantity,
+    description,
+  }
+}
+
+
+
 saleRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_SALE_REQUEST_BODY }),
   async (req, res) => {
     try {
       const sale = await createSale(req.body);
-      if (!sale) throw new Error("Unable to create the sale");
-      res.status(201).json(sale);
+      if (!sale){
+        throw new Error("Unable to create the sale");
+      } 
+      else{
+        const {itemSales} = req.body
+        itemSales.forEach(async (itemSale: any)=>{
+          try {
+            const itemSaleResult = await createItemSale(getItemSaleRequest(itemSale, sale.toJSON()));
+            if (!itemSaleResult){
+              throw new Error("Unable to create the  item sale");
+            }
+            res.status(201).json(itemSaleResult)
+          } catch (ex) {
+            console.log(ex);
+            res.status(res.statusCode || 400).json({
+              error: ex.message
+            });
+          }
+        })
+        res.status(201).json(sale);
+      }
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({

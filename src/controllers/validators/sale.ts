@@ -7,4 +7,5 @@ export const CREATE_SALE_REQUEST_BODY = {
   paymentType: Joi.string(),
   balance: Joi.number(),
   revdAmount:Joi.number(),
+  itemSales:Joi.array(),
 };
