@@ -68,7 +68,22 @@ const getItemSaleRequest = (saleRequest: any, {id}:any) => {
     description,
   }
 }
-
+const handleItemSaleOnSale = (itemSales:any, sale:any) => {
+  itemSales.forEach(async (itemSale: any, res:any)=>{
+    try {
+      const itemSaleResult = await createItemSale(getItemSaleRequest(itemSale, sale.toJSON()));
+      if (!itemSaleResult){
+        throw new Error("Unable to create the  item sale");
+      }
+      // res.status(201).json(itemSaleResult)
+    } catch (ex) {
+      console.log(ex);
+      res.status(res.statusCode || 400).json({
+        error: ex.message
+      });
+    }
+  })
+}
 
 
 saleRoute.post(
@@ -79,24 +94,9 @@ saleRoute.post(
       const sale = await createSale(req.body);
       if (!sale){
         throw new Error("Unable to create the sale");
-      } 
-      else{
-        const {itemSales} = req.body
-        itemSales.forEach(async (itemSale: any)=>{
-          try {
-            const itemSaleResult = await createItemSale(getItemSaleRequest(itemSale, sale.toJSON()));
-            if (!itemSaleResult){
-              throw new Error("Unable to create the  item sale");
-            }
-            res.status(201).json(itemSaleResult)
-          } catch (ex) {
-            console.log(ex);
-            res.status(res.statusCode || 400).json({
-              error: ex.message
-            });
-          }
-        })
+      } else{
         res.status(201).json(sale);
+        handleItemSaleOnSale(req.body.itemSales, sale);
       }
     } catch (ex) {
       console.log(ex);
