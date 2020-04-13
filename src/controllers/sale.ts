@@ -11,9 +11,9 @@ import requestValidator from "../middleware/requestValidator";
 
 const saleRoute = Router();
 
-saleRoute.get("/", async (_req, res) => {
+saleRoute.get("/", async (req, res) => {
   try {
-    const sales = await getAllSales();
+    const sales = await getAllSales(req.body);
     if (!sales.length) {
       res.status(204).json([]);
       return;
