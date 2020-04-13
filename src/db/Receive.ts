@@ -9,20 +9,6 @@ import ItemReceiving from "./ItemReceiving";
 class Receive extends Model<Receive> {
   @HasMany(()=>ItemReceiving)
   itemReceivings: ItemReceiving | undefined
-
-  @ForeignKey(()=>Item)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    validate: {
-      notNull: true
-    },
-    comment: "Supplier of the recieving item"
-  })
-  itemId: string | undefined;
-
-  @BelongsTo(()=>Item)
-  item: Item | undefined;
   
   @ForeignKey(()=>Supplier)
   @Column({

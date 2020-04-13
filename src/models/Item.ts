@@ -1,13 +1,24 @@
 import Item from "./../db/Item";
 import IItem from "./../interfaces/IItem";
 import ItemStats from "../db/ItemStat";
+import ItemReceiving from "../db/ItemReceiving";
+import ItemSale from "../db/ItemSale";
 
 const getItemOptions = {
   include: [
     {
       model: ItemStats,
       as: 'itemStats'
-    }
+    },
+    {
+      model: ItemReceiving,
+      as: 'itemReceive'
+    },
+    {
+      model: ItemSale,
+      as: 'itemSale'
+    },
+    
   ]
 };
 
