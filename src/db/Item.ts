@@ -1,6 +1,7 @@
 import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import ItemStats from "./ItemStat";
 import ItemSale from "./ItemSale";
+import ItemReceiving from "./ItemReceiving";
 @Table({
   timestamps: true
 })
@@ -13,6 +14,9 @@ class Item extends Model<Item> {
   @HasMany(() => ItemSale)
   itemSales: ItemSale[] | undefined;
 
+  @HasMany(() => ItemReceiving)
+  itemReceive: ItemReceiving[] | undefined;
+  
   @Column({
     type: DataType.STRING,
     allowNull: false,
