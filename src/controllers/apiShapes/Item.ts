@@ -16,7 +16,6 @@ export function ItemShape(item: any) {
     category: item && item.category,
     reOrderLevel: item && item.reOrderLevel,
     itemStats: item && item.itemStats,
-    receivings: item && item.receivings,
     itemSales: item && item.itemSales,
   };
 }

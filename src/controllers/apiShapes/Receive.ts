@@ -13,7 +13,6 @@ export function ReceivesShape(receiving: any) {
 export function ReceiveShape(receiving: any) {
   return {
     id: receiving && receiving.id,
-    item: receiving && receiving.item,
     supplier: receiving && receiving.supplier,
     total: receiving && receiving.total,
     totlaDiscount: receiving && receiving.totlaDiscount,
