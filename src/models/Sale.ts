@@ -4,6 +4,8 @@ import Customer from '../db/Customer';
 import ItemSale from '../db/ItemSale';
 import Sequelize from "sequelize";
 import Item from '../db/Item';
+import CashBook from '../db/CashBook';
+import ItemStats from '../db/ItemStat';
 
 const Op = Sequelize.Op;
 
@@ -55,5 +57,56 @@ export async function getSale(id: number) {
 
 export async function createSale(customer: ISale) {
   return await Sale.create(customer);
+}
+
+export const handleItemSaleOnSale = (itemSales: any, sale: any) => {
+  itemSales.forEach((itemSale: any) => {
+    try {
+      const { itemId, sellingPrice, discount, quantity, description } = itemSale;
+      const itemSaleDetails = {
+        saleId: sale.toJSON().id,
+        itemId,
+        sellingPrice,
+        discount,
+        quantity,
+        description,
+      }
+      const itemSaleResult = ItemSale.create(itemSaleDetails);
+      if (!itemSaleResult) {
+        throw new Error("Unable to create the  item sale");
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  })
+}
+
+export const handleCashBookOnSale = async (cashBookDetails: any) => {
+  if (cashBookDetails.type === "cash") {
+    try {
+      const cashBookResult = CashBook.create(cashBookDetails);
+      if (!cashBookResult) {
+        throw new Error("Unable to create cashbook entry on sale");
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+}
+
+export const handleItemStatOnSale = async (itemSales: any) => {
+  try {
+    itemSales.forEach((itemSale: { quantity: number; itemId: number; }) => {
+      ItemStats.update({
+        quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`)
+      }, {
+        where: {
+          itemId: itemSale.itemId,
+        }
+      });
+    })
+  } catch (ex) {
+    console.log(ex);
+  }
 }
 
