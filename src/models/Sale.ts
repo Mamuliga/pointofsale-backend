@@ -46,8 +46,9 @@ export async function getAllSales(dates: any) {
       }
     }
   }
+  // attributes: {include:[[Sequelize.fn('COUNT', Sequelize.col('id')), 'sales_count']]},
   return await Sale.findAll({
-    where: dateFilters
+    where: dateFilters,
   });
 }
 

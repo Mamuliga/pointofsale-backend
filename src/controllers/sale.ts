@@ -15,12 +15,12 @@ const saleRoute = Router();
 
 saleRoute.get("/", async (req, res) => {
   try {
-    const sales = await getAllSales(req.body);
+    const sales = await getAllSales(req.body);   
     if (!sales.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(sales.map(sale => SalesShape(sale)));
+    res.status(200).json(SalesShape(sales));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({

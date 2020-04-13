@@ -1,13 +1,12 @@
-export function SalesShape(sale: any) {
-  return {
-    id: sale && sale.id,
-    customerId: sale && sale.customerId,
-    total: sale && sale.total,
-    totlaDiscount: sale && sale.totlaDiscount,
-    paymentType: sale && sale.paymentType,
-    payedAmount: sale && sale.payedAmount,
-    balance: sale && sale.balance,
-  };
+export function SalesShape(sales: any) {
+  if(sales){
+    return {
+      sales
+    };
+  } else {
+    return {}
+  }
+
 }
 
 export function SaleShape(sale: any) {
