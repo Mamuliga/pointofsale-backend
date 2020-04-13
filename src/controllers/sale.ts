@@ -1,18 +1,16 @@
 import { Router } from "express";
 import {
-  // getSale,
   getSingleSale,
   createSale,
   getAllSales,
 } from "../models/Sale";
-import { SaleShape, SalesShape, getASaleShape } from "./apiShapes/Sale";
+import {  SalesShape, getASaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
-import { createItemSale } from "../models/ItemSale";
-import { ItemSaleShape } from "./apiShapes/ItemSale";
-import { createCashbookEntry } from "../models/Cashbook";
 import ItemStats from "../db/ItemStat";
 import Sequelize from "sequelize";
+import CashBook from "../db/CashBook";
+import ItemSale from "../db/ItemSale";
 
 const saleRoute = Router();
 
@@ -32,20 +30,6 @@ saleRoute.get("/", async (req, res) => {
   }
 });
 
-// saleRoute.get("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const sale = await getSale(parseInt(id) || 0);
-//     if (!sale) res.status(204).json({});
-//     res.status(200).json(SaleShape(sale));
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message
-//     });
-//   }
-// });
-
 saleRoute.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -60,30 +44,24 @@ saleRoute.get("/:id", async (req, res) => {
   }
 });
 
-const getItemSaleRequest = (saleRequest: any, {id}:any) => {
-  const { itemId, sellingPrice, discount, quantity, description } = saleRequest;
-  return {
-    saleId:id,
-    itemId,
-    sellingPrice,
-    discount,
-    quantity,
-    description,
-  }
-}
 const handleItemSaleOnSale = (itemSales:any, sale:any) => {
-  itemSales.forEach(async (itemSale: any, res:any)=>{
+  itemSales.forEach((itemSale: any)=>{
     try {
-      const itemSaleResult = await createItemSale(getItemSaleRequest(itemSale, sale.toJSON()));
+      const { itemId, sellingPrice, discount, quantity, description } = itemSale;
+      const itemSaleDetails = {
+        saleId:sale.toJSON().id,
+        itemId,
+        sellingPrice,
+        discount,
+        quantity,
+        description,
+      }
+      const itemSaleResult = ItemSale.create(itemSaleDetails);
       if (!itemSaleResult){
         throw new Error("Unable to create the  item sale");
       }
-      // res.status(201).json(itemSaleResult)
     } catch (ex) {
       console.log(ex);
-      res.status(res.statusCode || 400).json({
-        error: ex.message
-      });
     }
   })
 }
@@ -91,30 +69,31 @@ const handleItemSaleOnSale = (itemSales:any, sale:any) => {
 const handleCashBookOnSale = async (cashBookDetails:any) => {
   if(cashBookDetails.type === "cash"){
     try {
-      const cashBookResult = await createCashbookEntry(cashBookDetails);
+      const cashBookResult = CashBook.create(cashBookDetails);
       if (!cashBookResult){
         throw new Error("Unable to create cashbook entry on sale");
       }
-      // res.status(201).json(itemSaleResult)
     } catch (ex) {
       console.log(ex);
-      // res.status(res.statusCode || 400).json({
-      //   error: ex.message
-      // });
     }
   }
 }
 
 const handleItemStatOnSale = async (itemSales:any) => {
-  itemSales.forEach((itemSale: { quantity: number; itemId: number; })=>{
-    ItemStats.update({
-      quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`)
-    }, {
-      where: {
-        itemId:itemSale.itemId,
-      }
-    });
-  })
+  try{
+    itemSales.forEach((itemSale: { quantity: number; itemId: number; })=>{
+      ItemStats.update({
+        quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`)
+      }, {
+        where: {
+          itemId:itemSale.itemId,
+        }
+      });
+    })
+  } catch (ex) {
+    console.log(ex);
+  }
+ 
 
 }
 
