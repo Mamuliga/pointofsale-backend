@@ -10,10 +10,6 @@ import {
 import { SalesShape, SaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
-import ItemStats from "../db/ItemStat";
-import Sequelize from "sequelize";
-import CashBook from "../db/CashBook";
-import ItemSale from "../db/ItemSale";
 
 const saleRoute = Router();
 
