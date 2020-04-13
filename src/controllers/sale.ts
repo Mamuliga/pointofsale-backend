@@ -11,6 +11,8 @@ import requestValidator from "../middleware/requestValidator";
 import { createItemSale } from "../models/ItemSale";
 import { ItemSaleShape } from "./apiShapes/ItemSale";
 import { createCashbookEntry } from "../models/Cashbook";
+import ItemStats from "../db/ItemStat";
+import Sequelize from "sequelize";
 
 const saleRoute = Router();
 
@@ -101,6 +103,19 @@ const handleCashBookOnSale = async (cashBookDetails:any) => {
     }
 }
 
+const handleItemStatOnSale = async (itemSales:any) => {
+  itemSales.forEach((itemSale: { quantity: number; itemId: number; })=>{
+    ItemStats.update({
+      quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`)
+    }, {
+      where: {
+        itemId:itemSale.itemId,
+      }
+    });
+  })
+
+}
+
 
 saleRoute.post(
   "/",
@@ -114,6 +129,7 @@ saleRoute.post(
         res.status(201).json(sale);
         handleItemSaleOnSale(req.body.itemSales, sale);
         handleCashBookOnSale(req.body.cashBookDetails);
+        handleItemStatOnSale(req.body.itemSales);
       }
     } catch (ex) {
       console.log(ex);
