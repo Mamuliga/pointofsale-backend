@@ -7,11 +7,9 @@ import {
   handleCashBookOnSale,
   handleItemStatOnSale,
 } from "../models/Sale";
-import Sequelize from 'sequelize';
 import { SalesShape, SaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
-import sequelize from "../db";
 
 const saleRoute = Router();
 

@@ -1,3 +1,5 @@
+import ISale from "../../interfaces/ISale";
+
 export function SalesShape(sales: any) {
   if (sales) {
     return {
@@ -12,9 +14,9 @@ export function SalesShape(sales: any) {
 }
 
 export function SaleShape(sale: any) {
-  const { id, customer, total, totlaDiscount, paymentType, balance, itemSales } = sale;
-  const itemDetails: any | { itemName: string; discount: number; quantity: number; sellingPrice: number; itemId: number; }[] = [];
   if (sale) {
+  const itemDetails:ISale["itemDetails"] = [];
+  const { id, customer, total, totlaDiscount, paymentType, balance, itemSales } = sale;
     if (Array.isArray(itemSales)) {
       itemSales.forEach(({ item: { itemName }, discount, quantity, sellingPrice, itemId }) => {
         itemDetails.push({ itemName, discount, quantity, sellingPrice, itemId })

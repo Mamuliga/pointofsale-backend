@@ -64,8 +64,8 @@ export async function getSale(id: number) {
   return await Sale.findByPk(id, getSaleOptions);
 }
 
-export async function createSale(customer: ISale) {
-  return await Sale.create(customer);
+export async function createSale(sale: ISale) {
+  return await Sale.create(sale);
 }
 
 export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
