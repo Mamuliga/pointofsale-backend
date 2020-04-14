@@ -18,10 +18,10 @@ const getSaleOptions = {
     {
       model: ItemSale,
       as: 'itemSales',
-      include:[
+      include: [
         {
-          model:Item,
-          as:'item'
+          model: Item,
+          as: 'item'
         }
       ]
     }
@@ -29,10 +29,10 @@ const getSaleOptions = {
 };
 
 export async function getAllSales(dates: any) {
-  const {date1, date2} = dates;
-  let date  = '';
+  const { date1, date2 } = dates;
+  let date = '';
   let dateFilters = {};
-  if(date1 && date2){
+  if (date1 && date2) {
     dateFilters = {
       createdAt: {
         [Op.lt]: date1,
@@ -49,13 +49,14 @@ export async function getAllSales(dates: any) {
     }
     date = `Today`
   }
-  
-  const allSales = await Sale.findAll({ where: dateFilters,});
-  const salesSummary = await Sale.findAll({ 
+
+  const allSales = await Sale.findAll({ where: dateFilters });
+  const salesSummary = await Sale.findAll({
     attributes: [
       [Sequelize.fn('COUNT', Sequelize.col('id')), 'salesCount'],
-      [Sequelize.fn('SUM', Sequelize.col('total')), 'totalOfAllSales']]},
-    );
+      [Sequelize.fn('SUM', Sequelize.col('total')), 'totalOfAllSales']]
+  },
+  );
   return [[...salesSummary], date, [...allSales]]
 }
 

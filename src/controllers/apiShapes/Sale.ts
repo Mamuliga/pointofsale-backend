@@ -1,9 +1,9 @@
 export function SalesShape(sales: any) {
-  if(sales){
+  if (sales) {
     return {
-      sales:sales[0],
-      dateRange:sales[1],
-      saleSummary:sales[2]
+      sales: sales[0],
+      dateRange: sales[1],
+      saleSummary: sales[2]
     };
   } else {
     return {}
