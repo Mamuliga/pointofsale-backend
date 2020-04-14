@@ -15,7 +15,7 @@ const saleRoute = Router();
 
 saleRoute.get("/", async (req, res) => {
   try {
-    const sales = await getAllSales(req.body);   
+    const sales = await getAllSales(req.body);  
     if (!sales.length) {
       res.status(204).json([]);
       return;

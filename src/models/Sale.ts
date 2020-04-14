@@ -30,6 +30,7 @@ const getSaleOptions = {
 
 export async function getAllSales(dates: any) {
   const {date1, date2} = dates;
+  let date  = '';
   let dateFilters = {};
   if(date1 && date2){
     dateFilters = {
@@ -38,6 +39,7 @@ export async function getAllSales(dates: any) {
         [Op.gt]: date2,
       }
     }
+    date = `Between ${date1} and ${date2}`
   } else {
     dateFilters = {
       createdAt: {
@@ -45,11 +47,16 @@ export async function getAllSales(dates: any) {
         [Op.gt]: new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
       }
     }
+    date = `Today`
   }
-  // attributes: {include:[[Sequelize.fn('COUNT', Sequelize.col('id')), 'sales_count']]},
-  return await Sale.findAll({
-    where: dateFilters,
-  });
+  
+  const allSales = await Sale.findAll({ where: dateFilters,});
+  const salesSummary = await Sale.findAll({ 
+    attributes: [
+      [Sequelize.fn('COUNT', Sequelize.col('id')), 'salesCount'],
+      [Sequelize.fn('SUM', Sequelize.col('total')), 'totalOfAllSales']]},
+    );
+  return [[...salesSummary], date, [...allSales]]
 }
 
 export async function getSale(id: number) {
