@@ -68,8 +68,8 @@ export async function createSale(customer: ISale) {
   return await Sale.create(customer);
 }
 
-export const handleItemSaleOnSale = (itemSales: any, sale: any) => {
-  itemSales.forEach((itemSale: any) => {
+export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
+  itemSales.forEach(async (itemSale: any) => {
     try {
       const { itemId, sellingPrice, discount, quantity, description } = itemSale;
       const itemSaleDetails = {
@@ -80,7 +80,7 @@ export const handleItemSaleOnSale = (itemSales: any, sale: any) => {
         quantity,
         description,
       }
-      const itemSaleResult = ItemSale.create(itemSaleDetails);
+      const itemSaleResult = await ItemSale.create(itemSaleDetails);
       if (!itemSaleResult) {
         throw new Error("Unable to create the  item sale");
       }
@@ -93,7 +93,7 @@ export const handleItemSaleOnSale = (itemSales: any, sale: any) => {
 export const handleCashBookOnSale = async (cashBookDetails: any) => {
   if (cashBookDetails.type === "cash") {
     try {
-      const cashBookResult = CashBook.create(cashBookDetails);
+      const cashBookResult = await CashBook.create(cashBookDetails);
       if (!cashBookResult) {
         throw new Error("Unable to create cashbook entry on sale");
       }
@@ -105,8 +105,8 @@ export const handleCashBookOnSale = async (cashBookDetails: any) => {
 
 export const handleItemStatOnSale = async (itemSales: any) => {
   try {
-    itemSales.forEach((itemSale: { quantity: number; itemId: number; }) => {
-      ItemStats.update({
+    itemSales.forEach(async (itemSale: { quantity: number; itemId: number; }) => {
+      await ItemStats.update({
         quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`)
       }, {
         where: {

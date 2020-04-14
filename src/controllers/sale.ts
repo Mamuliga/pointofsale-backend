@@ -7,9 +7,11 @@ import {
   handleCashBookOnSale,
   handleItemStatOnSale,
 } from "../models/Sale";
+import Sequelize from 'sequelize';
 import { SalesShape, SaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
+import sequelize from "../db";
 
 const saleRoute = Router();
 
@@ -47,16 +49,15 @@ saleRoute.post(
   "/",
   requestValidator({ reqBodyValidator: CREATE_SALE_REQUEST_BODY }),
   async (req, res) => {
-    // add Sequelize.transaction(t => {
     try {
       const sale = await createSale(req.body);
       if (!sale) {
         throw new Error("Unable to create the sale");
       } else {
         res.status(201).json(sale);
-        handleItemSaleOnSale(req.body.itemSales, sale);
-        handleCashBookOnSale(req.body.cashBookDetails);
-        handleItemStatOnSale(req.body.itemSales);
+        await handleItemSaleOnSale(req.body.itemSales, sale);
+        await handleCashBookOnSale(req.body.cashBookDetails);
+        await handleItemStatOnSale(req.body.itemSales);
       }
     } catch (ex) {
       console.log(ex);
