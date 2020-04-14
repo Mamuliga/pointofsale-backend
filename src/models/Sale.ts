@@ -13,20 +13,25 @@ const getSaleOptions = {
   include: [
     {
       model: Customer,
-      as: 'customer'
+      as: 'customer',
+      attributes:['firstName', 'lastName']
     },
     {
       model: ItemSale,
       as: 'itemSales',
+      attributes:['discount', 'quantity', 'sellingPrice', 'itemId'],
       include: [
         {
           model: Item,
-          as: 'item'
+          as: 'item',
+          attributes:['itemName']
         }
       ]
     }
-  ]
+  ],
+  attributes:['total','totalDiscount', 'paymentType',]
 };
+
 
 export async function getAllSales(dates: any) {
   const { date1, date2 } = dates;
