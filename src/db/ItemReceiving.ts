@@ -1,46 +1,53 @@
-import { Model, Table, Column, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
-import Receive from "./Receive";
-import Item from "./Item";
+import {
+  Model,
+  Table,
+  Column,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
+import Receive from './Receive';
+import Item from './Item';
 
 @Table({
-  timestamps: true
+  timestamps: true,
 })
 class ItemReceiving extends Model<ItemReceiving> {
-  @ForeignKey(()=>(Receive))
-  @Column({ 
+  @ForeignKey(() => Receive)
+  @Column({
     type: DataType.INTEGER,
     allowNull: false,
     validate: {
-      notNull: true
+      notNull: true,
     },
-    comment: "receive ref"
+    comment: 'receive ref',
   })
   receiveId: number | undefined;
 
-  @BelongsTo(()=>Receive)
-  receive:Receive | undefined
+  @BelongsTo(() => Receive)
+  receive: Receive | undefined;
 
-  @ForeignKey(()=>(Item))
-  @Column({ 
+  @ForeignKey(() => Item)
+  @Column({
     type: DataType.INTEGER,
     allowNull: false,
     validate: {
-      notNull: true
+      notNull: true,
     },
-    comment: "item ref"
+    comment: 'item ref',
   })
   itemId: number | undefined;
 
-  @BelongsTo(()=>Item)
-  item:Item | undefined
+  @BelongsTo(() => Item)
+  item: Item | undefined;
 
   @Column({
     type: DataType.FLOAT,
     allowNull: false,
     validate: {
-      notNull: true
+      notNull: true,
     },
-    comment: "receive price of the item"
+    comment: 'receive price of the item',
   })
   receivePrice: number | undefined;
 
@@ -48,9 +55,9 @@ class ItemReceiving extends Model<ItemReceiving> {
     type: DataType.FLOAT,
     allowNull: false,
     validate: {
-      notNull: true
+      notNull: true,
     },
-    comment: "discount of received item"
+    comment: 'discount of received item',
   })
   discount: number | undefined;
 
@@ -58,19 +65,19 @@ class ItemReceiving extends Model<ItemReceiving> {
     type: DataType.NUMBER,
     allowNull: false,
     validate: {
-      notNull: true
+      notNull: true,
     },
-    comment: "item received quantitity"
+    comment: 'item received quantitity',
   })
-  qty: number | undefined;
+  quantity: number | undefined;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     validate: {
-      notNull: true
+      notNull: true,
     },
-    comment: "description of the item"
+    comment: 'description of the item',
   })
   description: Date | undefined;
 }
