@@ -79,7 +79,7 @@ export const handleItemReceiveOnReceive = async (
     try {
       const {
         itemId,
-        receivingPrice,
+        receivePrice,
         discount,
         quantity,
         description,
@@ -87,7 +87,7 @@ export const handleItemReceiveOnReceive = async (
       const itemReceiveDetails = {
         receiveId: receive.toJSON().id,
         itemId,
-        receivingPrice,
+        receivePrice,
         discount,
         quantity,
         description,
@@ -121,7 +121,7 @@ export const handleItemStatOnReceive = async (itemReceives: any) => {
       async (itemReceive: { quantity: number; itemId: number }) => {
         await ItemStats.update(
           {
-            quantity: Sequelize.literal(`quantity - ${itemReceive.quantity}`),
+            quantity: Sequelize.literal(`quantity + ${itemReceive.quantity}`),
           },
           {
             where: {
