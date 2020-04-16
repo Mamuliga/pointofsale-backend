@@ -5,7 +5,7 @@ const featureRoute = Router();
 
 featureRoute.get("/unique_features", async (req, res) => {
   try {
-    const { key } = req.query;
+    const { key } = req.params;
     if (key) res.status(200).json({ key: unique_feature[key] });
   } catch (ex) {
     console.log(ex);
