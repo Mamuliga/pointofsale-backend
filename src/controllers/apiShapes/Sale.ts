@@ -1,24 +1,37 @@
-export function SalesShape(sale: any) {
-  return {
-    id: sale && sale.id,
-    customerId: sale && sale.customerId,
-    total: sale && sale.total,
-    totlaDiscount: sale && sale.totlaDiscount,
-    paymentType: sale && sale.paymentType,
-    payedAmount: sale && sale.payedAmount,
-    balance: sale && sale.balance,
-  };
+import ISale from "../../interfaces/ISale";
+
+export function SalesShape(sales: any) {
+  if (sales) {
+    return {
+      sales: sales[0],
+      dateRange: sales[1],
+      saleSummary: sales[2]
+    };
+  } else {
+    return {}
+  }
+
 }
 
 export function SaleShape(sale: any) {
-  return {
-    id: sale && sale.id,
-    customer: sale && sale.customer,
-    total: sale && sale.total,
-    totlaDiscount: sale && sale.totlaDiscount,
-    paymentType: sale && sale.paymentType,
-    payedAmount: sale && sale.payedAmount,
-    balance: sale && sale.balance,
-    itemSales: sale && sale.itemSales,
-  };
+  if (sale) {
+  const itemDetails:ISale["itemDetails"] = [];
+  const { id, customer, total, totalDiscount, paymentType, balance, itemSales } = sale;
+    if (Array.isArray(itemSales)) {
+      itemSales.forEach(({ item: { itemName }, discount, quantity, sellingPrice, itemId }) => {
+        itemDetails.push({ itemName, discount, quantity, sellingPrice, itemId })
+      })
+    }
+    return {
+      id,
+      customerName: customer.firstName + " " + customer.lastName,
+      total,
+      totalDiscount,
+      paymentType,
+      balance,
+      itemDetails,
+    };
+  } else {
+    return {};
+  }
 }
