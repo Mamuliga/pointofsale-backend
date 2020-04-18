@@ -1,23 +1,26 @@
 import { Router } from "express";
 import {
-  getSale,
   createSale,
   getAllSales,
+  getSale,
+  handleItemSaleOnSale,
+  handleCashBookOnSale,
+  handleItemStatOnSale,
 } from "../models/Sale";
-import { SaleShape, SalesShape } from "./apiShapes/Sale";
+import { SalesShape, SaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
 
 const saleRoute = Router();
 
-saleRoute.get("/", async (_req, res) => {
+saleRoute.get("/", async (req, res) => {
   try {
-    const sales = await getAllSales();
+    const sales = await getAllSales(req.body);  
     if (!sales.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(sales.map(sale => SalesShape(sale)));
+    res.status(200).json(SalesShape(sales));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
@@ -46,8 +49,14 @@ saleRoute.post(
   async (req, res) => {
     try {
       const sale = await createSale(req.body);
-      if (!sale) throw new Error("Unable to create the sale");
-      res.status(201).json(sale);
+      if (!sale) {
+        throw new Error("Unable to create the sale");
+      } else {
+        res.status(201).json(sale);
+        await handleItemSaleOnSale(req.body.itemSales, sale);
+        await handleCashBookOnSale(req.body.cashBookDetails);
+        await handleItemStatOnSale(req.body.itemSales);
+      }
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({
