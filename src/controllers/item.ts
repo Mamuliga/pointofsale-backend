@@ -5,13 +5,20 @@ import {
   getItem,
   createItem,
   updateItem,
-  deleteItem
+  deleteItem,
+  searchItem,
 } from "../models/Item";
 import {
   CREATE_ITEM_REQUEST_BODY,
-  UPDATE_ITEM_REQUEST_BODY
+  UPDATE_ITEM_REQUEST_BODY,
 } from "./validators/item";
 import requestValidator from "../middleware/requestValidator";
+import {
+  ItemStatsShape,
+  ItemStatShape,
+  ItemSearchShape,
+} from "./apiShapes/ItemStat";
+import Item from "../db/Item";
 
 const itemRoute = Router();
 
@@ -22,11 +29,30 @@ itemRoute.get("/", async (_req, res) => {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(items.map(item => ItemsShape(item)));
+    res.status(200).json(items.map((item) => ItemsShape(item)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
-      error: ex.message
+      error: ex.message,
+    });
+  }
+});
+
+itemRoute.get("/search/:q", async (req, res) => {
+  const { q } = req.params;
+  try {
+    const itemStats = await searchItem(q);
+    if (!itemStats.length) {
+      res.status(204).json([]);
+      return;
+    }
+    res
+      .status(200)
+      .json(itemStats.map((itemStat) => ItemSearchShape(itemStat)));
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
     });
   }
 });
@@ -40,7 +66,7 @@ itemRoute.get("/:id", async (req, res) => {
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
-      error: ex.message
+      error: ex.message,
     });
   }
 });
@@ -56,7 +82,7 @@ itemRoute.post(
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({
-        error: ex.message
+        error: ex.message,
       });
     }
   }
@@ -72,7 +98,7 @@ itemRoute.put("/:id", async (req, res) => {
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
-      error: ex.message
+      error: ex.message,
     });
   }
 });
@@ -86,7 +112,7 @@ itemRoute.delete("/:id", async (req, res) => {
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
-      error: ex.message
+      error: ex.message,
     });
   }
 });
