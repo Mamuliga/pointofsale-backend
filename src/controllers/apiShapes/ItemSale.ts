@@ -10,14 +10,14 @@ export function ItemSalesShape(itemSale: any) {
 }
 
 export function ItemSaleShape(itemSale: any) {
-    return {
-      id: itemSale && itemSale.id,
-      sellingPrice: itemSale && itemSale.sellingPrice,
-      discount: itemSale && itemSale.discount,
-      quantity: itemSale && itemSale.quantity,
-      description: itemSale && itemSale.description,
-      sale: itemSale && itemSale.sale, 
-      item: itemSale && itemSale.item, 
-    };
-  }
-
+  return {
+    id: itemSale && itemSale.id,
+    costPrice: itemSale && itemSale.costPrice,
+    sellingPrice: itemSale && itemSale.sellingPrice,
+    discount: itemSale && itemSale.discount,
+    quantity: itemSale && itemSale.quantity,
+    description: itemSale && itemSale.description,
+    sale: itemSale && itemSale.sale,
+    item: itemSale && itemSale.item,
+  };
+}
