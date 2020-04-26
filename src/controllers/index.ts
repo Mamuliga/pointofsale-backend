@@ -19,14 +19,14 @@ const apiRoute = Router();
 
 apiRoute.use("/auth", authRouter);
 apiRoute.use("/features", featureRoute);
-apiRoute.use("/employees", validateJwt, employeeRoute);
+apiRoute.use("/employees", employeeRoute);
 apiRoute.use("/customers", customerRoute);
 apiRoute.use("/suppliers", supplierRoute);
 apiRoute.use("/items", itemRoute);
 apiRoute.use("/mock", mockRouter);
 apiRoute.use("/appSettings", appConfig);
 apiRoute.use("/itemStats", itemStatRoute);
-apiRoute.use("/cashBooks", cashBookRoute);
+apiRoute.use("/cashBooks", validateJwt, cashBookRoute);
 apiRoute.use("/itemReceivings", itemReceivingRoute);
 apiRoute.use("/itemSales", itemSaleRoute);
 apiRoute.use("/receives", receiveRoute);
