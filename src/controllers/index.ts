@@ -14,6 +14,7 @@ import itemReceivingRoute from "./itemReceiving";
 import itemSaleRoute from "./itemSale";
 import receiveRoute from "./receive";
 import saleRoute from "./sale";
+import reportRoute from "./report";
 
 const apiRoute = Router();
 
@@ -31,5 +32,6 @@ apiRoute.use("/itemReceivings", itemReceivingRoute);
 apiRoute.use("/itemSales", itemSaleRoute);
 apiRoute.use("/receives", receiveRoute);
 apiRoute.use("/sales", saleRoute);
+apiRoute.use("/report", reportRoute);
 
 export default apiRoute;

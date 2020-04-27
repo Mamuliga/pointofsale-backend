@@ -2,6 +2,7 @@ export function ItemSalesShape(itemSale: any) {
   return {
     id: itemSale && itemSale.id,
     saleId: itemSale && itemSale.saleId,
+    costPrice: itemSale && itemSale.costPrice,
     sellingPrice: itemSale && itemSale.sellingPrice,
     discount: itemSale && itemSale.discount,
     quantity: itemSale && itemSale.quantity,
