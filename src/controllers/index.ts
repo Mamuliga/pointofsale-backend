@@ -18,18 +18,18 @@ import saleRoute from "./sale";
 const apiRoute = Router();
 
 apiRoute.use("/auth", authRouter);
-apiRoute.use("/features", featureRoute);
+apiRoute.use("/features", validateJwt, featureRoute);
 apiRoute.use("/employees", employeeRoute);
-apiRoute.use("/customers", customerRoute);
-apiRoute.use("/suppliers", supplierRoute);
-apiRoute.use("/items", itemRoute);
+apiRoute.use("/customers", validateJwt, customerRoute);
+apiRoute.use("/suppliers", validateJwt, supplierRoute);
+apiRoute.use("/items", validateJwt, itemRoute);
 apiRoute.use("/mock", mockRouter);
-apiRoute.use("/appSettings", appConfig);
-apiRoute.use("/itemStats", itemStatRoute);
+apiRoute.use("/appSettings", validateJwt, appConfig);
+apiRoute.use("/itemStats", validateJwt, itemStatRoute);
 apiRoute.use("/cashBooks", validateJwt, cashBookRoute);
-apiRoute.use("/itemReceivings", itemReceivingRoute);
-apiRoute.use("/itemSales", itemSaleRoute);
-apiRoute.use("/receives", receiveRoute);
-apiRoute.use("/sales", saleRoute);
+apiRoute.use("/itemReceivings", validateJwt, itemReceivingRoute);
+apiRoute.use("/itemSales", validateJwt, itemSaleRoute);
+apiRoute.use("/receives", validateJwt, receiveRoute);
+apiRoute.use("/sales", validateJwt, saleRoute);
 
 export default apiRoute;
