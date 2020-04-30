@@ -4,13 +4,13 @@ import ItemSale from "../db/ItemSale";
 const Op = Sequelize.Op;
 
 export async function getNetProfit(dates: any) {
-  const { date1, date2 } = dates;
+  const { startDate, endDate } = dates;
   let dateFilters = {};
-  if (date1 && date2) {
+  if (startDate && endDate) {
     dateFilters = {
       createdAt: {
-        [Op.gte]: date1,
-        [Op.lte]: date2,
+        [Op.gte]: startDate,
+        [Op.lte]: endDate,
       },
     };
   } else {
@@ -18,8 +18,8 @@ export async function getNetProfit(dates: any) {
   }
 
   const allItemSales = await ItemSale.findAll({ where: dateFilters });
-  console.log(allItemSales);
-  return calculateProfit(allItemSales);
+  const noOfItems = allItemSales.length;
+  return [noOfItems, calculateProfit(allItemSales), startDate, endDate];
 }
 
 function calculateProfit(a: any) {
