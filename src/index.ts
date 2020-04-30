@@ -1,5 +1,6 @@
 // TODO: Setup automation for deploy
 import express from 'express';
+import cors from 'cors';
 import config from './config';
 import apiRoutes from './controllers';
 import dbConnect from './middleware/dbConnect';
@@ -9,7 +10,7 @@ import setHeaders from './middleware/headerSetup';
 
 const app = express();
 
-// TODO: call setup header middleware
+app.use(cors());
 app.use((req, res, next) => {
   setHeaders(req, res, next);
 });
