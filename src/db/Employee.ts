@@ -46,7 +46,7 @@ class Employee extends Model<Employee> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
     validate: {
       isIn: {
         args: [Object.keys(GENDER)],

@@ -56,10 +56,7 @@ class Item extends Model<Item> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
-    validate: {
-      notNull: true
-    },
+    allowNull: true,
     comment: "Item Description"
   })
   description: string | undefined;

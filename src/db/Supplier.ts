@@ -45,14 +45,14 @@ class Supplier extends Model<Supplier> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: "Phone number of the supplier"
   })
   phoneNo: string | undefined;
 
   @Column({
     type: DataType.STRING,
-    allowNull: true,
+    allowNull: false,
     validate: {
       isIn: {
         args: [Object.keys(GENDER)],

@@ -31,7 +31,7 @@ class Customer extends Model<Customer> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isEmail: true
     },
@@ -41,14 +41,14 @@ class Customer extends Model<Customer> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: "Phone number of the person"
   })
   phoneNo: string | undefined;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: true,
+    type: DataType.STRING, 
+    allowNull: false,
     validate: {
       isIn: {
         args: [Object.keys(GENDER)],
