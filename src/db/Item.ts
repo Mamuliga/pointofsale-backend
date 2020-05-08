@@ -19,7 +19,7 @@ class Item extends Model<Item> {
   
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       notNull: true
     },
@@ -46,7 +46,7 @@ class Item extends Model<Item> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       notNull: true
     },
