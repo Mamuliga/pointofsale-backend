@@ -32,6 +32,6 @@ apiRoute.use("/itemReceivings", validateJwt, itemReceivingRoute);
 apiRoute.use("/itemSales", validateJwt, itemSaleRoute);
 apiRoute.use("/receives", validateJwt, receiveRoute);
 apiRoute.use("/sales", validateJwt, saleRoute);
-apiRoute.use("/report", validateJwt, reportRoute);
+apiRoute.use("/report", reportRoute);
 
 export default apiRoute;
