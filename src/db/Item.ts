@@ -20,9 +20,6 @@ class Item extends Model<Item> {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    validate: {
-      notNull: true
-    },
     comment: "Item barcode"
   })
   barcode: string | undefined;
@@ -47,9 +44,6 @@ class Item extends Model<Item> {
   @Column({
     type: DataType.STRING,
     allowNull: true,
-    validate: {
-      notNull: true
-    },
     comment: "Re-order Level"
   })
   reOrderLevel: string | undefined;
