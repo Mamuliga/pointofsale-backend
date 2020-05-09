@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { getNetProfit, getDailySales } from "../models/report";
+import {
+  getNetProfit,
+  getDailySales,
+  getBestSellingItems,
+} from "../models/Report";
 import { SalesShape } from "./apiShapes/Report";
 
 const reportRoute = Router();
@@ -43,5 +47,21 @@ reportRoute.get("/dailySales", async (req, res) => {
   }
 });
 
+reportRoute.get("/best-selling-items", async (req, res) => {
+  try {
+    const items = await getBestSellingItems(req.query);
+
+    if (!items) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(items);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+
 export default reportRoute;
-// 2020-04-24T11:23:01.520Z
