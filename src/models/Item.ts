@@ -53,17 +53,17 @@ export async function deleteItem(id: number) {
 }
 
 export async function searchItem(q: any) {
-  const itemAtt = await Item.findOne({
-    attributes: ["id", "barcode", "itemName"],
+  const itemAtt = await Item.findAll({
+    attributes: ["id"],
     where: {
       [Op.or]: [
-        { id: { [Op.like]: q } },
-        { barcode: { [Op.like]: q } },
-        { itemName: { [Op.like]: q } },
+        { id: { [Op.like]: `%${q}%` } },
+        { barcode: { [Op.like]: `%${q}%` } },
+        { itemName: { [Op.like]: `%${q}%` } },
       ],
     },
   });
-  const i_id = itemAtt?.id;
+  const i_id = itemAtt.map((tag) => tag.id);
   const ItemStatsAtt = await ItemStats.findAll({
     attributes: { exclude: ["costPrice"] },
     where: { itemId: i_id },
