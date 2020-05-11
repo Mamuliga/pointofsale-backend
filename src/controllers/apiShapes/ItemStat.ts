@@ -34,6 +34,8 @@ export function ItemSearchShape(itemStats: any) {
     supplier: {
       id: itemStats && itemStats.supplier.id,
       email: itemStats && itemStats.supplier.email,
+      firstName: itemStats && itemStats.supplier.firstName,
+      lastName: itemStats && itemStats.supplier.lastName,
       phoneNo: itemStats && itemStats.supplier.phoneNo,
     },
     item: {
