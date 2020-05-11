@@ -56,7 +56,11 @@ export async function searchItem(q: any) {
   const itemAtt = await Item.findOne({
     attributes: ["id", "barcode", "itemName"],
     where: {
-      [Op.or]: [{ id: q }, { barcode: q }, { itemName: q }],
+      [Op.or]: [
+        { id: { [Op.like]: q } },
+        { barcode: { [Op.like]: q } },
+        { itemName: { [Op.like]: q } },
+      ],
     },
   });
   const i_id = itemAtt?.id;
