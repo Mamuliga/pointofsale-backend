@@ -1,6 +1,7 @@
 import Sequelize from "sequelize";
 import ItemSale from "../db/ItemSale";
 import Sale from "../db/Sale";
+import Item from "../db/Item";
 
 const Op = Sequelize.Op;
 
@@ -24,7 +25,6 @@ export async function getNetProfit(dates: any) {
 }
 
 export async function getDailySales(date: any) {
-  console.log(date);
   let dateFilters = {};
   let salesDate;
   if ("date" in date) {
@@ -55,6 +55,75 @@ export async function getDailySales(date: any) {
   });
 
   return [[...salesSummary], salesDate, [...allSales]];
+}
+
+export async function getBestSellingItems(limit: any) {
+  let itemLimit;
+  if ("limit" in limit) {
+    itemLimit = limit.limit;
+  } else {
+    itemLimit = 10;
+  }
+  let dateFilters = {
+    createdAt: {
+      [Op.lt]: new Date(new Date().setDate(31)).setUTCHours(23, 59, 59, 0),
+      [Op.gt]: new Date(new Date().setDate(1)).setUTCHours(0, 0, 0, 0),
+    },
+  };
+
+  const allItemSales = await ItemSale.findAll({
+    attributes: [
+      "itemId",
+      [Sequelize.fn("SUM", Sequelize.col("quantity")), "totalOfQuantity"],
+    ],
+    where: dateFilters,
+    group: "itemId",
+    order: [[Sequelize.fn("MAX", Sequelize.col("quantity")), "DESC"]],
+    limit: itemLimit,
+    include: [
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id", "itemName", "barcode"],
+      },
+    ],
+  });
+  return allItemSales;
+}
+
+export async function getSalesReportByPaymentType(dates: any) {
+  const { startDate, endDate } = dates;
+  let datePeriod;
+  let dateFilters = {};
+  if (startDate && endDate) {
+    dateFilters = {
+      createdAt: {
+        [Op.lt]: new Date(endDate).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(startDate).setUTCHours(23, 59, 59, 0),
+      },
+    };
+    datePeriod = dateFilters;
+  } else {
+    dateFilters = {
+      createdAt: {
+        [Op.lt]: new Date(new Date().setDate(31)).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(new Date().setDate(1)).setUTCHours(0, 0, 0, 0),
+      },
+    };
+    datePeriod = dateFilters;
+  }
+
+  const allItemSales = await Sale.findAll({
+    attributes: [
+      "paymentType",
+      [Sequelize.fn("COUNT", Sequelize.col("paymentType")), "Count"],
+      [Sequelize.fn("SUM", Sequelize.col("total")), "Amount Tendered"],
+    ],
+    where: dateFilters,
+    group: "paymentType",
+    order: [[Sequelize.fn("MAX", Sequelize.col("total")), "DESC"]],
+  });
+  return allItemSales;
 }
 
 function calculateProfit(a: any) {
