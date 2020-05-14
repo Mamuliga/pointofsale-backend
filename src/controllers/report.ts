@@ -3,6 +3,7 @@ import {
   getNetProfit,
   getDailySales,
   getBestSellingItems,
+  getSalesReportByPaymentType,
 } from "../models/Report";
 import { SalesShape } from "./apiShapes/Report";
 
@@ -56,6 +57,23 @@ reportRoute.get("/best-selling-items", async (req, res) => {
       return;
     }
     res.status(200).json(items);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+
+reportRoute.get("/report-by-payment-type", async (req, res) => {
+  try {
+    const salesByPaymentType = await getSalesReportByPaymentType(req.query);
+
+    if (!salesByPaymentType) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(salesByPaymentType);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
