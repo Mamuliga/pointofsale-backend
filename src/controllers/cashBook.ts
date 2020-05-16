@@ -12,7 +12,7 @@ const cashBookRoute = Router();
 
 cashBookRoute.get("/", async (_req, res) => {
   try {
-    const entries = await getAllCashBookEntries();
+    const entries = await getAllCashBookEntries(_req.query);
     if (!entries.length) {
       res.status(204).json([]);
       return;
