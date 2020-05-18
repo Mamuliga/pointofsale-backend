@@ -72,6 +72,13 @@ export async function createSale(sale: ISale) {
   return await Sale.create(sale);
 }
 
+export async function getLastSaleId() {
+  const id = await Sale.findOne({
+    attributes: [[Sequelize.fn("MAX", Sequelize.col("id")), "LastSaleId"]],
+  });
+  return id;
+}
+
 export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
   itemSales.forEach(async (itemSale: any) => {
     try {
