@@ -6,6 +6,7 @@ import {
   handleItemSaleOnSale,
   handleCashBookOnSale,
   handleItemStatOnSale,
+  getLastSaleId,
 } from "../models/Sale";
 import { SalesShape, SaleShape } from "./apiShapes/Sale";
 import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
@@ -15,7 +16,7 @@ const saleRoute = Router();
 
 saleRoute.get("/", async (req, res) => {
   try {
-    const sales = await getAllSales(req.body);  
+    const sales = await getAllSales(req.body);
     if (!sales.length) {
       res.status(204).json([]);
       return;
@@ -24,7 +25,23 @@ saleRoute.get("/", async (req, res) => {
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
-      error: ex.message
+      error: ex.message,
+    });
+  }
+});
+saleRoute.get("/last-sale-id", async (req, res) => {
+  try {
+    const saleId = await getLastSaleId();
+
+    if (!saleId) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(saleId);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
     });
   }
 });
@@ -38,7 +55,7 @@ saleRoute.get("/:id", async (req, res) => {
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
-      error: ex.message
+      error: ex.message,
     });
   }
 });
@@ -60,10 +77,27 @@ saleRoute.post(
     } catch (ex) {
       console.log(ex);
       res.status(res.statusCode || 400).json({
-        error: ex.message
+        error: ex.message,
       });
     }
   }
 );
+
+// saleRoute.get("/last-sale-id", async (req, res) => {
+//   try {
+//     const saleId = await getLastSaleId();
+
+//     if (!saleId) {
+//       res.status(204).json({});
+//       return;
+//     }
+//     res.status(200).json(saleId);
+//   } catch (ex) {
+//     console.log(ex);
+//     res.status(res.statusCode || 400).json({
+//       error: ex.message,
+//     });
+//   }
+// });
 
 export default saleRoute;
