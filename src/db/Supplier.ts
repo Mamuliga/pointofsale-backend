@@ -35,10 +35,7 @@ class Supplier extends Model<Supplier> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
-    validate: {
-      isEmail: true
-    },
+    allowNull: true,
     comment: "Email Address of the supplier"
   })
   email: string | undefined;
