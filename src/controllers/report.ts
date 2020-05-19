@@ -4,6 +4,7 @@ import {
   getDailySales,
   getBestSellingItems,
   getSalesReportByPaymentType,
+  getLowInventoryReport,
 } from "../models/Report";
 import { SalesShape } from "./apiShapes/Report";
 
@@ -74,6 +75,23 @@ reportRoute.get("/report-by-payment-type", async (req, res) => {
       return;
     }
     res.status(200).json(salesByPaymentType);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+
+reportRoute.get("/low-inventory-report", async (req, res) => {
+  try {
+    const lowInventories = await getLowInventoryReport();
+
+    if (!lowInventories) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(lowInventories);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({

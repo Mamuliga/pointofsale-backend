@@ -2,6 +2,7 @@ import Sequelize from "sequelize";
 import ItemSale from "../db/ItemSale";
 import Sale from "../db/Sale";
 import Item from "../db/Item";
+import ItemStats from "./../db/ItemStat";
 
 const Op = Sequelize.Op;
 
@@ -124,6 +125,26 @@ export async function getSalesReportByPaymentType(dates: any) {
     order: [[Sequelize.fn("MAX", Sequelize.col("total")), "DESC"]],
   });
   return allItemSales;
+}
+
+export async function getLowInventoryReport() {
+  const lowInventories = await ItemStats.findAll({
+    attributes: ["itemId", "quantity"],
+    include: [
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id", "itemName", "reOrderLevel"],
+        required: true,
+      },
+    ],
+    where: {
+      quantity: { [Op.lt]: Sequelize.literal(`item.reOrderLevel`) },
+    },
+    order: [["itemId", "ASC"]],
+  });
+
+  return lowInventories;
 }
 
 function calculateProfit(a: any) {
