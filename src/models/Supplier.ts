@@ -1,19 +1,19 @@
-import ISupplier from '../interfaces/ISupplier';
-import Supplier from '../db/Supplier';
-import ItemStats from '../db/ItemStat';
-import Receive from '../db/Receive';
+import ISupplier from "../interfaces/ISupplier";
+import Supplier from "../db/Supplier";
+import ItemStats from "../db/ItemStat";
+import Receive from "../db/Receive";
 
 const getSupplierOptions = {
   include: [
     {
       model: ItemStats,
-      as: 'itemStats'
+      as: "itemStats",
     },
     {
       model: Receive,
-      as: 'receivings'
-    }
-  ]
+      as: "receivings",
+    },
+  ],
 };
 
 export async function getAllSuppliers() {
@@ -38,8 +38,16 @@ export async function updateSupplier(id: number, supplier: any) {
 
 export async function deleteSupplier(id: number) {
   const oldSupplier = await Supplier.findByPk(id);
-  if (oldSupplier) {
-    await oldSupplier.destroy();
-    return oldSupplier;
+  const itemStatsOfSupplier = await ItemStats.findOne({
+    where: { supplierId: id },
+  });
+  const receivesOfSupplier = await Receive.findOne({
+    where: { supplierId: id },
+  });
+  if (itemStatsOfSupplier == null && receivesOfSupplier == null) {
+    if (oldSupplier) {
+      await oldSupplier.destroy();
+      return oldSupplier;
+    }
   }
 }
