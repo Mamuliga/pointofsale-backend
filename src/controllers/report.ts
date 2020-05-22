@@ -5,6 +5,7 @@ import {
   getBestSellingItems,
   getSalesReportByPaymentType,
   getLowInventoryReport,
+  getReceivesByDateRange,
 } from "../models/Report";
 import { SalesShape } from "./apiShapes/Report";
 
@@ -92,6 +93,23 @@ reportRoute.get("/low-inventory-report", async (req, res) => {
       return;
     }
     res.status(200).json(lowInventories);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+
+reportRoute.get("/receives-by-date-range", async (req, res) => {
+  try {
+    const receivesByDate = await getReceivesByDateRange(req.query);
+
+    if (!receivesByDate) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(receivesByDate);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
