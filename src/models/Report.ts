@@ -3,6 +3,9 @@ import ItemSale from "../db/ItemSale";
 import Sale from "../db/Sale";
 import Item from "../db/Item";
 import ItemStats from "./../db/ItemStat";
+import ItemReceiving from "./../db/ItemReceiving";
+import Supplier from "./../db/Supplier";
+import Receive from "../db/Receive";
 
 const Op = Sequelize.Op;
 
@@ -145,6 +148,50 @@ export async function getLowInventoryReport() {
   });
 
   return lowInventories;
+}
+
+export async function getReceivesByDateRange(dates: any) {
+  const { startDate, endDate } = dates;
+  let dateFilters = {};
+  if (startDate && endDate) {
+    dateFilters = {
+      createdAt: {
+        [Op.lt]: new Date(endDate).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(startDate).setUTCHours(23, 59, 59, 0),
+      },
+    };
+  } else {
+    dateFilters = {
+      createdAt: {
+        [Op.lt]: new Date(new Date().setDate(31)).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(new Date().setDate(1)).setUTCHours(0, 0, 0, 0),
+      },
+    };
+  }
+  const itemReceives = await ItemReceiving.findAll({
+    attributes: { exclude: ["discount", "description", "updatedAt"] },
+    where: dateFilters,
+    include: [
+      {
+        model: Item,
+        as: "item",
+        attributes: ["id", "barcode", "itemName"],
+      },
+      {
+        model: Receive,
+        as: "receive",
+        attributes: ["id", "supplierId"],
+        include: [
+          {
+            model: Supplier,
+            as: "supplier",
+            attributes: ["firstName", "lastName"],
+          },
+        ],
+      },
+    ],
+  });
+  return itemReceives;
 }
 
 function calculateProfit(a: any) {
