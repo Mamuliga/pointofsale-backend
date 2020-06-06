@@ -157,7 +157,7 @@ export async function getReceivesByDateRange(dates: any) {
     dateFilters = {
       createdAt: {
         [Op.lt]: new Date(endDate).setUTCHours(23, 59, 59, 0),
-        [Op.gt]: new Date(startDate).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(startDate).setUTCHours(0, 0, 0, 0),
       },
     };
   } else {
