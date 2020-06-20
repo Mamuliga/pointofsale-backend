@@ -6,7 +6,8 @@ import {
   getSalesReportByPaymentType,
   getLowInventoryReport,
   getReceivesByDateRange,
-  getReceivesReportByPaymentType
+  getReceivesReportByPaymentType,
+  getBestProfitGivenCustomer
 } from "../models/Report";
 import { SalesShape } from "./apiShapes/Report";
 
@@ -128,6 +129,23 @@ reportRoute.get("/receives-report-by-payment-type", async (req, res) => {
       return;
     }
     res.status(200).json(receivesByPaymentType);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+
+reportRoute.get("/best-profit-given-customers", async (req, res) => {
+  try {
+    const sales = await getBestProfitGivenCustomer(req.query);
+
+    if (!sales) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(sales);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
