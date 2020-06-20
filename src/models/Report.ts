@@ -256,7 +256,6 @@ export async function getBestProfitGivenCustomer(dates: any) {
         model: ItemSale,
         as: "itemSales",
         attributes: [
-          "saleId",
           [Sequelize.fn("SUM", Sequelize.literal(`sellingPrice * quantity`)), "Total"], 
           [Sequelize.fn("SUM", Sequelize.literal(`costPrice * quantity`)), "Total cost"],
           [Sequelize.fn("SUM", Sequelize.literal(`(sellingPrice - costPrice) * quantity`)), "Profit"]
