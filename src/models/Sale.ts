@@ -84,16 +84,16 @@ export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
     try {
       const {
         itemId,
-        costPrice,
         sellingPrice,
         discount,
         quantity,
         description,
       } = itemSale;
+      const costPrice = await ItemStats.findOne({attributes:["costPrice"], where:{ItemId:itemSale.itemId}});
       const itemSaleDetails = {
         saleId: sale.toJSON().id,
         itemId,
-        costPrice,
+        costPrice:costPrice?.costPrice,
         sellingPrice,
         discount,
         quantity,
