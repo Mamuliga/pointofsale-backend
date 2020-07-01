@@ -125,14 +125,14 @@ export const handleCashBookOnSale = async (cashBookDetails: any) => {
 export const handleItemStatOnSale = async (itemSales: any) => {
   try {
     itemSales.forEach(
-      async (itemSale: { quantity: number; itemId: number }) => {
+      async (itemSale: { quantity: number; itemId: number; itemStatId: number }) => {
         await ItemStats.update(
           {
             quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`),
           },
           {
             where: {
-              itemId: itemSale.itemId,
+              id: itemSale.itemStatId,
             },
           }
         );

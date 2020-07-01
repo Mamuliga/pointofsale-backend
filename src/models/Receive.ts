@@ -118,17 +118,8 @@ export const handleCashBookOnReceive = async (cashBookDetails: any) => {
 export const handleItemStatOnReceive = async (itemReceives: any) => {
   try {
     itemReceives.forEach(
-      async (itemReceive: { quantity: number; itemId: number }) => {
-        await ItemStats.update(
-          {
-            quantity: Sequelize.literal(`quantity + ${itemReceive.quantity}`),
-          },
-          {
-            where: {
-              itemId: itemReceive.itemId,
-            },
-          }
-        );
+      async (itemReceive: any) => {
+        await ItemStats.create(itemReceive);
       }
     );
   } catch (ex) {
