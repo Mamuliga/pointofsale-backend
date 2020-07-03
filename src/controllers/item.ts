@@ -7,6 +7,7 @@ import {
   updateItem,
   deleteItem,
   searchItem,
+  searchItemsForReceives,
 } from "../models/Item";
 import {
   CREATE_ITEM_REQUEST_BODY,
@@ -49,6 +50,25 @@ itemRoute.get("/search/:q", async (req, res) => {
     res
       .status(200)
       .json(itemStats.map((itemStat) => ItemSearchShape(itemStat)));
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+
+itemRoute.get("/item-search/:q", async (req, res) => {
+  const { q } = req.params;
+  try {
+    const items = await searchItemsForReceives(q);
+    if (!items.length) {
+      res.status(204).json([]);
+      return;
+    }
+    res
+      .status(200)
+      .json(items);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
