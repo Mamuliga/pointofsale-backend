@@ -5,6 +5,6 @@ export const CREATE_ITEM_RECEIVING_REQUEST_BODY = {
     itemId: Joi.number(),
     discount:Joi.number(),
     receivePrice:Joi.number().required(),
-    qty: Joi.number().required(),
+    quantity: Joi.number().required(),
     description:Joi.string().required()
 };
