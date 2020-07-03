@@ -56,3 +56,12 @@ export function ReceiveShape(receiving: any) {
     return {};
   }
 }
+
+export function ItemSearchForReceivesShape(item: any) {
+  return {
+      id: item && item.item.id,
+      barcode: item && item.item.barcode,
+      itemName: item && item.item.itemName,
+      
+  };
+}
