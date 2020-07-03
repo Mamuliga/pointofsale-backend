@@ -79,11 +79,16 @@ export const handleItemReceiveOnReceive = async (
     try {
       const {
         itemId,
+        supplierId,
         receivePrice,
-        discount,
+        salesPrice,
+        manuDate,
+        expDate,
         quantity,
-        description,
+        discount,
+        description
       } = itemReceive;
+
       const itemReceiveDetails = {
         receiveId: receive.toJSON().id,
         itemId,

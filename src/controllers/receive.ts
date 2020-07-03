@@ -52,10 +52,11 @@ receiveRoute.post(
       if (!receive) {
         throw new Error('Unable to create the receive');
       } else {
+        const {itemId, supplierId, receivePrice: costPrice, salesPrice, expDate, manuDate, quantity} = req.body.itemReceives;
         res.status(201).json(receive);
         await handleItemReceiveOnReceive(req.body.itemReceives, receive);
         await handleCashBookOnReceive(req.body.cashBookDetails);
-        await handleItemStatOnReceive(req.body.itemReceives);
+        await handleItemStatOnReceive({itemId, supplierId, costPrice, salesPrice, expDate, manuDate, quantity});
       }
     } catch (ex) {
       console.log(ex);
