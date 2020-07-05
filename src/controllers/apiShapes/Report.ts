@@ -11,13 +11,14 @@ export function SalesShape(dailySales: any) {
 }
 
 export function TotalCountShape(totalCountOfEntries: any){
+  const { sales, items, customers, suppliers, employees } = totalCountOfEntries;
   if (totalCountOfEntries) {
     return {
-      salesCount: totalCountOfEntries[0],
-      itemsCount: totalCountOfEntries[1],
-      customersCount: totalCountOfEntries[2],
-      suppliersCount: totalCountOfEntries[3],
-      employeesCount: totalCountOfEntries[4],
+      salesCount: sales,
+      itemsCount: items,
+      customersCount: customers,
+      suppliersCount: suppliers,
+      employeesCount: employees,
     };
   } else {
     return {};

@@ -247,7 +247,7 @@ export async function getTotalCountOfEntries(){
   const employees = await Employee.findOne({
     attributes: [[Sequelize.fn("COUNT", Sequelize.col("id")), "EmployeesCount"]]
   });
-  return [sales, items, customers, suppliers, employees];
+  return {sales, items, customers, suppliers, employees};
 }
 
 function calculateProfit(a: any) {
