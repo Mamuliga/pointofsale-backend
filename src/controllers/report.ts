@@ -7,7 +7,8 @@ import {
   getLowInventoryReport,
   getReceivesByDateRange,
   getReceivesReportByPaymentType,
-  getTotalCountOfEntries
+  getTotalCountOfEntries,
+  getBestProfitGivenCustomer
 } from "../models/Report";
 import { SalesShape, TotalCountShape } from "./apiShapes/Report";
 
@@ -146,6 +147,22 @@ reportRoute.get("/total-count-of-entries", async (req, res) => {
       return;
     }
     res.status(200).json(TotalCountShape(totalCountOfEntries));
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
+    });
+  }
+});
+reportRoute.get("/best-profit-given-customers", async (req, res) => {
+  try {
+    const sales = await getBestProfitGivenCustomer(req.query);
+
+    if (!sales) {
+      res.status(204).json({});
+      return;
+    }
+    res.status(200).json(sales);
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({

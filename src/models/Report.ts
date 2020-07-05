@@ -250,6 +250,50 @@ export async function getTotalCountOfEntries(){
   return {sales, items, customers, suppliers, employees};
 }
 
+export async function getBestProfitGivenCustomer(dates: any) {
+  const { startDate, endDate } = dates;
+  let dateFilters = {};
+  if (startDate && endDate) {
+    dateFilters = {
+      createdAt: {
+        [Op.lt]: new Date(endDate).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(startDate).setUTCHours(0, 0, 0, 0),
+      },
+    };
+  } else {
+    dateFilters = {
+      createdAt: {
+        [Op.lt]: new Date(new Date().setDate(31)).setUTCHours(23, 59, 59, 0),
+        [Op.gt]: new Date(new Date().setDate(1)).setUTCHours(0, 0, 0, 0),
+      },
+    };
+  }
+  const bestProfitGivingCustomers = await Sale.findAll({
+    attributes: ["customerId"],
+    where: dateFilters,
+    include: [
+      {
+        model: ItemSale,
+        as: "itemSales",
+        attributes: [
+          [Sequelize.fn("SUM", Sequelize.literal(`sellingPrice * quantity`)), "Total"], 
+          [Sequelize.fn("SUM", Sequelize.literal(`costPrice * quantity`)), "Total cost"],
+          [Sequelize.fn("SUM", Sequelize.literal(`(sellingPrice - costPrice) * quantity`)), "Profit"]
+        ],
+        where:{saleId:Sequelize.literal(`Sale.id`)}
+      },
+      {
+        model: Customer,
+        as: "customer",
+        attributes: ["firstName", "lastName"]
+      },
+    ],
+    group:"customerId",
+    order: Sequelize.literal(`(sellingPrice - costPrice) * quantity DESC`)
+  });
+  return {bestProfitGivingCustomers};
+}
+
 function calculateProfit(a: any) {
   let sum = 0;
   for (let index = 0; index < a.length; index++) {

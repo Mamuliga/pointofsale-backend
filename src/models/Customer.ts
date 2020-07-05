@@ -1,7 +1,7 @@
 import ICustomer from '../interfaces/ICustomer';
 import Customer from '../db/Customer';
 import Sale from '../db/Sale';
-
+import { Op } from "sequelize";
 const getSaleOptions = {
   include: [
     {
@@ -38,3 +38,24 @@ export async function deleteCustomer(id: number) {
     return oldCustomer;
   }
 }
+
+export async function searchCustomer(q: any) {
+  const customerId = await Customer.findAll({
+    attributes: ["id"],
+    where: {
+      [Op.or]: [
+        { id: { [Op.like]: `%${q}%` } },
+        { firstName: { [Op.like]: `%${q}%` } },
+        { lastName: { [Op.like]: `%${q}%` } },
+      ],
+    },
+  });
+  const i_id = customerId.map((tag) => tag.id);
+  const customer = await Customer.findAll({
+    attributes: ["id", "firstName", "lastName", "email"],
+    where: { id: i_id },
+    
+  });
+  return customer;
+}
+

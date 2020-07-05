@@ -84,16 +84,16 @@ export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
     try {
       const {
         itemId,
-        costPrice,
         sellingPrice,
         discount,
         quantity,
         description,
       } = itemSale;
+      const costPrice = await ItemStats.findOne({attributes:["costPrice"], where:{ItemId:itemSale.itemId}});
       const itemSaleDetails = {
         saleId: sale.toJSON().id,
         itemId,
-        costPrice,
+        costPrice:costPrice?.costPrice,
         sellingPrice,
         discount,
         quantity,
@@ -125,14 +125,14 @@ export const handleCashBookOnSale = async (cashBookDetails: any) => {
 export const handleItemStatOnSale = async (itemSales: any) => {
   try {
     itemSales.forEach(
-      async (itemSale: { quantity: number; itemId: number }) => {
+      async (itemSale: { quantity: number; itemId: number; itemStatId: number }) => {
         await ItemStats.update(
           {
             quantity: Sequelize.literal(`quantity - ${itemSale.quantity}`),
           },
           {
             where: {
-              itemId: itemSale.itemId,
+              id: itemSale.itemStatId,
             },
           }
         );
