@@ -94,7 +94,7 @@ export async function searchItemsForReceives(q: any) {
   });
   const i_id = itemId.map((tag) => tag.id);
   const items = await Item.findAll({
-    attributes: ["id", "itemName"],
+    attributes: ["id", "itemName", "isExpireDateEnabled"],
     where: { id: i_id },
     
   });
