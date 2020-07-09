@@ -107,16 +107,17 @@ export const handleItemReceiveOnReceive = async (
   });
 };
 
-export const handleCashBookOnReceive = async (cashBookDetails: any) => {
-  if (cashBookDetails.type === 'cash') {
+export const handleCashBookOnReceive = async (amount: any, receive: any) => {
     try {
-      const cashBookResult = await CashBook.create(cashBookDetails);
+      const type = "CREDIT";
+      const description = "PAY_TO_SUPPLIER";
+      const cashBookEntry = {refNo: receive.toJSON().id, amount, type, description};
+      const cashBookResult = await CashBook.create(cashBookEntry);
       if (!cashBookResult) {
         throw new Error('Unable to create cashbook entry on receive');
       }
     } catch (ex) {
       console.log(ex);
-    }
   }
 };
 
