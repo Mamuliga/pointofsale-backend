@@ -1,10 +1,9 @@
 export default interface IItemStats {
-  itemId: string;
-  supplierId: string;
-  supplier: string;
-  costPrice: string;
+  itemId: number;
+  supplierId: number;
+  costPrice: number;
   // salesPrice: string;
-  manuDate: string;
-  expDate: string;
-  quantity: string;
+  manuDate: Date;
+  expDate: Date;
+  quantity: number;
   } 
