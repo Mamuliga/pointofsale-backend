@@ -1,6 +1,7 @@
 import CashBook from "../db/CashBook";
 import ICashBook from "./../interfaces/ICashBook";
 import Sequelize from "sequelize";
+import Due from "../db/Due";
 const Op = Sequelize.Op;
 
 export async function getAllCashBookEntries(dates: any) {
@@ -29,5 +30,30 @@ export async function getCashBookEntry(id: number) {
 }
 
 export async function createCashbookEntry(cashbook: ICashBook) {
-  return await CashBook.create(cashbook);
+  const { refNo, amount } = cashbook;
+  const type = "DEBIT";
+  const description = "CASH_FROM_DEBTORS";
+  const cashReceiveFromDebtors = { refNo, amount, type, description };
+
+  return await CashBook.create(cashReceiveFromDebtors);
 }
+
+export const handleDueOnCashbook = async (dueDetails: any) => {
+    try {
+      const { refNo, amount, dueId } = dueDetails;
+      await Due.update(
+        {
+          amount: Sequelize.literal(`amount - ${amount}`),
+        },
+        {
+          where: {
+            [Op.or]: [{saleId: dueId}, {saleId: refNo} ]
+            
+          },
+        }
+        );
+    } catch (ex) {
+      console.log(ex);
+    }
+  
+};
