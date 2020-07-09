@@ -6,7 +6,6 @@ import {
   updateDue,
   deleteDue
 } from '../models/Due';
-// import { SuppliersShape, SupplierShape } from './apiShapes/Supplier';
 import {
   CREATE_DUE_REQUEST_BODY,
   UPDATE_DUE_REQUEST_BODY
