@@ -7,5 +7,5 @@ export const CREATE_ITEM_STAT_REQUEST_BODY = {
   salesPrice: Joi.number(),
   manuDate: Joi.date(),
   expDate: Joi.date(),
-  quantity: Joi.string(),
+  quantity: Joi.number(),
 };
