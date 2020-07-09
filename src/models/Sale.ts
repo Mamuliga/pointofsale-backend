@@ -6,6 +6,7 @@ import Sequelize from "sequelize";
 import Item from "../db/Item";
 import CashBook from "../db/CashBook";
 import ItemStats from "../db/ItemStat";
+import Due from "../db/Due";
 
 const Op = Sequelize.Op;
 
@@ -109,12 +110,67 @@ export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
   });
 };
 
-export const handleCashBookOnSale = async (cashBookDetails: any) => {
-  if (cashBookDetails.type === "cash") {
+export const handleDueOnSale = async (amountDetails: any, sale: any) => {
+  if (amountDetails.paymentType.due) {
     try {
-      const cashBookResult = await CashBook.create(cashBookDetails);
-      if (!cashBookResult) {
-        throw new Error("Unable to create cashbook entry on sale");
+      const { customerId, dueDate, total, paymentType } = amountDetails;
+      const amount = paymentType.due;
+      const description = "DUE";
+      const dueAmountDetails = {saleId: sale.toJSON().id, customerId, dueDate, total, amount, description};
+      const dueResult = await Due.create(dueAmountDetails);
+      if (!dueResult) {
+        throw new Error("Unable to create due entry on sale");
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+};
+
+export const handleCashBookOnSale = async (amountDetails: any, sale: any) => {
+  if (amountDetails.paymentType.cash) {
+    try {
+      const { paymentType } = amountDetails;
+      const type = "DEBIT";
+      const description = "CASH";
+      const amount = paymentType.cash;
+      const refNo = sale.toJSON().id;
+      const cashAmountDetails = { refNo, description, type, amount };
+      const cashResult = await CashBook.create(cashAmountDetails);
+      if (!cashResult) {
+        throw new Error("Unable to create cashbook entry for Cash on sale");
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+  if (amountDetails.paymentType.cheque) {
+    try {
+      const { paymentType } = amountDetails;
+      const type = "DEBIT";
+      const description = "CHEQUE";
+      const amount = paymentType.cheque;
+      const refNo = sale.toJSON().id;
+      const chequeAmountDetails = { refNo, description, type, amount };
+      const chequeResult = await CashBook.create(chequeAmountDetails);
+      if (!chequeResult) {
+        throw new Error("Unable to create cashbook entry for Cheque on sale");
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+  if (amountDetails.paymentType.ecard) {
+    try {
+      const { paymentType } = amountDetails;
+      const type = "DEBIT";
+      const description = "E-CARD";
+      const amount = paymentType.ecard;
+      const refNo = sale.toJSON().id;
+      const ecardAmountDetails = { refNo, description, type, amount };
+      const ecardResult = await CashBook.create(ecardAmountDetails);
+      if (!ecardResult) {
+        throw new Error("Unable to create cashbook entry for E-Card on sale");
       }
     } catch (ex) {
       console.log(ex);

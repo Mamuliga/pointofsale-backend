@@ -8,3 +8,4 @@ export const EMPLOYEE_ROLES = {
   admin: "admin",
   cashier: "cashier"
 };
+

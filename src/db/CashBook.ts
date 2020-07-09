@@ -5,14 +5,14 @@ import { Table, Model, Column, DataType } from "sequelize-typescript";
 })
 class CashBook extends Model<CashBook> {
     @Column({
-        type: DataType.STRING,
+        type: DataType.INTEGER,
         allowNull: false,
         validate: {
             notNull: true
         },
         comment: "Reference no"
     })
-    refNo: string | undefined;
+    refNo: number | undefined;
 
     @Column({
         type: DataType.STRING,
@@ -28,9 +28,9 @@ class CashBook extends Model<CashBook> {
         type: DataType.STRING,
         allowNull: false,
         validate: {
-            notNull: true
+            notNull: true,
         },
-        comment: "Type of payment (credit/debit)"
+        comment: "Amount type of payment (cash/cheque/ecard/due)"
     })
     type: string | undefined;
 

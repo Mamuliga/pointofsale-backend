@@ -1,6 +1,6 @@
 export default interface ICashBook {
-    refNo: string;
+    refNo: number;
     description: string;
     type: string;
-    amount:string;
+    amount:number;
   }

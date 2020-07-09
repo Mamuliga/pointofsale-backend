@@ -7,9 +7,10 @@ import {
   handleCashBookOnSale,
   handleItemStatOnSale,
   getLastSaleId,
+  handleDueOnSale,
 } from "../models/Sale";
 import { SalesShape, SaleShape } from "./apiShapes/Sale";
-import { CREATE_SALE_REQUEST_BODY } from "./validators/sale";
+import { SALE_ROUTE_REQUEST_BODY } from "./validators/sale";
 import requestValidator from "../middleware/requestValidator";
 
 const saleRoute = Router();
@@ -62,16 +63,20 @@ saleRoute.get("/:id", async (req, res) => {
 
 saleRoute.post(
   "/",
-  requestValidator({ reqBodyValidator: CREATE_SALE_REQUEST_BODY }),
+  requestValidator({ reqBodyValidator: SALE_ROUTE_REQUEST_BODY }),
   async (req, res) => {
     try {
+      const { customerId, dueDate, total, paymentType } = req.body;
+      const amountDetails = {customerId, dueDate, total, paymentType};
       const sale = await createSale(req.body);
       if (!sale) {
         throw new Error("Unable to create the sale");
       } else {
         res.status(201).json(sale);
+
         await handleItemSaleOnSale(req.body.itemSales, sale);
-        await handleCashBookOnSale(req.body.cashBookDetails);
+        await handleDueOnSale(amountDetails, sale);
+        await handleCashBookOnSale(amountDetails, sale);
         await handleItemStatOnSale(req.body.itemSales);
       }
     } catch (ex) {

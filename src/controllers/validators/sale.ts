@@ -1,12 +1,13 @@
 import Joi from "@hapi/joi";
 
-export const CREATE_SALE_REQUEST_BODY = {
-  customerId: Joi.number(),
-  total: Joi.number(),
+export const SALE_ROUTE_REQUEST_BODY = {
   totalDiscount: Joi.number(),
-  paymentType: Joi.string(),
   balance: Joi.number(),
   revdAmount:Joi.number(),
   itemSales:Joi.array(),
-  cashBookDetails:Joi.object(),
+  customerId: Joi.number(),
+  dueDate: Joi.date(),
+  total: Joi.number(),
+  paymentType: Joi.object(),
+  
 };
