@@ -83,13 +83,13 @@ class ItemSale extends Model<ItemSale> {
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
-      notNull: true,
+      notNull: false,
     },
     comment: "Description of item sale",
   })
-  description: number | undefined;
+  description: string | undefined;
 }
 
 export default ItemSale;
