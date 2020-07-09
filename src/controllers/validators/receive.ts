@@ -8,5 +8,4 @@ export const CREATE_RECEIVE_REQUEST_BODY = {
   payedAmount: Joi.number(),
   balance: Joi.number(),
   itemReceives: Joi.array(),
-  cashBookDetails: Joi.object(),
 };
