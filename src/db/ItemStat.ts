@@ -59,9 +59,6 @@ class ItemStats extends Model<ItemStats> {
   @Column({
     type: DataType.DATEONLY,
     allowNull: true,
-    validate: {
-      notNull: false
-    },
     comment: "Manufacture date"
   })
   manuDate: Date | undefined;
@@ -69,9 +66,6 @@ class ItemStats extends Model<ItemStats> {
   @Column({
     type: DataType.DATEONLY,
     allowNull: true,
-    validate: {
-      notNull: false
-    },
     comment: "Exp date"
   })
   expDate: Date | undefined;

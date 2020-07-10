@@ -5,7 +5,7 @@ export const CREATE_ITEM_STAT_REQUEST_BODY = {
   supplierId: Joi.number(),
   costPrice: Joi.number(),
   salesPrice: Joi.number(),
-  manuDate: Joi.date(),
-  expDate: Joi.date(),
+  manuDate: Joi.date().optional(),
+  expDate: Joi.date().optional(),
   quantity: Joi.number(),
 };
