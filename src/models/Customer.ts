@@ -1,7 +1,9 @@
+import Sequelize from "sequelize";
 import ICustomer from '../interfaces/ICustomer';
 import Customer from '../db/Customer';
 import Sale from '../db/Sale';
 import { Op } from "sequelize";
+import Due from '../db/Due';
 const getSaleOptions = {
   include: [
     {
@@ -11,8 +13,30 @@ const getSaleOptions = {
   ]
 };
 
-export async function getAllCustomers() {
-  return await Customer.findAll();
+export async function getAllCustomers(limit: any) {
+  let itemLimit;
+  if ("limit" in limit) {
+    itemLimit = limit.limit;
+  } else {
+    itemLimit = 10;
+  }
+  const allCustomers = await Customer.findAll({
+    include: [
+      {
+        model: Due,
+        as: "due",
+        attributes: ["customerId", "amount"],  
+      },
+    ],
+    // group: `due.customerId`,
+    attributes: ["id", "firstName", "lastName","phoneNo","gender","bankAccount"],
+    limit: itemLimit
+    //[Sequelize.fn("SUM", Sequelize.col("amount")), "dueTotal"]
+  });
+
+  
+  return allCustomers;
+  
 }
 
 export async function getCustomer(id: number) {
@@ -58,4 +82,21 @@ export async function searchCustomer(q: any) {
   });
   return customer;
 }
+
+// function returnCusArray (allCustomers: any){
+//   let cus = {};
+//   allCustomers.forEach(async (customers: any) => {
+    
+//       const {
+//         id, firstName, lastName,phoneNo,gender,bankAccount
+//       } = customers;
+//       const dueTotal = await Due.findAll({attributes:[[Sequelize.fn("SUM", Sequelize.col("amount")), "dueTotal"]], where:{customerId:id}});
+//       const cusDetails = {
+//         id, firstName, lastName,phoneNo,gender,bankAccount, dueTotal 
+//       };
+//       const cus = {cusDetails};
+    
+//   });
+//   return cus;
+// };
 
