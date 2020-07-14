@@ -113,9 +113,10 @@ export const handleItemSaleOnSale = async (itemSales: any, sale: any) => {
 export const handleDueOnSale = async (amountDetails: any, sale: any) => {
   if (amountDetails.paymentType.due) {
     try {
-      const { customerId, dueDate, total, paymentType } = amountDetails;
+      const { customerId, dueDate, paymentType } = amountDetails;
       const amount = paymentType.due;
       const description = "DUE";
+      const total = amount;
       const dueAmountDetails = {saleId: sale.toJSON().id, customerId, dueDate, total, amount, description};
       const dueResult = await Due.create(dueAmountDetails);
       if (!dueResult) {
