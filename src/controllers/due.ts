@@ -4,7 +4,8 @@ import {
   createDue,
   getDue,
   updateDue,
-  deleteDue
+  deleteDue,
+  getAllDuesByCustomerId
 } from '../models/Due';
 import {
   CREATE_DUE_REQUEST_BODY,
@@ -17,6 +18,23 @@ const dueRoute = Router();
 dueRoute.get('/', async (_req, res) => {
   try {
     const dues = await getAllDues();
+    if (!dues.length) {
+      res.status(204).json([]);
+      return;
+    }
+    res.status(200).json(dues);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message
+    });
+  }
+});
+
+dueRoute.get('/search-by-customer-id/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const dues = await getAllDuesByCustomerId(parseInt(id) || 0);
     if (!dues.length) {
       res.status(204).json([]);
       return;
