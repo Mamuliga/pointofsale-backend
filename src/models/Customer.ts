@@ -1,7 +1,10 @@
+import Sequelize from "sequelize";
 import ICustomer from '../interfaces/ICustomer';
 import Customer from '../db/Customer';
 import Sale from '../db/Sale';
 import { Op } from "sequelize";
+import Due from '../db/Due';
+import sequelize from "../db";
 const getSaleOptions = {
   include: [
     {
@@ -11,8 +14,30 @@ const getSaleOptions = {
   ]
 };
 
-export async function getAllCustomers() {
-  return await Customer.findAll();
+export async function getAllCustomers(limit: any) {
+  let itemLimit;
+  if ("limit" in limit) {
+    itemLimit = limit.limit;
+  } else {
+    itemLimit = 10;
+  }
+  const [allCustomers, metadata] = await sequelize.query(
+    `SELECT 
+	    c.id, 
+	    c.firstName,
+      c.lastName, 
+      c.phoneNo,
+      c.gender,
+      c.bankAccount,
+	    SUM(d.amount) as dueTotal 
+    from Customers c 
+    LEFT JOIN Dues d 
+    ON c.id = d.customerId
+    GROUP BY c.id`
+);
+  
+  return allCustomers;
+  
 }
 
 export async function getCustomer(id: number) {

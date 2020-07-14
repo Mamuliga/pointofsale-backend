@@ -18,7 +18,7 @@ const customerRoute = Router();
 
 customerRoute.get("/", async (_req, res) => {
   try {
-    const customers = await getAllCustomers();
+    const customers = await getAllCustomers(_req.query);
     if (!customers.length) {
       res.status(204).json([]);
       return;
