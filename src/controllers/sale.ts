@@ -88,21 +88,4 @@ saleRoute.post(
   }
 );
 
-// saleRoute.get("/last-sale-id", async (req, res) => {
-//   try {
-//     const saleId = await getLastSaleId();
-
-//     if (!saleId) {
-//       res.status(204).json({});
-//       return;
-//     }
-//     res.status(200).json(saleId);
-//   } catch (ex) {
-//     console.log(ex);
-//     res.status(res.statusCode || 400).json({
-//       error: ex.message,
-//     });
-//   }
-// });
-
 export default saleRoute;

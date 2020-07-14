@@ -19,12 +19,11 @@ const customerRoute = Router();
 customerRoute.get("/", async (_req, res) => {
   try {
     const customers = await getAllCustomers(_req.query);
-    // console.log(customers);
     if (!customers.length) {
       res.status(204).json([]);
       return;
     }
-    res.status(200).json(customers);//.map(customer => CustomersShape(customer)));
+    res.status(200).json(customers.map(customer => CustomersShape(customer)));
   } catch (ex) {
     console.log(ex);
     res.status(res.statusCode || 400).json({
