@@ -29,3 +29,10 @@ export async function deleteDue(id: number) {
     return oldDue;
   }
 }
+
+export async function getAllDuesByCustomerId(id: number) {
+  const dues = await Due.findAll({
+    where: {customerId: id}
+  });
+  return dues;
+}
