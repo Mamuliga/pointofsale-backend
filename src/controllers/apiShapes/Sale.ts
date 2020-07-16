@@ -16,7 +16,7 @@ export function SalesShape(sales: any) {
 export function SaleShape(sale: any) {
   if (sale) {
   const itemDetails:ISale["itemDetails"] = [];
-  const { id, customer, total, totalDiscount, paymentType, balance, itemSales } = sale;
+  const { id, customer, total, totalDiscount, balance, itemSales } = sale;
     if (Array.isArray(itemSales)) {
       itemSales.forEach(({ item: { itemName }, discount, quantity, sellingPrice, itemId }) => {
         itemDetails.push({ itemName, discount, quantity, sellingPrice, itemId })
@@ -27,7 +27,6 @@ export function SaleShape(sale: any) {
       customerName: customer.firstName + " " + customer.lastName,
       total,
       totalDiscount,
-      paymentType,
       balance,
       itemDetails,
     };

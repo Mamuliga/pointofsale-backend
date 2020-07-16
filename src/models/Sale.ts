@@ -30,7 +30,7 @@ const getSaleOptions = {
       ],
     },
   ],
-  attributes: ["total", "totalDiscount", "paymentType"],
+  attributes: ["total", "totalDiscount"],
 };
 
 export async function getAllSales(dates: any) {

@@ -40,16 +40,6 @@ class Sale extends Model<Sale> {
   totalDiscount: string | undefined;
 
   @Column({
-    type: DataType.JSON,
-    allowNull: false,
-    validate: {
-      notNull: true
-    },
-    comment: "Re-order Level"
-  })
-  paymentType: string | undefined;
-
-  @Column({
     type: DataType.FLOAT,
     allowNull: false,
     validate: {
