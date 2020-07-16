@@ -30,9 +30,7 @@ export async function getCashBookEntry(id: number) {
 }
 
 export async function createCashbookEntry(cashbook: ICashBook) {
-  const { refNo, amount } = cashbook;
-  const type = "DEBIT";
-  const description = "CASH_FROM_DEBTORS";
+  const { refNo, amount, type, description } = cashbook;
   const cashReceiveFromDebtors = { refNo, amount, type, description };
 
   return await CashBook.create(cashReceiveFromDebtors);

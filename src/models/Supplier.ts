@@ -2,6 +2,7 @@ import ISupplier from "../interfaces/ISupplier";
 import Supplier from "../db/Supplier";
 import ItemStats from "../db/ItemStat";
 import Receive from "../db/Receive";
+import { Op } from "sequelize";
 
 const getSupplierOptions = {
   include: [
@@ -50,4 +51,24 @@ export async function deleteSupplier(id: number) {
       return oldSupplier;
     }
   }
+}
+
+export async function searchSupplier(q: any) {
+  const supplierId = await Supplier.findAll({
+    attributes: ["id"],
+    where: {
+      [Op.or]: [
+        { id: { [Op.like]: `%${q}%` } },
+        { firstName: { [Op.like]: `%${q}%` } },
+        { lastName: { [Op.like]: `%${q}%` } },
+      ],
+    },
+  });
+  const i_id = supplierId.map((tag) => tag.id);
+  const supplier = await Supplier.findAll({
+    attributes: ["id", "firstName", "lastName", "email"],
+    where: { id: i_id },
+    
+  });
+  return supplier;
 }
