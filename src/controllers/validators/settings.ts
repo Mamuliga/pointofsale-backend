@@ -7,8 +7,10 @@ export const CREATE_SETTINGS_REQUEST_BODY = {
   email: Joi.string()
     .email()
     .optional(),
+  websiteUrl: Joi.string().optional(),
+  fax: Joi.string().optional(),
   phoneNo: Joi.string().optional(),
-  description: Joi.string().optional(),
+  returnPolicy: Joi.string().optional(),
   openingTime: Joi.string().optional(),
   closingTime: Joi.string().optional()
 };
@@ -20,8 +22,10 @@ export const UPDATE_SETTINGS_REQUEST_BODY = {
   email: Joi.string()
     .email()
     .optional(),
+  websiteUrl: Joi.string().optional(),
+  fax: Joi.string().optional(),
   phoneNo: Joi.string().optional(),
-  description: Joi.string().optional(),
+  returnPolicy: Joi.string().optional(),
   openingTime: Joi.string().optional(),
   closingTime: Joi.string().optional()
 };

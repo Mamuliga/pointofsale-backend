@@ -21,11 +21,4 @@ export async function createSettings(settings: ISettings) {
     }
   }
   
-  export async function deleteSettings(id: number) {
-    const oldSettings = await Settings.findByPk(id);
-    if (oldSettings) {
-      await oldSettings.destroy();
-      return oldSettings;
-    }
-  }
   

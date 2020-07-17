@@ -3,8 +3,10 @@ export default interface ISettings {
     companyName: string;
     address: string;
     email: string;
+    websiteUrl: string,
+    fax: string,
     phoneNo: string;
-    description: string;
+    returnPolicy: string,
     openingTime: string;
     closingTime: string;
   }

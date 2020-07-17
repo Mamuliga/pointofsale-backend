@@ -4,7 +4,6 @@ import {
   getSetting,
   createSettings,
   updateSettings,
-  deleteSettings,
 } from "../models/Settings";
 import {
   CREATE_SETTINGS_REQUEST_BODY,
@@ -83,18 +82,6 @@ settingsRoute.put(
   }
 );
 
-settingsRoute.delete("/:id", validateJwt, async (req, res) => {
-  const { id } = req.params;
-  try {
-    const settings = await deleteSettings(parseInt(id));
-    if (!settings) throw new Error("Unable to delete the Settings");
-    res.status(201).json(settings);
-  } catch (ex) {
-    console.log(ex);
-    res.status(res.statusCode || 400).json({
-      error: ex.message,
-    });
-  }
-});
+
 
 export default settingsRoute;

@@ -5,7 +5,7 @@ import { Model, Table, Column, DataType } from "sequelize-typescript";
   })
 class Settings extends Model<Settings>{
     @Column({
-        type: DataType.STRING,
+        type: DataType.BLOB('long'),
         allowNull: true,
         comment: "company's or the shop's logo"
       })
@@ -44,6 +44,13 @@ class Settings extends Model<Settings>{
       @Column({
         type: DataType.STRING,
         allowNull: true,
+        comment: "Website URL of the company or the shop"
+      })
+      websiteUrl: string | undefined;
+
+      @Column({
+        type: DataType.STRING,
+        allowNull: true,
         validate: {
           len: [2, 10]
         },
@@ -54,19 +61,29 @@ class Settings extends Model<Settings>{
       @Column({
         type: DataType.STRING,
         allowNull: true,
-        comment: "Description about the company or the shop"
+        validate: {
+          len: [2, 10]
+        },
+        comment: "Fax number of the company or the shop"
       })
-      description: string | undefined;
+      fax: string | undefined;
 
       @Column({
         type: DataType.STRING,
+        allowNull: true,
+        comment: "Return policy of the company or the shop"
+      })
+      returnPolicy: string | undefined;
+
+      @Column({
+        type: DataType.TIME,
         allowNull: true,
         comment: "Opening time of the company or the shop"
       })
       openingTime: string | undefined;
 
       @Column({
-        type: DataType.STRING,
+        type: DataType.TIME,
         allowNull: true,
         comment: "Closing time of the company or the shop"
       })
