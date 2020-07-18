@@ -4,4 +4,5 @@ export default interface IItem {
   category: string;
   supplier: string;
   reOrderLevel: string;
+  isExpireDateEnabled: boolean;
 }

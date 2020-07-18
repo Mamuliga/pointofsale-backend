@@ -5,7 +5,8 @@ export const CREATE_ITEM_REQUEST_BODY = {
   itemName: Joi.string().required(),
   category: Joi.string().optional(),
   reOrderLevel: Joi.number().optional(),
-  description: Joi.string().optional()
+  description: Joi.string().optional(),
+  isExpireDateEnabled: Joi.boolean().required()
 };
 
 export const UPDATE_ITEM_REQUEST_BODY = {
@@ -13,5 +14,6 @@ export const UPDATE_ITEM_REQUEST_BODY = {
   itemName: Joi.string().optional(),
   category: Joi.string().optional(),
   reOrderLevel: Joi.number().optional(),
-  description: Joi.string().optional()
+  description: Joi.string().optional(),
+  isExpireDateEnabled: Joi.boolean().optional()
 };

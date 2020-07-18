@@ -79,11 +79,16 @@ export const handleItemReceiveOnReceive = async (
     try {
       const {
         itemId,
+        supplierId,
         receivePrice,
-        discount,
+        salesPrice,
+        manuDate,
+        expDate,
         quantity,
-        description,
+        discount,
+        description
       } = itemReceive;
+
       const itemReceiveDetails = {
         receiveId: receive.toJSON().id,
         itemId,
@@ -102,33 +107,25 @@ export const handleItemReceiveOnReceive = async (
   });
 };
 
-export const handleCashBookOnReceive = async (cashBookDetails: any) => {
-  if (cashBookDetails.type === 'cash') {
+export const handleCashBookOnReceive = async (amount: any, receive: any) => {
     try {
-      const cashBookResult = await CashBook.create(cashBookDetails);
+      const type = "CREDIT";
+      const description = "PAY_TO_SUPPLIER";
+      const cashBookEntry = {refNo: receive.toJSON().id, amount, type, description};
+      const cashBookResult = await CashBook.create(cashBookEntry);
       if (!cashBookResult) {
         throw new Error('Unable to create cashbook entry on receive');
       }
     } catch (ex) {
       console.log(ex);
-    }
   }
 };
 
 export const handleItemStatOnReceive = async (itemReceives: any) => {
   try {
     itemReceives.forEach(
-      async (itemReceive: { quantity: number; itemId: number }) => {
-        await ItemStats.update(
-          {
-            quantity: Sequelize.literal(`quantity + ${itemReceive.quantity}`),
-          },
-          {
-            where: {
-              itemId: itemReceive.itemId,
-            },
-          }
-        );
+      async (itemReceive: any) => {
+        await ItemStats.create(itemReceive);
       }
     );
   } catch (ex) {

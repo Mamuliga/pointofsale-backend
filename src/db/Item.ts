@@ -54,5 +54,12 @@ class Item extends Model<Item> {
     comment: "Item Description"
   })
   description: string | undefined;
+
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: true,
+    comment: "Is expire date enabled"
+  })
+  isExpireDateEnabled: boolean | undefined;
 }
 export default Item;

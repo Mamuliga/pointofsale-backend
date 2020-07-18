@@ -23,5 +23,6 @@ export function CustomersShape(customer: any) {
     phoneNo: customer && customer.phoneNo,
     gender: customer && customer.gender,
     bankAccount: customer && customer.bankAccount,
+    dueTotal: customer && customer.dueTotal,
   };
 }

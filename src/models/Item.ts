@@ -80,3 +80,23 @@ export async function searchItem(q: any) {
   });
   return ItemStatsAtt;
 }
+
+export async function searchItemsForReceives(q: any) {
+  const itemId = await Item.findAll({
+    attributes: ["id"],
+    where: {
+      [Op.or]: [
+        { id: { [Op.like]: `%${q}%` } },
+        { barcode: { [Op.like]: `%${q}%` } },
+        { itemName: { [Op.like]: `%${q}%` } },
+      ],
+    },
+  });
+  const i_id = itemId.map((tag) => tag.id);
+  const items = await Item.findAll({
+    attributes: ["id", "itemName", "isExpireDateEnabled"],
+    where: { id: i_id },
+    
+  });
+  return items;
+}

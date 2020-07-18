@@ -1,6 +1,7 @@
 import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { GENDER } from "../utilities/constant";
 import Sale from "./Sale";
+import Due from "./Due";
 
 @Table({
   timestamps: true
@@ -8,6 +9,9 @@ import Sale from "./Sale";
 class Customer extends Model<Customer> {
   @HasMany(() => Sale)
   sales: Sale[] | undefined;
+
+  @HasMany(() => Due)
+  due: Due[] | undefined;
 
   @Column({
     type: DataType.STRING,

@@ -7,6 +7,7 @@ import ItemReceiving from "./../db/ItemReceiving";
 import Supplier from "./../db/Supplier";
 import Receive from "../db/Receive";
 import Customer from "../db/Customer";
+import Employee from "../db/Employee";
 
 const Op = Sequelize.Op;
 
@@ -228,6 +229,25 @@ export async function getReceivesReportByPaymentType(dates: any) {
     order: [[Sequelize.fn("MAX", Sequelize.col("total")), "DESC"]],
   });
   return allItemSales;
+}
+
+export async function getTotalCountOfEntries(){
+  const sales = await Sale.findOne({
+    attributes: [[Sequelize.fn("COUNT", Sequelize.col("id")), "SalesCount"]]
+  });
+  const items = await Item.findOne({
+    attributes: [[Sequelize.fn("COUNT", Sequelize.col("id")), "ItemsCount"]]
+  });
+  const customers = await Customer.findOne({
+    attributes: [[Sequelize.fn("COUNT", Sequelize.col("id")), "CustomersCount"]]
+  });
+  const suppliers = await Supplier.findOne({
+    attributes: [[Sequelize.fn("COUNT", Sequelize.col("id")), "SuppliersCount"]]
+  });
+  const employees = await Employee.findOne({
+    attributes: [[Sequelize.fn("COUNT", Sequelize.col("id")), "EmployeesCount"]]
+  });
+  return {sales, items, customers, suppliers, employees};
 }
 
 export async function getBestProfitGivenCustomer(dates: any) {

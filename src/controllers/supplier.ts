@@ -4,7 +4,8 @@ import {
   createSupplier,
   getAllSuppliers,
   updateSupplier,
-  deleteSupplier
+  deleteSupplier,
+  searchSupplier
 } from '../models/Supplier';
 import { SuppliersShape, SupplierShape } from './apiShapes/Supplier';
 import {
@@ -27,6 +28,25 @@ supplierRoute.get('/', async (_req, res) => {
     console.log(ex);
     res.status(res.statusCode || 400).json({
       error: ex.message
+    });
+  }
+});
+
+supplierRoute.get("/search/:q", async (req, res) => {
+  const { q } = req.params;
+  try {
+    const supplier = await searchSupplier(q);
+    if (!supplier.length) {
+      res.status(204).json([]);
+      return;
+    }
+    res
+      .status(200)
+      .json(supplier);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
     });
   }
 });

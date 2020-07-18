@@ -52,10 +52,18 @@ receiveRoute.post(
       if (!receive) {
         throw new Error('Unable to create the receive');
       } else {
+        const { total } =  req.body;
+        const itemReceivesArray: { itemId: any; supplierId: any; costPrice: any; salesPrice: any; expDate: any; manuDate: any; quantity: any;  }[] = [];
+        req.body.itemReceives.forEach((receiveItem: any) => {
+          const { itemId, supplierId, receivePrice, salesPrice, expDate, manuDate, quantity } = receiveItem;
+          const costPrice = receivePrice;
+          itemReceivesArray.push({ itemId, supplierId, costPrice, salesPrice, expDate, manuDate, quantity })
+        })
+
         res.status(201).json(receive);
         await handleItemReceiveOnReceive(req.body.itemReceives, receive);
-        await handleCashBookOnReceive(req.body.cashBookDetails);
-        await handleItemStatOnReceive(req.body.itemReceives);
+        await handleCashBookOnReceive(total, receive);
+        await handleItemStatOnReceive(itemReceivesArray);
       }
     } catch (ex) {
       console.log(ex);

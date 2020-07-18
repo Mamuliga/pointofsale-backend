@@ -4,7 +4,8 @@ import {
   createCustomer,
   getAllCustomers,
   updateCustomer,
-  deleteCustomer
+  deleteCustomer,
+  searchCustomer
 } from "../models/Customer";
 import { CustomersShape, CustomerShape } from "./apiShapes/Customer";
 import {
@@ -17,7 +18,7 @@ const customerRoute = Router();
 
 customerRoute.get("/", async (_req, res) => {
   try {
-    const customers = await getAllCustomers();
+    const customers = await getAllCustomers(_req.query);
     if (!customers.length) {
       res.status(204).json([]);
       return;
@@ -27,6 +28,25 @@ customerRoute.get("/", async (_req, res) => {
     console.log(ex);
     res.status(res.statusCode || 400).json({
       error: ex.message
+    });
+  }
+});
+
+customerRoute.get("/search/:q", async (req, res) => {
+  const { q } = req.params;
+  try {
+    const customer = await searchCustomer(q);
+    if (!customer.length) {
+      res.status(204).json([]);
+      return;
+    }
+    res
+      .status(200)
+      .json(customer);
+  } catch (ex) {
+    console.log(ex);
+    res.status(res.statusCode || 400).json({
+      error: ex.message,
     });
   }
 });

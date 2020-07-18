@@ -40,14 +40,14 @@ class Sale extends Model<Sale> {
   totalDiscount: string | undefined;
 
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.JSON,
     allowNull: false,
     validate: {
       notNull: true
     },
     comment: "Re-order Level"
   })
-  paymentType: number | undefined;
+  paymentType: string | undefined;
 
   @Column({
     type: DataType.FLOAT,
