@@ -2,7 +2,6 @@ export default interface ISale {
     customerId: number;
     total: number;
     totalDiscount: number;
-    paymentType: string;
     payedAmount: number;
     balance: number;
     revdAmount: number;
