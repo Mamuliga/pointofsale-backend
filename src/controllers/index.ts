@@ -15,6 +15,7 @@ import itemSaleRoute from "./itemSale";
 import receiveRoute from "./receive";
 import saleRoute from "./sale";
 import reportRoute from "./report";
+import settingsRoute from "./settings";
 import dueRoute from "./due";
 
 const apiRoute = Router();
@@ -34,6 +35,7 @@ apiRoute.use("/itemSales", validateJwt, itemSaleRoute);
 apiRoute.use("/receives", validateJwt, receiveRoute);
 apiRoute.use("/sales", validateJwt, saleRoute);
 apiRoute.use("/report", reportRoute);
+apiRoute.use("/settings", validateJwt, settingsRoute);
 apiRoute.use("/due", validateJwt, dueRoute);
 
 export default apiRoute;
