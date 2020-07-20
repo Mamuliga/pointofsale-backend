@@ -1,7 +1,7 @@
 import Joi from "@hapi/joi";
 
 export const CREATE_SETTINGS_REQUEST_BODY = {
-  logo: Joi.string().required(),
+  logo: Joi.string().optional(),
   companyName: Joi.string().required(),
   address: Joi.string().optional(),
   email: Joi.string()
