@@ -11,7 +11,8 @@ class Due extends Model<Due> {
   @Column({
     type: DataType.DATE,
     allowNull: true,
-    comment: "Due date of the credit amount"
+    comment: "Due date of the credit amount",
+    defaultValue: null
   })
   dueDate: Date | undefined;
 
