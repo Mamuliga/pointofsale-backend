@@ -5,7 +5,7 @@ import { Model, Table, Column, DataType } from "sequelize-typescript";
   })
 class Settings extends Model<Settings>{
     @Column({
-        type: DataType.BLOB('long'),
+        type: DataType.STRING,
         allowNull: true,
         comment: "company's or the shop's logo"
       })
